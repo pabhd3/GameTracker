@@ -1,0 +1,18 @@
+<!-- Extending from base.html -->
+{% extends 'base.html' %}
+<!-- Used to load in static files -->
+{% load static %}
+
+{% block content %}
+  <!-- Home Page Panels -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md">
+        <a href="/skyrim-se/">
+          <h4>The Elder Scrolls V: Skyrim Special Edition</h4>
+          <img src="{% static '/images/skyrimse-logo.jpg' %}" alt="Skyrim SE Logo" height=50% width=50%>
+        </a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+  <!-- Head Section -->
+  <head>
+    <link href="{% static 'bootstrap.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'styles.css' %}" rel="stylesheet" media="screen">
+    <link rel="shortcut icon" type="image/png" href="{% static 'img/djangofavicon.png' %}">
+    <title>GameTracker</title>
+  </head>
+  <body>
+    <!-- Navbar Section -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Games
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/skyrimse/">Elder Scrolls V: Skyrim SE</a>
+            </div>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+    <!-- Inherited Section -->
+    <main class="container">
+        {% block content %}
+        {% endblock %}
+    </main>
+    <!-- Footer Section -->
+    <footer class="footer" role="contentinfo">
+      <div class="container">
+        <p class="text-muted">&copy; GameTrackerDB 2018</p>
+      </div>
+    </footer>
+    <script src="{% static 'jquery-3.3.1.js' %}"></script>
+    <script src="{% static 'bootstrap.js' %}"></script>
+  </body>
+</html>
