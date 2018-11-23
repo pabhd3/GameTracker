@@ -1,0 +1,18 @@
+<!-- Extending from base.html -->
+{% extends 'base.html' %}
+<!-- Used to load in static files -->
+{% load static %}
+
+{% block content %}
+  <!-- Home Page Panels -->
+  <div>
+    <h1>Skyim SE Home Page</h1>
+  </div>
+  <table style="width:90%">
+    <tr>
+      <td>
+        <a href="/skyrimse/progress">Progress Tracker</a>
+      </td>
+    </tr>
+  </table>
+{% endblock %}

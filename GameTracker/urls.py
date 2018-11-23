@@ -20,5 +20,6 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(regex=r"^$", view=views.index)
+    url(regex=r"^$", view=views.index),
+    url(r'skyrimse/', include('skyrimse.urls'))
 ]

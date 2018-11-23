@@ -1,0 +1,23 @@
+<!-- Extending from base.html -->
+{% extends 'base.html' %}
+<!-- Used to load in static files -->
+{% load static %}
+
+{% block content %}
+  <!-- Home Page Panels -->
+  <div>
+    <h1>Progress Tracker</h1>
+  </div>
+  <table style="width:90%">
+    <tr>
+      <td>Novice</td>
+      <td>Apprentice</td>
+      <td>Adept</td>
+    </tr>
+    <tr>
+      <td>Expert</td>
+      <td>Master</td>
+      <td>Legendary</td>
+    </tr>
+  </table>
+{% endblock %}
