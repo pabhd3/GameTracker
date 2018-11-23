@@ -4,20 +4,20 @@
 {% load static %}
 
 {% block content %}
-  <!-- Home Page Panels -->
+  <!-- Page Title Descriptor -->
   <div>
     <h1>Progress Tracker</h1>
   </div>
-  <table style="width:90%">
+  <!-- Link back to previous page -->
+  <a href="javascript:javascript:history.go(-1)">The Elder Scrolls V: Skyrim Special Edition (Home Page)</a>
+  <!-- Table containing difficulty progress -->
+  <table style="width:90%" border="1">
+    {% for progress in data %}
     <tr>
-      <td>Novice</td>
-      <td>Apprentice</td>
-      <td>Adept</td>
+      <td>
+        <a href={{progress.id}}>{{progress.difficulty}}</a>
+      </td>
     </tr>
-    <tr>
-      <td>Expert</td>
-      <td>Master</td>
-      <td>Legendary</td>
-    </tr>
+    {% endfor %}
   </table>
 {% endblock %}

@@ -1,0 +1,15 @@
+<!-- Extending from base.html -->
+{% extends 'base.html' %}
+<!-- Used to load in static files -->
+{% load static %}
+
+{% block content %}
+  <!-- Page Title Descriptor -->
+  <div>
+    <h1>Progress Detail</h1>
+  </div>
+  <!-- Link back to previous page -->
+  <a href="javascript:javascript:history.go(-1)">The Elder Scrolls V: Skyrim Special Edition (Progress Page)</a>
+
+  <p>{{data.id}}</p>
+{% endblock %}
