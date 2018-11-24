@@ -3,6 +3,21 @@
 <!-- Used to load in static files -->
 {% load static %}
 
+{% block javascript %}
+  <script>
+    $("#id_difficulty").change(function () {
+      var difficulty = $(this).val();
+      $.ajax({
+        url: '{% url "addDifficulty" %}',
+        data: {
+          'difficulty': difficulty
+        },
+        dataType: 'json',
+      });
+    });
+  </script>
+{% endblock %}
+
 {% block content %}
   <!-- Page Title Descriptor -->
   <div>
@@ -12,12 +27,59 @@
   <a href="javascript:javascript:history.go(-1)">The Elder Scrolls V: Skyrim Special Edition (Home Page)</a>
   <!-- Table containing difficulty progress -->
   <table style="width:90%" border="1">
-    {% for progress in data %}
     <tr>
       <td>
-        <a href={{progress.id}}>{{progress.difficulty}}</a>
+        <p>Novice</p>
+        {% if data.Novice == None %}
+          <input type="button" onclick="window.location.href='addDifficulty=Novice'" value="Start Novice">
+        {% else %}
+          <a href={{data.Novice.id}}>Full Details</a>
+        {% endif %}
+      </td>
+      <td>
+        <p>Apprentice</p>
+        {% if data.Apprentice == None %}
+          <input type="button" onclick="window.location.href='addDifficulty=Apprentice'" value="Start Apprentice">
+        {% else %}
+          <a href={{data.Apprentice.id}}>Full Details</a>
+        {% endif %}
       </td>
     </tr>
-    {% endfor %}
+    <tr>
+      <td>
+        <p>Adept</p>
+        {% if data.Adept == None %}
+          <input type="button" onclick="window.location.href='addDifficulty=Adept'" value="Start Adept">
+        {% else %}
+          <a href={{data.Adept.id}}>Full Details</a>
+        {% endif %}
+      </td>
+      <td>
+        <p>Expert</p>
+        {% if data.Expert == None %}
+          <input type="button" onclick="window.location.href='addDifficulty=Expert'" value="Start Expert">
+        {% else %}
+          <a href={{data.Expert.id}}>Full Details</a>
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <p>Master</p>
+        {% if data.Master == None %}
+          <input type="button" onclick="window.location.href='addDifficulty=Master'" value="Start Master">
+        {% else %}
+          <a href={{data.Master.id}}>Full Details</a>
+        {% endif %}
+      </td>
+      <td>
+        <p>Legendary</p>
+        {% if data.Legendary == None %}
+          <input type="button" onclick="window.location.href='addDifficulty=Legendary'" value="Start Legendary">
+        {% else %}
+          <a href={{data.Legendary.id}}>Full Details</a>
+        {% endif %}
+      </td>
+    </tr>
   </table>
 {% endblock %}

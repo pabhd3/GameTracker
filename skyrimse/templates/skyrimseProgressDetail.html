@@ -10,6 +10,8 @@
   </div>
   <!-- Link back to previous page -->
   <a href="javascript:javascript:history.go(-1)">The Elder Scrolls V: Skyrim Special Edition (Progress Page)</a>
-
   <p>{{data.id}}</p>
+  <p>{{data.difficulty}}</p>
+  <p>{{data.created}}</p>
+  <input type="button" onclick="window.location.href='deleteDifficulty={{data.id}}'" value="Delete">
 {% endblock %}
