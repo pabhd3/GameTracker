@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from skyrimse.models import Progress
+from skyrimse.models import *
 from mongoengine.context_managers import switch_db
 from datetime import datetime
 
@@ -20,6 +20,7 @@ def addDifficulty(request):
     progress = Progress()
     progress.created = datetime.strftime(datetime.now(), "%A %B %d, %Y %H:%M:%S:%f %Z")
     progress.difficulty = request.path.split("=")[1]
+    progress.completion = Completion(vanilla=0, mod=0)
     progress.save()
     return redirect("/skyrimse/progress")
 
