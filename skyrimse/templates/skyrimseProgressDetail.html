@@ -5,57 +5,53 @@
 
 {% block content %}
   <!-- Page Title Descriptor -->
-  <div>
-    <h1>Progress Detail</h1>
-  </div>
+  <h1>Progress Detail</h1>
   <!-- Link back to previous page -->
   <a href="/skyrimse/progress/">The Elder Scrolls V: Skyrim Special Edition (Progress Page)</a>
-  <p>{{data.id}}</p>
-  <p>{{data.difficulty}}</p>
-  <p>{{data.created}}</p>
-  <input type="button" onclick="window.location.href='deleteDifficulty={{data.id}}'" value="Delete">
-  <!-- Skills Section -->
-  <div>
-    {% if data.difficulty == "Novice"%}
-      <img src="{% static '/images/skills-Novice.png' %}" alt="{{data.difficulty}} Skills Graph">
-    {% elif data.difficulty == "Apprentice"%}
-      <img src="{% static '/images/skills-Apprentice.png' %}" alt="{{data.difficulty}} Skills Graph">
-    {% elif data.difficulty == "Adept"%}
-      <img src="{% static '/images/skills-Adept.png' %}" alt="{{data.difficulty}} Skills Graph">
-    {% elif data.difficulty == "Expert"%}
-      <img src="{% static '/images/skills-Expert.png' %}" alt="{{data.difficulty}} Skills Graph">
-    {% elif data.difficulty == "Master"%}
-      <img src="{% static '/images/skills-Master.png' %}" alt="{{data.difficulty}} Skills Graph">
-    {% elif data.difficulty == "Legendary"%}
-      <img src="{% static '/images/skills-Legendary.png' %}" alt="{{data.difficulty}} Skills Graph">
-    {% endif %}
+  <div class="row" style="padding-top=10px;">
+    <div class="col-sm-10"><h3>Difficulty: {{data.difficulty}}</h3></div>
+    <div class="col-sm-2"><input type="button" onclick="window.location.href='deleteDifficulty={{data.id}}'" value="Delete"></div>
   </div>
-  <table border="1">
-    <tr>
-      <td>Alchemy: {{ data.skills.alchemy }} <input type="button" onclick="window.location.href='levelSkill=alchemy&difficulty={{data.id}}'" value="Level up"></td>
-      <td>Alteration: {{ data.skills.alteration }} <input type="button" onclick="window.location.href='levelSkill=alteration&difficulty={{data.id}}'" value="Level up"></td>
-      <td>Archery: {{ data.skills.archery }} <input type="button" onclick="window.location.href='levelSkill=archery&difficulty={{data.id}}'" value="Level up"></td>
-      <td>Block: {{ data.skills.block }} <input type="button" onclick="window.location.href='levelSkill=block&difficulty={{data.id}}'" value="Level up"></td>
-      <td>Conjuration: {{ data.skills.conjuration }} <input type="button" onclick="window.location.href='levelSkill=conjuration&difficulty={{data.id}}'" value="Level up"></td>
-    </tr>
-    <tr>
-      <td>Destruction: {{ data.skills.destruction }} <input type="button" onclick="window.location.href='levelSkill=destruction&difficulty={{data.id}}'" value="Level up"></td>
-      <td>Enchanting: {{ data.skills.enchanting }} <input type="button" onclick="window.location.href='levelSkill=enchanting&difficulty={{data.id}}'" value="Level up"></td>
-      <td>Heavy Armor: {{ data.skills.heavyArmor }} <input type="button" onclick="window.location.href='levelSkill=heavyArmor&difficulty={{data.id}}'" value="Level up"></td>
-      <td>Illusion: {{ data.skills.illusion }} <input type="button" onclick="window.location.href='levelSkill=illusion&difficulty={{data.id}}'" value="Level up"></td>
-      <td>Light Armor: {{ data.skills.lightArmor }} <input type="button" onclick="window.location.href='levelSkill=lightArmor&difficulty={{data.id}}'" value="Level up"></td>
-    </tr>
-    <tr>
-      <td>Lockpicking: {{ data.skills.lockpicking }} <input type="button" onclick="window.location.href='levelSkill=lockpicking&difficulty={{data.id}}'" value="Level up"></td>
-      <td>One Handed: {{ data.skills.oneHanded }} <input type="button" onclick="window.location.href='levelSkill=oneHanded&difficulty={{data.id}}'" value="Level up"></td>
-      <td>Pick Pocketing: {{ data.skills.pickPocket }} <input type="button" onclick="window.location.href='levelSkill=pickPocket&difficulty={{data.id}}'" value="Level up"></td>
-      <td>Restoration: {{ data.skills.restoration }} <input type="button" onclick="window.location.href='levelSkill=restoration&difficulty={{data.id}}'" value="Level up"></td>
-      <td>Smithing: {{ data.skills.smithing }} <input type="button" onclick="window.location.href='levelSkill=smithing&difficulty={{data.id}}'" value="Level up"></td>
-    </tr>
-    <tr>
-      <td>Sneak: {{ data.skills.sneak }} <input type="button" onclick="window.location.href='levelSkill=sneak&difficulty={{data.id}}'" value="Level up"></td>
-      <td>Speech: {{ data.skills.speech }} <input type="button" onclick="window.location.href='levelSkill=speech&difficulty={{data.id}}'" value="Level up"></td>
-      <td>Two Handed: {{ data.skills.twoHanded }} <input type="button" onclick="window.location.href='levelSkill=twoHanded&difficulty={{data.id}}'" value="Level up"></td>
-    </tr>
-  </table>
+  <p>Started: {{data.created}}</p>
+  <!-- Skills Section -->
+  <h3>Skills</h3>
+  <div class="row">
+    <div class="col-sm-9">
+      {% if data.difficulty == "Novice"%}
+        <img src="{% static '/images/skills-Novice.png' %}" alt="{{data.difficulty}} Skills Graph" height=100% width=100%>
+      {% elif data.difficulty == "Apprentice"%}
+        <img src="{% static '/images/skills-Apprentice.png' %}" alt="{{data.difficulty}} Skills Graph" height=100% width=100%>
+      {% elif data.difficulty == "Adept"%}
+        <img src="{% static '/images/skills-Adept.png' %}" alt="{{data.difficulty}} Skills Graph" height=100% width=100%>
+      {% elif data.difficulty == "Expert"%}
+        <img src="{% static '/images/skills-Expert.png' %}" alt="{{data.difficulty}} Skills Graph" height=100% width=100%>
+      {% elif data.difficulty == "Master"%}
+        <img src="{% static '/images/skills-Master.png' %}" alt="{{data.difficulty}} Skills Graph" height=100% width=100%>
+      {% elif data.difficulty == "Legendary"%}
+        <img src="{% static '/images/skills-Legendary.png' %}" alt="{{data.difficulty}} Skills Graph" height=100% width=100%>
+      {% endif %}
+    </div>
+    <div class="col-sm-3" style="overflow:auto">
+      <table border="1">
+        <tr><td>Alchemy: {{ data.skills.alchemy }} <input type="button" onclick="window.location.href='levelSkill=alchemy&difficulty={{data.id}}'" value="Level up"></td></tr>
+        <tr><td>Alteration: {{ data.skills.alteration }} <input type="button" onclick="window.location.href='levelSkill=alteration&difficulty={{data.id}}'" value="Level up"></td></tr>
+        <tr><td>Archery: {{ data.skills.archery }} <input type="button" onclick="window.location.href='levelSkill=archery&difficulty={{data.id}}'" value="Level up"></td></tr>
+        <tr><td>Block: {{ data.skills.block }} <input type="button" onclick="window.location.href='levelSkill=block&difficulty={{data.id}}'" value="Level up"></td></tr>
+        <tr><td>Conjuration: {{ data.skills.conjuration }} <input type="button" onclick="window.location.href='levelSkill=conjuration&difficulty={{data.id}}'" value="Level up"></td></tr>
+        <tr><td>Destruction: {{ data.skills.destruction }} <input type="button" onclick="window.location.href='levelSkill=destruction&difficulty={{data.id}}'" value="Level up"></td></tr>
+        <tr><td>Enchanting: {{ data.skills.enchanting }} <input type="button" onclick="window.location.href='levelSkill=enchanting&difficulty={{data.id}}'" value="Level up"></td></tr>
+        <tr><td>Heavy Armor: {{ data.skills.heavyArmor }} <input type="button" onclick="window.location.href='levelSkill=heavyArmor&difficulty={{data.id}}'" value="Level up"></td></tr>
+        <tr><td>Illusion: {{ data.skills.illusion }} <input type="button" onclick="window.location.href='levelSkill=illusion&difficulty={{data.id}}'" value="Level up"></td></tr>
+        <tr><td>Light Armor: {{ data.skills.lightArmor }} <input type="button" onclick="window.location.href='levelSkill=lightArmor&difficulty={{data.id}}'" value="Level up"></td></tr>
+        <tr><td>Lockpicking: {{ data.skills.lockpicking }} <input type="button" onclick="window.location.href='levelSkill=lockpicking&difficulty={{data.id}}'" value="Level up"></td></tr>
+        <tr><td>One Handed: {{ data.skills.oneHanded }} <input type="button" onclick="window.location.href='levelSkill=oneHanded&difficulty={{data.id}}'" value="Level up"></td></tr>
+        <tr><td>Pick Pocketing: {{ data.skills.pickPocket }} <input type="button" onclick="window.location.href='levelSkill=pickPocket&difficulty={{data.id}}'" value="Level up"></td></tr>
+        <tr><td>Restoration: {{ data.skills.restoration }} <input type="button" onclick="window.location.href='levelSkill=restoration&difficulty={{data.id}}'" value="Level up"></td></tr>
+        <tr><td>Smithing: {{ data.skills.smithing }} <input type="button" onclick="window.location.href='levelSkill=smithing&difficulty={{data.id}}'" value="Level up"></td></tr>
+        <tr><td>Sneak: {{ data.skills.sneak }} <input type="button" onclick="window.location.href='levelSkill=sneak&difficulty={{data.id}}'" value="Level up"></td></tr>
+        <tr><td>Speech: {{ data.skills.speech }} <input type="button" onclick="window.location.href='levelSkill=speech&difficulty={{data.id}}'" value="Level up"></td></tr>
+        <tr><td>Two Handed: {{ data.skills.twoHanded }} <input type="button" onclick="window.location.href='levelSkill=twoHanded&difficulty={{data.id}}'" value="Level up"></td></tr>
+      </table>
+    </div>
+  </div>
 {% endblock %}
