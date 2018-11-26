@@ -34,3 +34,11 @@ class Progress(Document):
     difficulty = fields.StringField(max_length=10)
     completion = fields.EmbeddedDocumentField(Completion)
     skills = fields.EmbeddedDocumentField(Skills)
+
+#########################
+##### Quest Related #####
+#########################
+class Quest(Document):
+    name = fields.StringField()
+    questLine = fields.StringField()
+    source = fields.StringField()

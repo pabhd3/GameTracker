@@ -4,11 +4,17 @@ from skyrimse.models import *
 from mongoengine.context_managers import switch_db
 from datetime import datetime
 from .customScripts import plotRader
+from json import load, loads, dumps
 
-# Create your views here.
+#####################
+##### Home Page #####
+#####################
 def index(request):
     return render(request, 'skyrimseIndex.html')
 
+############################
+##### Progress Related #####
+############################
 def progress(request):
     switch_db(cls=Progress, db_alias="skyrimse")
     docs = Progress.objects.all()
@@ -90,3 +96,28 @@ def progressDetail(request):
     progressID = request.path.split("/skyrimse/progress/")[1]
     data = Progress.objects(id=progressID).first()
     return render(request, "skyrimseProgressDetail.html", {'data': data})
+
+##########################
+##### Quests Related #####
+##########################
+def quests(request):
+    data = {"counts": {
+                "vanilla": len(Quest.objects(source="vanilla")),
+                "dawnguard": len(Quest.objects(source="dawnguard")),
+                "dragonborn": len(Quest.objects(source="dragonborn"))},
+            "quests": {
+                "vanilla": Quest.objects(source="vanilla"),
+                "dawnguard": Quest.objects(source="dawnguard"),
+                "dragonborn": Quest.objects(source="dragonborn")
+            }}
+    return render(request, "skyrimseQuests.html", {'data': data})
+
+def questsLoad(request):
+    toLoad = "skyrimse/static/json/{source}Quests.json".format(source=request.path.split("=")[1])
+    with open(file=toLoad, mode="r") as f:
+        jsonData = load(f)
+        f.close()
+    for questData in jsonData:
+        quest = Quest(name=questData["name"], questLine=questData["questLine"], source=questData["source"])
+        quest.save()
+    return redirect("/skyrimse/quests")

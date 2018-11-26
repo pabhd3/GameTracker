@@ -1,0 +1,35 @@
+<!-- Extending from base.html -->
+{% extends 'base.html' %}
+<!-- Used to load in static files -->
+{% load static %}
+
+{% block content %}
+  <!-- Page Title Descriptor -->
+  <h1>Quests</h1>
+  <!-- Link back to previous page -->
+  <a href="/skyrimse/">The Elder Scrolls V: Skyrim Special Edition (Home Page)</a>
+  <!-- Load Quests into MongoDB -->
+  <div class="row">
+    {% for key, value in data.counts.items %}
+      {% if value == 0 %}
+        <div class="col-sm-2"><input type="button" onclick="window.location.href='loadQuests={{key}}'" value="Load {{key}}"></div>
+      {% endif %}
+    {% endfor %}
+  </div>
+  <!-- Display Quests -->
+  <div>
+    {% for key, value in data.quests.items %}
+      <h3>{{key}}</h3>
+      <div style="height:200px;overflow:auto;">
+        <table border="1">
+          {% for quest in value %}
+            <tr>
+              <td>{{quest.name}}</td>
+              <td>{{quest.questLine}}</td>
+            </tr>
+          {% endfor %}
+        </table>
+      </div>
+    {% endfor %}
+  <div>
+{% endblock %}
