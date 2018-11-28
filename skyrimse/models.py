@@ -38,7 +38,18 @@ class Progress(Document):
 #########################
 ##### Quest Related #####
 #########################
+class Tracker(EmbeddedDocument):
+    novice = fields.IntField(min_value=0)
+    apprentice = fields.IntField(min_value=0)
+    adept = fields.IntField(min_value=0)
+    expert = fields.IntField(min_value=0)
+    master = fields.IntField(min_value=0)
+    legendary = fields.IntField(min_value=0)
+
 class Quest(Document):
     name = fields.StringField()
     questLine = fields.StringField()
     source = fields.StringField()
+    section = fields.StringField()
+    completion = fields.EmbeddedDocumentField(Tracker)
+    radiant = fields.BooleanField()

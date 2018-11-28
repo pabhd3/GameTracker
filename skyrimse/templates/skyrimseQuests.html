@@ -17,19 +17,24 @@
     {% endfor %}
   </div>
   <!-- Display Quests -->
-  <div>
-    {% for key, value in data.quests.items %}
-      <h3>{{key}}</h3>
-      <div style="height:200px;overflow:auto;">
-        <table border="1">
-          {% for quest in value %}
-            <tr>
-              <td>{{quest.name}}</td>
-              <td>{{quest.questLine}}</td>
-            </tr>
-          {% endfor %}
-        </table>
-      </div>
-    {% endfor %}
-  <div>
+  {% for source, questLines in data.sources.items%}
+    <h2>{{source}}</h2>
+    <div class="row">
+      {% for questLine, stats in questLines.items %}
+        <div class="col-sm-6">
+          <a href="{{source}}-{{questLine}}"><h5>{{questLine}}</h5></a>
+          <table border="1">
+          <tr>
+            <td>TODO: Add Description</td>
+            <td>
+              {% for difficulty, progress in stats.items %}
+                {{difficulty}}: <progress value={{progress.complete}} max={{progress.total}}></progress> {{progress.complete}}/{{progress.total}}<br>
+              {% endfor %}
+            </td>
+          </tr>
+          </table>
+        </div>
+      {% endfor %}
+    </div>
+  {% endfor %}
 {% endblock %}

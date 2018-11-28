@@ -101,15 +101,31 @@ def progressDetail(request):
 ##### Quests Related #####
 ##########################
 def quests(request):
+    allQuests = Quest.objects.all()
+    allSources = set([q.source for q in allQuests])
+    allQuestLines = set([q.questLine for q in allQuests])
     data = {"counts": {
                 "vanilla": len(Quest.objects(source="vanilla")),
                 "dawnguard": len(Quest.objects(source="dawnguard")),
                 "dragonborn": len(Quest.objects(source="dragonborn"))},
-            "quests": {
-                "vanilla": Quest.objects(source="vanilla"),
-                "dawnguard": Quest.objects(source="dawnguard"),
-                "dragonborn": Quest.objects(source="dragonborn")
-            }}
+            "sources": {}}
+    for source in allSources:
+        data["sources"][source] = {}
+        for quest in allQuests:
+            if(quest.questLine not in data["sources"][source] and quest.source == source):
+                total = len(Quest.objects(questLine=quest.questLine, source=source))
+                data["sources"][source][quest.questLine] = progData = {"novice": {"complete": len(Quest.objects(questLine=quest.questLine, source=source, completion__novice__gt=0)), 
+                                                                                  "total": total},
+                                                                       "apprentice": {"complete": len(Quest.objects(questLine=quest.questLine, source=source, completion__apprentice__gt=0)), 
+                                                                                  "total": total},
+                                                                       "adept": {"complete": len(Quest.objects(questLine=quest.questLine, source=source, completion__adept__gt=0)), 
+                                                                                  "total": total},
+                                                                       "expert": {"complete": len(Quest.objects(questLine=quest.questLine, source=source, completion__expert__gt=0)), 
+                                                                                  "total": total},
+                                                                       "master": {"complete": len(Quest.objects(questLine=quest.questLine, source=source, completion__master__gt=0)), 
+                                                                                  "total": total},
+                                                                       "legendary": {"complete": len(Quest.objects(questLine=quest.questLine, source=source, completion__legendary__gt=0)), 
+                                                                                  "total": total}}
     return render(request, "skyrimseQuests.html", {'data': data})
 
 def questsLoad(request):
@@ -118,6 +134,8 @@ def questsLoad(request):
         jsonData = load(f)
         f.close()
     for questData in jsonData:
-        quest = Quest(name=questData["name"], questLine=questData["questLine"], source=questData["source"])
+        quest = Quest(name=questData["name"], questLine=questData["questLine"], source=questData["source"],
+                      section=questData["section"], radiant=questData["radiant"],
+                      completion = Tracker(novice=0, apprentice=0, adept=0, expert=0, master=0, legendary=0))
         quest.save()
     return redirect("/skyrimse/quests")
