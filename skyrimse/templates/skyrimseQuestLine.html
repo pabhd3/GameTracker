@@ -1,0 +1,32 @@
+<!-- Extending from base.html -->
+{% extends 'base.html' %}
+<!-- Used to load in static files -->
+{% load static %}
+
+{% block content %}
+  <!-- Page Title Descriptor -->
+  <h1>{{data.questLine}}</h1>
+  <h5>Source: {{data.source}}</h5>
+  <!-- Link back to previous page -->
+  <a href="/skyrimse/quests/">The Elder Scrolls V: Skyrim Special Edition (Quests Page)</a>
+  <!-- Load Quests into MongoDB -->
+  {% for section, quests in data.sections.items %}
+    <h3>{{section}}</h3>
+    {% for quest in quests %}
+        <p>{{quest.name}}</p>
+        <table border="1" style="width:100%">
+          <tr>
+            <td style="width:40%">Description<td>
+            <td>
+              <div class="row">
+                <p>{{quest.completion.novice}}</p>
+                <!--{% for difficulty, stats in quest.completion.items %}
+                  <div class="col-sm-6">{{difficulty}}</div>
+                {% endfor %}-->
+              </div>
+            </td>
+          </tr>
+        <table>
+    {% endfor %}
+  {% endfor %}
+{% endblock %}

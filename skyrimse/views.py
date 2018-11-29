@@ -139,3 +139,17 @@ def questsLoad(request):
                       completion = Tracker(novice=0, apprentice=0, adept=0, expert=0, master=0, legendary=0))
         quest.save()
     return redirect("/skyrimse/quests")
+
+def questLine(request):
+    questSource = request.path.replace("/skyrimse/quests/", "").split("-")[0]
+    questLine = request.path.replace("/skyrimse/quests/", "").split("-")[1]
+    allQuests = Quest.objects(source=questSource, questLine=questLine)
+    allSections = set([q.section for q in allQuests])
+    data = {"source": questSource, "questLine": questLine,
+            "sections": {}}
+    for section in allSections:
+        data["sections"][section] = []
+        for quest in allQuests:
+            if(quest.section == section):
+                data["sections"][section].append(quest)
+    return render(request, "skyrimseQuestLine.html", {'data': data})
