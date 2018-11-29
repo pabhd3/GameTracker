@@ -114,18 +114,19 @@ def quests(request):
         for quest in allQuests:
             if(quest.questLine not in data["sources"][source] and quest.source == source):
                 total = len(Quest.objects(questLine=quest.questLine, source=source))
-                data["sources"][source][quest.questLine] = progData = {"novice": {"complete": len(Quest.objects(questLine=quest.questLine, source=source, completion__novice__gt=0)), 
-                                                                                  "total": total},
-                                                                       "apprentice": {"complete": len(Quest.objects(questLine=quest.questLine, source=source, completion__apprentice__gt=0)), 
-                                                                                  "total": total},
-                                                                       "adept": {"complete": len(Quest.objects(questLine=quest.questLine, source=source, completion__adept__gt=0)), 
-                                                                                  "total": total},
-                                                                       "expert": {"complete": len(Quest.objects(questLine=quest.questLine, source=source, completion__expert__gt=0)), 
-                                                                                  "total": total},
-                                                                       "master": {"complete": len(Quest.objects(questLine=quest.questLine, source=source, completion__master__gt=0)), 
-                                                                                  "total": total},
-                                                                       "legendary": {"complete": len(Quest.objects(questLine=quest.questLine, source=source, completion__legendary__gt=0)), 
-                                                                                  "total": total}}
+                progData = {"novice": {"complete": len(Quest.objects(questLine=quest.questLine, source=source, completion__novice__gt=0)), 
+                            "total": total},
+                            "apprentice": {"complete": len(Quest.objects(questLine=quest.questLine, source=source, completion__apprentice__gt=0)), 
+                            "total": total},
+                            "adept": {"complete": len(Quest.objects(questLine=quest.questLine, source=source, completion__adept__gt=0)), 
+                            "total": total},
+                            "expert": {"complete": len(Quest.objects(questLine=quest.questLine, source=source, completion__expert__gt=0)), 
+                            "total": total},
+                            "master": {"complete": len(Quest.objects(questLine=quest.questLine, source=source, completion__master__gt=0)), 
+                            "total": total},
+                            "legendary": {"complete": len(Quest.objects(questLine=quest.questLine, source=source, completion__legendary__gt=0)), 
+                            "total": total}}
+                data["sources"][source][quest.questLine] = progData
     return render(request, "skyrimseQuests.html", {'data': data})
 
 def questsLoad(request):
@@ -144,9 +145,8 @@ def questLine(request):
     questSource = request.path.replace("/skyrimse/quests/", "").split("-")[0]
     questLine = request.path.replace("/skyrimse/quests/", "").split("-")[1]
     allQuests = Quest.objects(source=questSource, questLine=questLine)
-    allSections = set([q.section for q in allQuests])
-    data = {"source": questSource, "questLine": questLine,
-            "sections": {}}
+    allSections = [q.section for q in allQuests]
+    data = {"source": questSource, "questLine": questLine, "test": allQuests[0], "sections": {}}
     for section in allSections:
         data["sections"][section] = []
         for quest in allQuests:

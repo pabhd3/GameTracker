@@ -13,20 +13,139 @@
   {% for section, quests in data.sections.items %}
     <h3>{{section}}</h3>
     {% for quest in quests %}
-        <p>{{quest.name}}</p>
+        <h5>{{quest.name}}</h5>
         <table border="1" style="width:100%">
           <tr>
-            <td style="width:40%">Description<td>
-            <td>
+            <td style="width:60%;">
               <div class="row">
-                <p>{{quest.completion.novice}}</p>
-                <!--{% for difficulty, stats in quest.completion.items %}
-                  <div class="col-sm-6">{{difficulty}}</div>
-                {% endfor %}-->
+                <div class="col">
+                  <h6>Description</h6>
+                  <p>{{quest.description}}</p>
+                  <h6>Location(s)</h6>
+                  {% for location in quest.locations %}
+                    {{location}}
+                  {% endfor %}
+                  <h6>Reward(s)</h6>
+                  <ul>
+                    {% for reward in quest.rewards %}
+                      <li>{{reward}}</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+                <div class="col">
+                  <h6>Objectives</h6>
+                  <ol>
+                    {% for objective in data.objectives %}
+                      <li>{{objective}}</li>
+                    {% endfor %}
+                  </ol>
+                </div>
+              </div>
+            </td>
+            <td valign="top" style="width:30%;">
+              <h5>Difficulty Status</h5>
+                <!-- Novice -->
+                <div class="row">
+                  <div class="col">Novice</div>
+                  {% if quest.radiant %}
+                    <div class="col">{{quest.completion.novice}} times</div>
+                    <div class="col"><button type="button">Complete</button></div>
+                  {% else %}
+                    {% if quest.completion.novice == 0%}
+                      <div class="col"><button type="button">Complete</button></div>
+                    {% else %}
+                      <div class="col">Completed</div>
+                    {% endif %}
+                  {% endif %}
+                </div>
+                <!-- Apprentice -->
+                <div class="row">
+                  <div class="col">Novice</div>
+                  {% if quest.radiant %}
+                    <div class="col">{{quest.completion.apprentice}} times</div>
+                    <div class="col"><button type="button">Complete</button></div>
+                  {% else %}
+                    {% if quest.completion.apprentice == 0%}
+                      <div class="col"><button type="button">Complete</button></div>
+                    {% else %}
+                      <div class="col">Completed</div>
+                    {% endif %}
+                  {% endif %}
+                </div>
+                <!-- Adept -->
+                <div class="row">
+                  <div class="col">Adept</div>
+                  {% if quest.radiant %}
+                    <div class="col">{{quest.completion.adept}} times</div>
+                    <div class="col"><button type="button">Complete</button></div>
+                  {% else %}
+                    {% if quest.completion.adept == 0%}
+                      <div class="col"><button type="button">Complete</button></div>
+                    {% else %}
+                      <div class="col">Completed</div>
+                    {% endif %}
+                  {% endif %}
+                </div>
+                <!-- Expert -->
+                <div class="row">
+                  <div class="col">Expert</div>
+                  {% if quest.radiant %}
+                    <div class="col">{{quest.completion.expert}} times</div>
+                    <div class="col"><button type="button">Complete</button></div>
+                  {% else %}
+                    {% if quest.completion.expert == 0%}
+                      <div class="col"><button type="button">Complete</button></div>
+                    {% else %}
+                      <div class="col">Completed</div>
+                    {% endif %}
+                  {% endif %}
+                </div>
+                <!-- Master -->
+                <div class="row">
+                  <div class="col">Master</div>
+                  {% if quest.radiant %}
+                    <div class="col">{{quest.completion.master}} times</div>
+                    <div class="col"><button type="button">Complete</button></div>
+                  {% else %}
+                    {% if quest.completion.master == 0%}
+                      <div class="col"><button type="button">Complete</button></div>
+                    {% else %}
+                      <div class="col">Completed</div>
+                    {% endif %}
+                  {% endif %}
+                </div>
+                <!-- Legendary -->
+                <div class="row">
+                  <div class="col">Legendary</div>
+                  {% if quest.radiant %}
+                    <div class="col">{{quest.completion.legendary}} times</div>
+                    <div class="col"><button type="button">Complete</button></div>
+                  {% else %}
+                    {% if quest.completion.legendary == 0%}
+                      <div class="col"><button type="button">Complete</button></div>
+                    {% else %}
+                      <div class="col">Completed</div>
+                    {% endif %}
+                  {% endif %}
+                </div>
+            </td>
+          </tr>
+          <tr style="width:100%">
+            <td colspan="2">
+              <div class="row">
+                <div class="col">
+                  <h6>Notes</h6>
+                  <p>These are the notes I care about for the next time I do this quest. I want to make sure that I know these things that made some sort of difference when completing the quest.</p>
+                </div>
               </div>
             </td>
           </tr>
         <table>
     {% endfor %}
   {% endfor %}
+  <!-- Test Area -->
+  <h1>Test Area Start</h1>
+  <div>
+  </div>
+  <h1>Test Area End</h1>
 {% endblock %}
