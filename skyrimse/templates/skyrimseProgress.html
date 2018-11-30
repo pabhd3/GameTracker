@@ -20,7 +20,7 @@
         {% else %}
           <div class="row">
             <div class="col-sm-2">Vanilla</div>
-            <div class="col-sm-6"><progress value={{data.Novice.completion.vanilla}} max="100"></progress></div>
+            <div class="col-sm-6"><progress value={{data.Novice.completion.vanilla}}  max="100"></progress></div>
             <div class="col-sm-2">{{data.Novice.completion.vanilla}}%</div>
           </div>
           <div class="row">
@@ -28,7 +28,7 @@
             <div class="col-sm-6"><progress value={{data.Novice.completion.mod}} max="100"></progress></div>
             <div class="col-sm-2">{{data.Novice.completion.mod}}%</div>
           </div>
-          <a href={{data.Novice.id}}>Full Details</a>
+          <a href={{data.Novice.difficulty}}>Full Details</a>
         {% endif %}
       </td>
       <td>
@@ -46,7 +46,7 @@
             <div class="col-sm-6"><progress value={{data.Apprentice.completion.mod}} max="100"></progress></div>
             <div class="col-sm-2">{{data.Apprentice.completion.mod}}%</div>
           </div>
-          <a href={{data.Apprentice.id}}>Full Details</a>
+          <a href={{data.Apprentice.difficulty}}>Full Details</a>
         {% endif %}
       </td>
     </tr>
@@ -66,7 +66,7 @@
             <div class="col-sm-6"><progress value={{data.Adept.completion.mod}} max="100"></progress></div>
             <div class="col-sm-2">{{data.Adept.completion.mod}}%</div>
           </div>
-          <a href={{data.Adept.id}}>Full Details</a>
+          <a href={{data.Adept.difficulty}}>Full Details</a>
         {% endif %}
       </td>
       <td>
@@ -84,7 +84,7 @@
             <div class="col-sm-6"><progress value={{data.Expert.completion.mod}} max="100"></progress></div>
             <div class="col-sm-2">{{data.Expert.completion.mod}}%</div>
           </div>
-          <a href={{data.Expert.id}}>Full Details</a>
+          <a href={{data.Expert.difficulty}}>Full Details</a>
         {% endif %}
       </td>
     </tr>
@@ -104,7 +104,7 @@
             <div class="col-sm-6"><progress value={{data.Master.completion.mod}} max="100"></progress></div>
             <div class="col-sm-2">{{data.Master.completion.mod}}%</div>
           </div>
-          <a href={{data.Master.id}}>Full Details</a>
+          <a href={{data.Master.difficulty}}>Full Details</a>
         {% endif %}
       </td>
       <td>
@@ -122,7 +122,7 @@
             <div class="col-sm-6"><progress value={{data.Legendary.completion.mod}} max="100"></progress></div>
             <div class="col-sm-2">{{data.Legendary.completion.mod}}%</div>
           </div>
-          <a href={{data.Legendary.id}}>Full Details</a>
+          <a href={{data.Legendary.difficulty}}>Full Details</a>
         {% endif %}
       </td>
     </tr>

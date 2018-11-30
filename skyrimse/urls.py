@@ -13,5 +13,6 @@ urlpatterns = [
     # Quest Related
     url(r"^quests/$", views.quests),
     url(r"^quests/loadQuests=\w+", views.questsLoad),
-    url(r"^quests/\w+-\w+", views.questLine)
+    url(r"^quests/\w+-\w+", views.questLine),
+    url(r"^quests/completeQuest=\w+", views.completeQuest)
 ]

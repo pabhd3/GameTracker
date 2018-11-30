@@ -78,7 +78,7 @@ def plotRader(values, difficulty):
 
 
     # Show polar plot
-    strFile = "skyrimse/static/images/skills-{difficulty}.png".format(difficulty=difficulty)
+    strFile = "skyrimse/static/images/progress/skills-{difficulty}.png".format(difficulty=difficulty)
     if(os.path.isfile(strFile)):
         os.remove(strFile)
     plt.savefig(strFile)

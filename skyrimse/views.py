@@ -5,6 +5,7 @@ from mongoengine.context_managers import switch_db
 from datetime import datetime
 from .customScripts import plotRader
 from json import load, loads, dumps
+import os
 
 #####################
 ##### Home Page #####
@@ -35,53 +36,63 @@ def addDifficulty(request):
             lockpicking=0, oneHanded=0, pickPocket=0, restoration=0, smithing=0, 
             sneak=0, speech=0, twoHanded=0)
     progress.save()
-    plotRader(values=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], difficulty=difficulty)
+    newLevels = [progress.skills.alchemy, progress.skills.alteration, progress.skills.archery, progress.skills.block,
+        progress.skills.conjuration, progress.skills.destruction, progress.skills.enchanting, progress.skills.heavyArmor,
+        progress.skills.illusion, progress.skills.lightArmor, progress.skills.lockpicking, progress.skills.oneHanded,
+        progress.skills.pickPocket, progress.skills.restoration, progress.skills.smithing, progress.skills.sneak,
+        progress.skills.speech, progress.skills.twoHanded]
+    plotRader(values=newLevels, difficulty=progress.difficulty)
     return redirect("/skyrimse/progress")
 
 def deleteDifficulty(request):
     deleteID = request.path.split("=")[1]
-    Progress.objects(id=deleteID).delete()
+    progress = Progress.objects(id=deleteID).first()
+    strFile = "skyrimse/static/images/progress/skills-{difficulty}.png".format(difficulty=progress.difficulty)
+    if(os.path.isfile(strFile)):
+        os.remove(strFile)
+    progress.delete()
     return redirect("/skyrimse/progress")
 
 def levelSkill(request):
     paramsStr = request.path.split("/skyrimse/progress/")[1]
-    params = {param.split("=")[0]: param.split("=")[1] for param in paramsStr.split("&")}
-    progress = Progress.objects(id=params["difficulty"]).first()
-    if(params["levelSkill"] == "alchemy"):
+    skill = paramsStr.split("&")[0].split("=")[1]
+    difficulty = paramsStr.split("&")[1].split("=")[1]
+    progress = Progress.objects(id=difficulty).first()
+    if(skill == "alchemy"):
         progress.update(inc__skills__alchemy=1)
-    elif(params["levelSkill"] == "alteration"):
+    elif(skill == "alteration"):
         progress.update(inc__skills__alteration=1)
-    elif(params["levelSkill"] == "archery"):
+    elif(skill == "archery"):
         progress.update(inc__skills__archery=1)
-    elif(params["levelSkill"] == "block"):
+    elif(skill == "block"):
         progress.update(inc__skills__block=1)
-    elif(params["levelSkill"] == "conjuration"):
+    elif(skill == "conjuration"):
         progress.update(inc__skills__conjuration=1)
-    elif(params["levelSkill"] == "destruction"):
+    elif(skill == "destruction"):
         progress.update(inc__skills__destruction=1)
-    elif(params["levelSkill"] == "enchanting"):
+    elif(skill == "enchanting"):
         progress.update(inc__skills__enchanting=1)
-    elif(params["levelSkill"] == "heavyArmor"):
+    elif(skill == "heavyArmor"):
         progress.update(inc__skills__heavyArmor=1)
-    elif(params["levelSkill"] == "illusion"):
+    elif(skill == "illusion"):
         progress.update(inc__skills__illusion=1)
-    elif(params["levelSkill"] == "lightArmor"):
+    elif(skill == "lightArmor"):
         progress.update(inc__skills__lightArmor=1)
-    elif(params["levelSkill"] == "lockpicking"):
+    elif(skill == "lockpicking"):
         progress.update(inc__skills__lockpicking=1)
-    elif(params["levelSkill"] == "oneHanded"):
+    elif(skill == "oneHanded"):
         progress.update(inc__skills__oneHanded=1)
-    elif(params["levelSkill"] == "pickPocket"):
+    elif(skill == "pickPocket"):
         progress.update(inc__skills__pickPocket=1)
-    elif(params["levelSkill"] == "restoration"):
+    elif(skill == "restoration"):
         progress.update(inc__skills__restoration=1)
-    elif(params["levelSkill"] == "smithing"):
+    elif(skill == "smithing"):
         progress.update(inc__skills__smithing=1)
-    elif(params["levelSkill"] == "sneak"):
+    elif(skill == "sneak"):
         progress.update(inc__skills__sneak=1)
-    elif(params["levelSkill"] == "speech"):
+    elif(skill == "speech"):
         progress.update(inc__skills__speech=1)
-    elif(params["levelSkill"] == "twoHanded"):
+    elif(skill == "twoHanded"):
         progress.update(inc__skills__twoHanded=1)
     progress.save()
     newLevels = [progress.skills.alchemy, progress.skills.alteration, progress.skills.archery, progress.skills.block,
@@ -90,11 +101,11 @@ def levelSkill(request):
         progress.skills.pickPocket, progress.skills.restoration, progress.skills.smithing, progress.skills.sneak,
         progress.skills.speech, progress.skills.twoHanded]
     plotRader(values=newLevels, difficulty=progress.difficulty)
-    return redirect("/skyrimse/progress/{id}".format(id=progress.id))
+    return redirect("/skyrimse/progress/{difficulty}".format(difficulty=progress.difficulty))
 
 def progressDetail(request):
     progressID = request.path.split("/skyrimse/progress/")[1]
-    data = Progress.objects(id=progressID).first()
+    data = Progress.objects(difficulty=progressID).first()
     return render(request, "skyrimseProgressDetail.html", {'data': data})
 
 ##########################
@@ -153,3 +164,24 @@ def questLine(request):
             if(quest.section == section):
                 data["sections"][section].append(quest)
     return render(request, "skyrimseQuestLine.html", {'data': data})
+
+def completeQuest(request):
+    params = request.path.split("/skyrimse/quests/")[1]
+    questID = params.split("&")[0].split("=")[1]
+    difficulty = params.split("&")[1].split("=")[1]
+    questLine = params.split("&")[2].split("=")[1]
+    quest = Quest.objects(id=questID).first()
+    if(difficulty == "novice"):
+        quest.update(inc__completion__novice=1)
+    elif(difficulty == "apprentice"):
+        quest.update(inc__completion__apprentice=1)
+    elif(difficulty == "adept"):
+        quest.update(inc__completion__adept=1)
+    elif(difficulty == "expert"):
+        quest.update(inc__completion__expert=1)
+    elif(difficulty == "master"):
+        quest.update(inc__completion__master=1)
+    elif(difficulty == "legendary"):
+        quest.update(inc__completion__legendary=1)
+    quest.save()
+    return(redirect("/skyrimse/quests/{questLine}".format(questLine=questLine)))

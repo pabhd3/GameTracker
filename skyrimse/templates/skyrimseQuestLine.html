@@ -49,10 +49,10 @@
                   <div class="col">Novice</div>
                   {% if quest.radiant %}
                     <div class="col">{{quest.completion.novice}} times</div>
-                    <div class="col"><button type="button">Complete</button></div>
+                    <div class="col"><input type="button" onclick="window.location.href='completeQuest={{quest.id}}&difficulty=novice&questLine={{quest.source}}-{{quest.questLine}}'" value="Complete"></div>
                   {% else %}
                     {% if quest.completion.novice == 0%}
-                      <div class="col"><button type="button">Complete</button></div>
+                      <div class="col"><input type="button" onclick="window.location.href='completeQuest={{quest.id}}&difficulty=novice&questLine={{quest.source}}-{{quest.questLine}}'" value="Complete"></div>
                     {% else %}
                       <div class="col">Completed</div>
                     {% endif %}
@@ -63,10 +63,10 @@
                   <div class="col">Novice</div>
                   {% if quest.radiant %}
                     <div class="col">{{quest.completion.apprentice}} times</div>
-                    <div class="col"><button type="button">Complete</button></div>
+                    <div class="col"><input type="button" onclick="window.location.href='completeQuest={{quest.id}}&difficulty=apprentice&questLine={{quest.source}}-{{quest.questLine}}'" value="Complete"></div>
                   {% else %}
                     {% if quest.completion.apprentice == 0%}
-                      <div class="col"><button type="button">Complete</button></div>
+                      <div class="col"><input type="button" onclick="window.location.href='completeQuest={{quest.id}}&difficulty=apprentice&questLine={{quest.source}}-{{quest.questLine}}'" value="Complete"></div>
                     {% else %}
                       <div class="col">Completed</div>
                     {% endif %}
@@ -77,10 +77,10 @@
                   <div class="col">Adept</div>
                   {% if quest.radiant %}
                     <div class="col">{{quest.completion.adept}} times</div>
-                    <div class="col"><button type="button">Complete</button></div>
+                    <div class="col"><input type="button" onclick="window.location.href='completeQuest={{quest.id}}&difficulty=adept&questLine={{quest.source}}-{{quest.questLine}}'" value="Complete"></div>
                   {% else %}
                     {% if quest.completion.adept == 0%}
-                      <div class="col"><button type="button">Complete</button></div>
+                      <div class="col"><input type="button" onclick="window.location.href='completeQuest={{quest.id}}&difficulty=adept&questLine={{quest.source}}-{{quest.questLine}}'" value="Complete"></div>
                     {% else %}
                       <div class="col">Completed</div>
                     {% endif %}
@@ -91,10 +91,10 @@
                   <div class="col">Expert</div>
                   {% if quest.radiant %}
                     <div class="col">{{quest.completion.expert}} times</div>
-                    <div class="col"><button type="button">Complete</button></div>
+                    <div class="col"><input type="button" onclick="window.location.href='completeQuest={{quest.id}}&difficulty=expert&questLine={{quest.source}}-{{quest.questLine}}'" value="Complete"></div>
                   {% else %}
                     {% if quest.completion.expert == 0%}
-                      <div class="col"><button type="button">Complete</button></div>
+                      <div class="col"><input type="button" onclick="window.location.href='completeQuest={{quest.id}}&difficulty=expert&questLine={{quest.source}}-{{quest.questLine}}'" value="Complete"></div>
                     {% else %}
                       <div class="col">Completed</div>
                     {% endif %}
@@ -105,10 +105,10 @@
                   <div class="col">Master</div>
                   {% if quest.radiant %}
                     <div class="col">{{quest.completion.master}} times</div>
-                    <div class="col"><button type="button">Complete</button></div>
+                    <div class="col"><input type="button" onclick="window.location.href='completeQuest={{quest.id}}&difficulty=master&questLine={{quest.source}}-{{quest.questLine}}'" value="Complete"></div>
                   {% else %}
                     {% if quest.completion.master == 0%}
-                      <div class="col"><button type="button">Complete</button></div>
+                      <div class="col"><input type="button" onclick="window.location.href='completeQuest={{quest.id}}&difficulty=master&questLine={{quest.source}}-{{quest.questLine}}'" value="Complete"></div>
                     {% else %}
                       <div class="col">Completed</div>
                     {% endif %}
@@ -119,10 +119,10 @@
                   <div class="col">Legendary</div>
                   {% if quest.radiant %}
                     <div class="col">{{quest.completion.legendary}} times</div>
-                    <div class="col"><button type="button">Complete</button></div>
+                    <div class="col"><input type="button" onclick="window.location.href='completeQuest={{quest.id}}&difficulty=legendary&questLine={{quest.source}}-{{quest.questLine}}'" value="Complete"></div>
                   {% else %}
                     {% if quest.completion.legendary == 0%}
-                      <div class="col"><button type="button">Complete</button></div>
+                      <div class="col"><input type="button" onclick="window.location.href='completeQuest={{quest.id}}&difficulty=legendary&questLine={{quest.source}}-{{quest.questLine}}'" value="Complete"></div>
                     {% else %}
                       <div class="col">Completed</div>
                     {% endif %}
