@@ -35,13 +35,14 @@ def addDifficulty(request):
             destruction=0, enchanting=0, heavyArmor=0, illusion=0, lightArmor=0, 
             lockpicking=0, oneHanded=0, pickPocket=0, restoration=0, smithing=0, 
             sneak=0, speech=0, twoHanded=0)
+    questCount = sum([len(Quest.objects(source=source)) for source in ["vanilla", "dawnguard", "dragonborn"]])
+    modQuestCount = len(Quest.objects.all()) - questCount
+    totalCount = sum([questCount])
+    modTotalCount = sum([modQuestCount])
+    progress.collected = Collected(quests=0, modQuests=0, total=0, modTotal=0)
+    progress.collectedTotal = Collected(quests=questCount, modQuests=modQuestCount, total=totalCount, modTotal=modTotalCount)
     progress.save()
-    newLevels = [progress.skills.alchemy, progress.skills.alteration, progress.skills.archery, progress.skills.block,
-        progress.skills.conjuration, progress.skills.destruction, progress.skills.enchanting, progress.skills.heavyArmor,
-        progress.skills.illusion, progress.skills.lightArmor, progress.skills.lockpicking, progress.skills.oneHanded,
-        progress.skills.pickPocket, progress.skills.restoration, progress.skills.smithing, progress.skills.sneak,
-        progress.skills.speech, progress.skills.twoHanded]
-    plotRader(values=newLevels, difficulty=progress.difficulty)
+    plotRader(values=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], difficulty=progress.difficulty)
     return redirect("/skyrimse/progress")
 
 def deleteDifficulty(request):
@@ -108,6 +109,9 @@ def progressDetail(request):
     data = Progress.objects(difficulty=progressID).first()
     return render(request, "skyrimseProgressDetail.html", {'data': data})
 
+def refreshProgress(request):
+    return(HttpResponse("Test"))
+
 ##########################
 ##### Quests Related #####
 ##########################
@@ -166,22 +170,81 @@ def questLine(request):
     return render(request, "skyrimseQuestLine.html", {'data': data})
 
 def completeQuest(request):
+    # Determine params from HTTP request
     params = request.path.split("/skyrimse/quests/")[1]
     questID = params.split("&")[0].split("=")[1]
     difficulty = params.split("&")[1].split("=")[1]
     questLine = params.split("&")[2].split("=")[1]
+    # Pull the Quest and Progress objects
     quest = Quest.objects(id=questID).first()
+    progress = Progress.objects(difficulty=difficulty.capitalize()).first()
+    # Update the Quest Object
     if(difficulty == "novice"):
+        if(quest.completion.novice == 0):
+            if(quest.source in ("vanilla", "dawnguard", "dragonborn")):
+                progress.update(inc__collected__quests=1)
+                progress.update(inc__collected__total=1)
+                progress.update(set__completion__vanilla=progress.collected.total/progress.collectedTotal.total)
+            else:
+                progress.update(inc__collected__modQuests=1)
+                progress.update(inc__collected__modTotal=1)
+                progress.update(set__completion__vanilla=progress.collected.modTotal/progress.collectedTotal.modTotal)
         quest.update(inc__completion__novice=1)
     elif(difficulty == "apprentice"):
+        if(quest.completion.apprentice == 0):
+            if(quest.source in ("vanilla", "dawnguard", "dragonborn")):
+                progress.update(inc__collected__quests=1)
+                progress.update(inc__collected__total=1)
+                progress.update(set__completion__vanilla=progress.collected.total/progress.collectedTotal.total)
+            else:
+                progress.update(inc__collected__modQuests=1)
+                progress.update(inc__collected__modTotal=1)
+                progress.update(set__completion__vanilla=progress.collected.modTotal/progress.collectedTotal.modTotal)
         quest.update(inc__completion__apprentice=1)
     elif(difficulty == "adept"):
+        if(quest.completion.adept == 0):
+            if(quest.source in ("vanilla", "dawnguard", "dragonborn")):
+                progress.update(inc__collected__quests=1)
+                progress.update(inc__collected__total=1)
+                progress.update(set__completion__vanilla=progress.collected.total/progress.collectedTotal.total)
+            else:
+                progress.update(inc__collected__modQuests=1)
+                progress.update(inc__collected__modTotal=1)
+                progress.update(set__completion__vanilla=progress.collected.modTotal/progress.collectedTotal.modTotal)
         quest.update(inc__completion__adept=1)
     elif(difficulty == "expert"):
+        if(quest.completion.expert == 0):
+            if(quest.source in ("vanilla", "dawnguard", "dragonborn")):
+                progress.update(inc__collected__quests=1)
+                progress.update(inc__collected__total=1)
+                progress.update(set__completion__vanilla=progress.collected.total/progress.collectedTotal.total)
+            else:
+                progress.update(inc__collected__modQuests=1)
+                progress.update(inc__collected__modTotal=1)
+                progress.update(set__completion__vanilla=progress.collected.modTotal/progress.collectedTotal.modTotal)
         quest.update(inc__completion__expert=1)
     elif(difficulty == "master"):
+        if(quest.completion.master == 0):
+            if(quest.source in ("vanilla", "dawnguard", "dragonborn")):
+                progress.update(inc__collected__quests=1)
+                progress.update(inc__collected__total=1)
+                progress.update(set__completion__vanilla=progress.collected.total/progress.collectedTotal.total)
+            else:
+                progress.update(inc__collected__modQuests=1)
+                progress.update(inc__collected__modTotal=1)
+                progress.update(set__completion__vanilla=progress.collected.modTotal/progress.collectedTotal.modTotal)
         quest.update(inc__completion__master=1)
     elif(difficulty == "legendary"):
+        if(quest.completion.legendary == 0):
+            if(quest.source in ("vanilla", "dawnguard", "dragonborn")):
+                progress.update(inc__collected__quests=1)
+                progress.update(inc__collected__total=1)
+                progress.update(set__completion__vanilla=progress.collected.total/progress.collectedTotal.total)
+            else:
+                progress.update(inc__collected__modQuests=1)
+                progress.update(inc__collected__modTotal=1)
+                progress.update(set__completion__vanilla=progress.collected.modTotal/progress.collectedTotal.modTotal)
         quest.update(inc__completion__legendary=1)
     quest.save()
+    progress.save()
     return(redirect("/skyrimse/quests/{questLine}".format(questLine=questLine)))

@@ -14,37 +14,39 @@
   <table style="width:90%" border="1">
     <tr>
       <td>
-        <p>Novice</p>
+        <b style="font-size:20px;">Novice</b>&nbsp;&nbsp;&nbsp;&nbsp;
         {% if data.Novice == None %}
           <input type="button" onclick="window.location.href='addDifficulty=Novice'" value="Start Novice">
         {% else %}
+          <input type="button" value="Refresh" onclick="window.location.href='refreshProgress=novice'" disabled>
           <div class="row">
-            <div class="col-sm-2">Vanilla</div>
-            <div class="col-sm-6"><progress value={{data.Novice.completion.vanilla}}  max="100"></progress></div>
-            <div class="col-sm-2">{{data.Novice.completion.vanilla}}%</div>
+            <div class="col">Vanilla</div>
+            <div class="col"><progress value={{data.Novice.completion.vanilla}} x max="100"></progress></div>
+            <div class="col">{{data.Novice.completion.vanilla}}%</div>
           </div>
           <div class="row">
-            <div class="col-sm-2">Mod(s)</div>
-            <div class="col-sm-6"><progress value={{data.Novice.completion.mod}} max="100"></progress></div>
-            <div class="col-sm-2">{{data.Novice.completion.mod}}%</div>
+            <div class="col">Mod(s)</div>
+            <div class="col"><progress value={{data.Novice.completion.mod}} max="100"></progress></div>
+            <div class="col">{{data.Novice.completion.mod}}%</div>
           </div>
           <a href={{data.Novice.difficulty}}>Full Details</a>
         {% endif %}
       </td>
       <td>
-        <p>Apprentice</p>
+        <b style="font-size:20px;">Apprentice</b>&nbsp;&nbsp;&nbsp;&nbsp;
         {% if data.Apprentice == None %}
           <input type="button" onclick="window.location.href='addDifficulty=Apprentice'" value="Start Apprentice">
         {% else %}
+          <input type="button" value="Refresh" onclick="window.location.href='refreshProgress=apprentice'" disabled>
           <div class="row">
-            <div class="col-sm-2">Vanilla</div>
-            <div class="col-sm-6"><progress value={{data.Apprentice.completion.vanilla}} max="100"></progress></div>
-            <div class="col-sm-2">{{data.Apprentice.completion.vanilla}}%</div>
+            <div class="col">Vanilla</div>
+            <div class="col"><progress value={{data.Apprentice.completion.vanilla}} max="100"></progress></div>
+            <div class="col">{{data.Apprentice.completion.vanilla}}%</div>
           </div>
           <div class="row">
-            <div class="col-sm-2">Mod(s)</div>
-            <div class="col-sm-6"><progress value={{data.Apprentice.completion.mod}} max="100"></progress></div>
-            <div class="col-sm-2">{{data.Apprentice.completion.mod}}%</div>
+            <div class="col">Mod(s)</div>
+            <div class="col"><progress value={{data.Apprentice.completion.mod}} max="100"></progress></div>
+            <div class="col">{{data.Apprentice.completion.mod}}%</div>
           </div>
           <a href={{data.Apprentice.difficulty}}>Full Details</a>
         {% endif %}
@@ -52,37 +54,39 @@
     </tr>
     <tr>
       <td>
-        <p>Adept</p>
+        <b style="font-size:20px;">Adept</b>&nbsp;&nbsp;&nbsp;&nbsp;
         {% if data.Adept == None %}
           <input type="button" onclick="window.location.href='addDifficulty=Adept'" value="Start Adept">
         {% else %}
+          <input type="button" value="Refresh" onclick="window.location.href='refreshProgress=adept'" disabled>
           <div class="row">
-            <div class="col-sm-2">Vanilla</div>
-            <div class="col-sm-6"><progress value={{data.Adept.completion.vanilla}} max="100"></progress></div>
-            <div class="col-sm-2">{{data.Adept.completion.vanilla}}%</div>
+            <div class="col">Vanilla</div>
+            <div class="col"><progress value={{data.Adept.completion.vanilla}} max="100"></progress></div>
+            <div class="col">{{data.Adept.completion.vanilla}}%</div>
           </div>
           <div class="row">
-            <div class="col-sm-2">Mod(s)</div>
-            <div class="col-sm-6"><progress value={{data.Adept.completion.mod}} max="100"></progress></div>
-            <div class="col-sm-2">{{data.Adept.completion.mod}}%</div>
+            <div class="col">Mod(s)</div>
+            <div class="col"><progress value={{data.Adept.completion.mod}} max="100"></progress></div>
+            <div class="col">{{data.Adept.completion.mod}}%</div>
           </div>
           <a href={{data.Adept.difficulty}}>Full Details</a>
         {% endif %}
       </td>
       <td>
-        <p>Expert</p>
+        <b style="font-size:20px;">Expert</b>&nbsp;&nbsp;&nbsp;&nbsp;
         {% if data.Expert == None %}
           <input type="button" onclick="window.location.href='addDifficulty=Expert'" value="Start Expert">
         {% else %}
+          <input type="button" value="Refresh" onclick="window.location.href='refreshProgress=expert'" disabled>
           <div class="row">
-            <div class="col-sm-2">Vanilla</div>
-            <div class="col-sm-6"><progress value={{data.Expert.completion.vanilla}} max="100"></progress></div>
-            <div class="col-sm-2">{{data.Expert.completion.vanilla}}%</div>
+            <div class="col">Vanilla</div>
+            <div class="col"><progress value={{data.Expert.completion.vanilla}} max="100"></progress></div>
+            <div class="col">{{data.Expert.completion.vanilla}}%</div>
           </div>
           <div class="row">
-            <div class="col-sm-2">Mod(s)</div>
-            <div class="col-sm-6"><progress value={{data.Expert.completion.mod}} max="100"></progress></div>
-            <div class="col-sm-2">{{data.Expert.completion.mod}}%</div>
+            <div class="col">Mod(s)</div>
+            <div class="col"><progress value={{data.Expert.completion.mod}} max="100"></progress></div>
+            <div class="col">{{data.Expert.completion.mod}}%</div>
           </div>
           <a href={{data.Expert.difficulty}}>Full Details</a>
         {% endif %}
@@ -90,37 +94,39 @@
     </tr>
     <tr>
       <td>
-        <p>Master</p>
+        <b style="font-size:20px;">Master</b>&nbsp;&nbsp;&nbsp;&nbsp;
         {% if data.Master == None %}
           <input type="button" onclick="window.location.href='addDifficulty=Master'" value="Start Master">
         {% else %}
+          <input type="button" value="Refresh" onclick="window.location.href='refreshProgress=master'" disabled>
           <div class="row">
-            <div class="col-sm-2">Vanilla</div>
-            <div class="col-sm-6"><progress value={{data.Master.completion.vanilla}} max="100"></progress></div>
-            <div class="col-sm-2">{{data.Master.completion.vanilla}}%</div>
+            <div class="col">Vanilla</div>
+            <div class="col"><progress value={{data.Master.completion.vanilla}} max="100"></progress></div>
+            <div class="col">{{data.Master.completion.vanilla}}%</div>
           </div>
           <div class="row">
-            <div class="col-sm-2">Mod(s)</div>
-            <div class="col-sm-6"><progress value={{data.Master.completion.mod}} max="100"></progress></div>
-            <div class="col-sm-2">{{data.Master.completion.mod}}%</div>
+            <div class="col">Mod(s)</div>
+            <div class="col"><progress value={{data.Master.completion.mod}} max="100"></progress></div>
+            <div class="col">{{data.Master.completion.mod}}%</div>
           </div>
           <a href={{data.Master.difficulty}}>Full Details</a>
         {% endif %}
       </td>
       <td>
-        <p>Legendary</p>
+        <b style="font-size:20px;">Legendary</b>&nbsp;&nbsp;&nbsp;&nbsp;
         {% if data.Legendary == None %}
           <input type="button" onclick="window.location.href='addDifficulty=Legendary'" value="Start Legendary">
         {% else %}
+          <input type="button" value="Refresh" onclick="window.location.href='refreshProgress=legendary'" disabled>
           <div class="row">
-            <div class="col-sm-2">Vanilla</div>
-            <div class="col-sm-6"><progress value={{data.Legendary.completion.vanilla}} max="100"></progress></div>
-            <div class="col-sm-2">{{data.Legendary.completion.vanilla}}%</div>
+            <div class="col">Vanilla</div>
+            <div class="col"><progress value={{data.Legendary.completion.vanilla}} max="100"></progress></div>
+            <div class="col">{{data.Legendary.completion.vanilla}}%</div>
           </div>
           <div class="row">
-            <div class="col-sm-2">Mod(s)</div>
-            <div class="col-sm-6"><progress value={{data.Legendary.completion.mod}} max="100"></progress></div>
-            <div class="col-sm-2">{{data.Legendary.completion.mod}}%</div>
+            <div class="col">Mod(s)</div>
+            <div class="col"><progress value={{data.Legendary.completion.mod}} max="100"></progress></div>
+            <div class="col">{{data.Legendary.completion.mod}}%</div>
           </div>
           <a href={{data.Legendary.difficulty}}>Full Details</a>
         {% endif %}

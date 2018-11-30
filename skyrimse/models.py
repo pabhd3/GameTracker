@@ -1,6 +1,7 @@
 from django.db import models
 from mongoengine import Document, EmbeddedDocument, fields
 from mongoengine.context_managers import switch_db
+from json import dumps
 
 ###################################
 ##### Progress Related Models #####
@@ -29,11 +30,23 @@ class Skills(EmbeddedDocument):
     speech = fields.IntField(min_value=0)
     twoHanded = fields.IntField(min_value=0)
 
+class Collected(EmbeddedDocument):
+    quests = fields.IntField(min_value=0)
+    modQuests = fields.IntField(min_value=0)
+    total = fields.IntField(min_value=0)
+    modTotal = fields.IntField(min_value=0)
+
 class Progress(Document):
     created = fields.StringField(max_length=50)
     difficulty = fields.StringField(max_length=10)
     completion = fields.EmbeddedDocumentField(Completion)
     skills = fields.EmbeddedDocumentField(Skills)
+    collected = fields.EmbeddedDocumentField(Collected)
+    collectedTotal = fields.EmbeddedDocumentField(Collected)
+
+    def __str__(self):
+        data = {"created": self.created, "difficulty": self.difficulty}
+        return dumps(data, indent=4) 
 
 #########################
 ##### Quest Related #####

@@ -53,5 +53,20 @@
         <tr><td>Two Handed: {{ data.skills.twoHanded }} <input type="button" onclick="window.location.href='levelSkill=twoHanded&difficulty={{data.id}}'" value="Level up"></td></tr>
       </table>
     </div>
+    <div>
+      <h2>Stats</h2>
+      <div class="row">
+        <div class="col">
+          <b>Quests<b>&nbsp;&nbsp;&nbsp;&nbsp;
+          <progress value={{data.collected.quests}} max={{data.collectedTotal.quests}}></progress>&nbsp;&nbsp;&nbsp;&nbsp;
+          {{data.collected.quests}} / {{data.collectedTotal.quests}}
+        </div>
+        <div class="col">
+          <b>Quests (mods)<b>&nbsp;&nbsp;&nbsp;&nbsp;
+          <progress value={{data.collected.modQuests}} max={{data.collectedTotal.modQuests}}></progress>&nbsp;&nbsp;&nbsp;&nbsp;
+          {{data.collected.modQuests}} / {{data.collectedTotal.modQuests}}
+        </div>
+      </div>
+    </div>
   </div>
 {% endblock %}
