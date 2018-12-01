@@ -10,7 +10,8 @@ urlpatterns = [
     url(r"^progress/addDifficulty=\w+", views.addDifficulty),
     url(r"^progress/deleteDifficulty=\w+", views.deleteDifficulty),
     url(r"^progress/levelSkill=\w+&difficulty=\w+", views.levelSkill),
-    url(r"progress/refreshProgress=\w+", views.refreshProgress),
+    url(r"^progress/refreshProgress=\w+", views.refreshProgress),
+    url(r"^progress/levelProgress=\w+", views.levelProgress),
     # Quest Related
     url(r"^quests/$", views.quests),
     url(r"^quests/loadQuests=\w+", views.questsLoad),

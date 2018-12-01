@@ -1,0 +1,267 @@
+Perk | Rank | Description | ID | Skill Required | Perk Required
+
+Alteration
+Novice Alteration		Cast Novice level Alteration spells for half magicka.	000f2ca6		
+Alteration Dual Casting		Dual casting an Alteration spell overcharges the effects into an even more powerful version.††	000153cd	20 Alteration	Novice Alteration
+Apprentice Alteration		Cast Apprentice level Alteration spells for half magicka.	000c44b7	25 Alteration	Novice Alteration
+Magic Resistance	1	Blocks 10% of a spell's effects.	00053128	30 Alteration	Apprentice Alteration
+                    2	Blocks 20% of a spell's effects.	00053129	50 Alteration	Apprentice Alteration
+                    3	Blocks 30% of a spell's effects.	0005312a	70 Alteration	Apprentice Alteration
+Adept Alteration		Cast Adept level Alteration spells for half magicka.	000c44b8	50 Alteration	Apprentice Alteration
+Expert Alteration		Cast Expert level Alteration spells for half magicka.	000c44b9	75 Alteration	Adept Alteration
+Atronach		Absorb† 30% of the magicka of any spells that hit you.	000581f7	100 Alteration	Expert Alteration
+Master Alteration		Cast Master level Alteration spells for half magicka.	000c44ba	100 Alteration	Expert Alteration
+Stability		Alteration spells have 50% greater duration.††	000581fc	70 Alteration	Adept Alteration
+Mage Armor	1	Protection spells like Stoneflesh are twice as strong if not wearing armor.	000d7999	30 Alteration	Apprentice Alteration
+            2	Protection spells like Stoneflesh are 2.5 times as strong if not wearing armor.	000d799a	50 Alteration	Apprentice Alteration
+            3	Protection spells like Stoneflesh are three times as strong if not 
+
+Conjuration
+Novice Conjuration		Cast Novice level Conjuration spells for half magicka.	000f2ca7		
+Apprentice Conjuration		Cast Apprentice level Conjuration spells for half magicka.	000c44bb	25 Conjuration	Novice Conjuration
+Adept Conjuration		Cast Adept level Conjuration spells for half magicka.	000c44bc	50 Conjuration	Apprentice Conjuration
+Expert Conjuration		Cast Expert level Conjuration spells for half magicka.	000c44bd	75 Conjuration	Adept Conjuration
+Master Conjuration		Cast Master level Conjuration spells for half magicka.	000c44be	100 Conjuration	Expert Conjuration
+Conjuration Dual Casting		Dual casting a Conjuration spell overcharges the spell, allowing it to last longer.	000153ce	20 Conjuration	Novice Conjuration
+Mystic Binding		Bound weapons do more damage.	000640b3	20 Conjuration	Novice Conjuration
+Soul Stealer		Bound weapons cast Soul Trap on targets.	000d799e	30 Conjuration	Mystic Binding
+Oblivion Binding		Bound weapons will banish summoned creatures and turn raised ones.	000d799c	50 Conjuration	Soul Stealer
+Necromancy		Greater duration for reanimated undead.	000581dd	40 Conjuration	Novice Conjuration
+Dark Souls		Reanimated undead have 100 points more health.[1]	000581de	70 Conjuration	Necromancy
+Summoner	1	Can summon atronachs or raise undead twice as far away.[2]	00105f30	30 Conjuration	Novice Conjuration
+            2	Can summon atronachs or raise undead three times as far away.[2]	00105f31	70 Conjuration	
+Atromancy		Double duration for conjured Atronachs.[2]	000cb419	40 Conjuration	Summoner
+Elemental Potency		Conjured Atronachs are 50% more powerful.	000cb41a	80 Conjuration	Atromancy
+Twin Souls		You can have two atronachs or reanimated zombies.[2]	000d5f1c	100 Conjuration	Dark Souls or Elemental Potency
+
+Destruction
+Spray	Novice	Flames	Frostbite	Sparks	Short range spell that deals damage as long as you cast	8/s
+Missile	Apprentice	Firebolt	Ice Spike	Lightning Bolt	Single-target missile	25
+Rune	Apprentice	Fire Rune	Frost Rune	Lightning Rune	Cast on a surface and triggered like a proximity mine	50
+Area Missile	Adept	Fireball	Ice Storm	Chain Lightning	Multiple-target missile (projectile behaviors vary specific to which element)	40
+Cloak	Adept	Flame Cloak	Frost Cloak	Lightning Cloak	Harms all enemies in melee range	8/s
+Heavy Missile	Expert	Incinerate	Icy Spear	Thunderbolt	Single-target missile	60
+Wall	Expert	Wall of Flames	Wall of Frost	Wall of Storms	Persistent sprayed-down obstacle that does damage when walked through	20/s
+Storm	Master	Fire Storm	Blizzard	Lightning Storm	Constant wide area of effect	varies
+
+Enchanting
+Enchanter	1	New enchantments are 20% stronger.	000bee97		
+            2	New enchantments are 40% stronger.	000c367c	20 Enchanting	
+            3	New enchantments are 60% stronger.	000c367d	40 Enchanting	
+            4	New enchantments are 80% stronger.	000c367e	60 Enchanting	
+            5	New enchantments are 100% stronger.	000c367f	80 Enchanting	
+Fire Enchanter		Fire enchantments on weapons and armor are 25% stronger.[1]	00058f80	30 Enchanting	Enchanter
+Frost Enchanter		Frost enchantments on weapons and armor are 25% stronger.[1]	00058f81	40 Enchanting	Fire Enchanter
+Storm Enchanter		Shock enchantments on weapons and armor are 25% stronger.[1]	00058f82	50 Enchanting	Frost Enchanter
+Insightful Enchanter		Skill enchantments on armor are 25% stronger.[1]	00058f7e	50 Enchanting	Enchanter
+Corpus Enchanter		Health, magicka, and stamina enchantments on armor are 25% stronger.[1][2]	00058f7d	70 Enchanting	Insightful Enchanter
+Extra Effect		Can put two enchantments on the same item.[3]	00058f7f	100 Enchanting	Corpus Enchanter or Storm Enchanter
+Soul Squeezer		Soul gems provide extra magicka for recharging.[4]	00058f7c	20 Enchanting	Enchanter
+Soul Siphon		Death blows to creatures, but not people, trap 5% of the victim's soul, recharging the weapon.[5]	00108a44	40 Enchanting	Soul Squeezer
+
+Illusion
+Novice Illusion	Cast Novice level Illusion spells for half magicka.		000f2ca9		
+Animage	Illusion spells now work on higher level animals††.	Adds +8† levels to the spell maximum.	000581e1	20 Illusion	Novice Illusion
+Kindred Mage	All Illusion spells work on higher level people††.	Adds +10† levels to the spell maximum.	000581e2	40 Illusion	Animage
+Quiet Casting	All spells you cast from any school of magic are silent to others.	All shouts are also silent.	000581fd	50 Illusion	Kindred Mage
+Apprentice Illusion	Cast Apprentice level Illusion spells for half magicka.		000c44c3	25 Illusion	Novice Illusion
+Adept Illusion	Cast Adept level Illusion spells for half magicka.		000c44c4	50 Illusion	Apprentice Illusion
+Expert Illusion	Cast Expert level Illusion spells for half magicka.		000c44c5	75 Illusion	Adept Illusion
+Master Illusion	Cast Master level Illusion spells for half magicka.		000c44c6	100 Illusion	Expert Illusion
+Hypnotic Gaze	Calm spells now work on higher level opponents. Cumulative with Kindred Mage and Animage.	Adds +8 levels to the spell maximum. Applies to Pacify and Harmony as well as Calm.	00059b77	30 Illusion	Novice Illusion
+Aspect of Terror	Fear spells work on higher level opponents. Cumulative with Kindred Mage and Animage.	Adds +10 levels to the spell maximum. This perk also gives an extra 10 (15 if both ranks of Augmented Flames are unlocked first) points of damage to fire spells, as they also utilize a fear effect.	00059b78	50 Illusion	Hypnotic Gaze
+Rage	Frenzy spells work on higher level opponents. Cumulative with Kindred Mage and Animage.	Adds +12 levels to the spell maximum.	000c44b5	70 Illusion	Aspect of Terror
+Master of the Mind	Illusion spells work on undead††, daedra, and automatons.		00059b76	90 Illusion	Quiet Casting or Rage
+Illusion Dual Casting	Dual casting an Illusion spell overcharges the effects into an even more powerful version.	This slightly more than doubles the maximum level of any level-based Illusion spell, while it instead improves the duration of Courage, Rally, and Call to Arms. Level adjustments from Animage, Kindred Mage, Hypnotic Gaze, Aspect of Terror, or Rage are applied before the doubling effect (2.2 times the spell power for 2.8 times the magicka cost).	000153d0	20 Illusion	Novice Illusion
+
+Restoration
+Novice Restoration		Cast Novice level Restoration spells for half magicka.	000f2caa		
+Apprentice Restoration		Cast Apprentice level Restoration spells for half magicka.	000c44c7	25 Restoration	Novice Restoration
+Adept Restoration		Cast Adept level Restoration spells for half magicka.	000c44c8	50 Restoration	Apprentice Restoration
+Expert Restoration		Cast Expert level Restoration spells for half magicka.	000c44c9	75 Restoration	Adept Restoration
+Master Restoration		Cast Master level Restoration spells for half magicka.	000c44ca	100 Restoration	Expert Restoration
+Recovery	1	Magicka regenerates 25% faster.	000581f4	30 Restoration	Novice Restoration
+            2	Magicka regenerates 50% faster.	000581f5	60 Restoration	
+Avoid Death		Once a day, heals 250 points automatically if you fall below 10% health. (Only if the damage does not kill you.)	000a3f64	90 Restoration	Recovery
+Regeneration		Healing spells cure 50% more.	000581f8	20 Restoration	Novice Restoration
+Necromage		All spells are more effective against undead. (+25% effect and +50% effect duration)	000581e4	70 Restoration	Regeneration
+Respite		Healing spells also restore Stamina.	000581f9	40 Restoration	Novice Restoration
+Restoration Dual Casting		Dual casting a Restoration spell overcharges the effects into an even more powerful version. (220% spell effect for 280% magicka cost)	000153d1	20 Restoration	Novice Restoration
+Ward Absorb		Wards recharge your magicka when hit with spells.	00068bcc	60 Restoration	Novice Restoration
+
+Archery
+Overdraw	1	Bows do 20% more damage.	000babed		
+            2	Bows do 40% more damage.	0007934a	20 Archery	
+            3	Bows do 60% more damage.	0007934b	40 Archery	
+            4	Bows do 80% more damage.	0007934d	60 Archery	
+            5	Bows always do twice as much damage.	00079354	80 Archery	
+Critical Shot	1	10% chance of a critical hit that does extra damage.	00105f1c	30 Archery	Overdraw
+                2	15% chance of a critical hit that does 25% more critical damage.	00105f1e	60 Archery	
+                3	20% chance of a critical hit that does 50% more critical damage.	00105f1f	90 Archery	
+Hunter's Discipline		Recover twice as many arrows from dead bodies.	00051b12	50 Archery	Critical Shot
+Ranger		Able to move faster with a drawn bow.	00058f63	60 Archery	Hunter's Discipline
+Eagle Eye		Pressing Block while aiming will zoom in your view.	00058f61	30 Archery	Overdraw
+Power Shot		Arrows stagger all but the largest opponents 50% of the time.	00058f62	50 Archery	Eagle Eye
+Quick Shot		Can draw a bow 30% faster.	00105f19	70 Archery	Power Shot
+Steady Hand	1	Zooming in with a bow slows time by 25%.	00103ada	40 Archery	Eagle Eye
+            2	Zooming in with a bow slows time by 50%.	00103adb	60 Archery	
+Bullseye		15% chance of paralyzing the target for a few seconds.†	00058f64	100 Archery	Ranger or Quick Shot
+
+Block
+Shield Wall †	1	Blocking is 20% more effective. (Actually 10%)‡‡	000bccae		
+                2	Blocking is 25% more effective. (Actually 20%)‡‡	00079355	20 Block	
+                3	Blocking is 30% more effective.	00079356	40 Block	
+                4	Blocking is 35% more effective. (Actually 40%)‡‡	00079357	60 Block	
+                5	Blocking is 40% more effective. (Actually 50%)‡‡	00079358	80 Block	
+Deflect Arrows ‡		Arrows that hit the shield do no damage.††	00058f68	30 Block	Shield Wall
+Elemental Protection ‡		Blocking with a shield reduces incoming fire, frost, and shock damage by 50%.	00058f69	50 Block	Deflect Arrows
+Block Runner †		Able to move faster with a shield or weapon raised.‡‡	00106253	70 Block	Elemental Protection
+Power Bash †		Able to do a power bash.	00058f67	30 Block	Shield Wall
+Deadly Bash †		Bashing does five times more damage.	0005f594	50 Block	Power Bash
+Disarming Bash †		Chance to disarm when power bashing.‡‡	00058f66	70 Block	Deadly Bash
+Shield Charge ‡		Sprinting with a shield raised knocks down most targets.‡‡	00058f6a	100 Block	Disarming Bash or Block Runner
+Quick Reflexes †		Time slows down if you are blocking during an enemy's power attack.‡‡	000d8c33	30 Block	Shield Wall
+
+Heavy Armor
+Juggernaut	1	Increases armor rating for Heavy Armor by 20%.[1]	000bcd2a		
+            2	Increases armor rating for Heavy Armor by 40%.[1]	0007935e	20 Heavy Armor	
+            3	Increases armor rating for Heavy Armor by 60%.[1]	00079361	40 Heavy Armor	
+            4	Increases armor rating for Heavy Armor by 80%.[1]	00079362	60 Heavy Armor	
+            5	Increases armor rating for Heavy Armor by 100%.[1]	00079374	80 Heavy Armor	
+Fists of Steel		Unarmed attacks with Heavy Armor gauntlets do their armor rating in extra damage.	00058f6e	30 Heavy Armor	Juggernaut
+Cushioned		Half damage from falling if wearing all Heavy Armor: head, chest, hands, feet.[2]	000bcd2b	50 Heavy Armor	Fists of Steel
+Conditioning		Heavy Armor weighs nothing and doesn't slow you down when worn.[1]	00058f6d	70 Heavy Armor	Cushioned
+Well Fitted		25% Armor bonus if wearing all Heavy Armor: head, chest, hands, feet.[2]	00058f6f	30 Heavy Armor	Juggernaut
+Tower of Strength		50% less stagger when wearing only Heavy Armor.[2]	00058f6c	50 Heavy Armor	Well Fitted
+Matching Set		Additional 25% Armor bonus if wearing a matched set[3] of Heavy Armor.	00107832	70 Heavy Armor	Tower of Strength
+Reflect Blows		10% chance to reflect melee damage back to the enemy while wearing all Heavy Armor: head, chest, hands, feet.[2]	00105f33	100 Heavy Armor	Matching Set
+
+One-handed
+Armsman	1	One-Handed weapons do 20% more damage.	000babe4		
+        2	One-Handed weapons do 40% more damage.	00079343	20 One-handed	
+        3	One-Handed weapons do 60% more damage.	00079342	40 One-handed	
+        4	One-Handed weapons do 80% more damage.	00079344	60 One-handed	
+        5	One-Handed weapons do twice as much damage.	00079345	80 One-handed	
+Bladesman	1	Attacks with swords have a 10% chance of doing critical damage (+0% crit damage)*.	0005f56f	30 One-handed	Armsman
+            2	Attacks with swords have a 15% chance of doing more critical damage (+25% crit damage)*.	000c1e90	60 One-handed	
+            3	Attacks with swords have a 20% chance of doing even more critical damage (+50% crit damage)*.	000c1e91	90 One-handed	
+Bone Breaker	1	Attacks with maces ignore 25% of armor.	0005f592	30 One-handed	Armsman
+                2	Attacks with maces ignore 50% of armor.	000c1e92	60 One-handed	
+                3	Attacks with maces ignore 75% of armor.	000c1e93	90 One-handed	
+Dual Flurry	1	Dual wielding attacks are 20% faster.	00106256	30 One-handed	Armsman
+            2	Dual wielding attacks are 35% faster.	00106257	50 One-handed	
+Dual Savagery		Dual wielding power attacks do 50% bonus damage.	00106258	70 One-handed	Dual Flurry
+Fighting Stance		Power attacks with one-handed weapons cost 25% less stamina.	00052d50	20 One-handed	Armsman
+Critical Charge		Can do a one-handed power attack while sprinting that does double critical damage.	000cb406	50 One-handed	Fighting Stance
+Savage Strike		Standing power attacks do 25% bonus damage with a chance to decapitate your enemies.	0003af81	50 One-handed	Fighting Stance
+Paralyzing Strike		Backwards power attack has a 25%** chance to paralyze the target.	0003afa6	100 One-handed	Critical Charge or Savage Strike
+Hack and Slash	1	Attacks with war axes cause extra bleeding damage.	0003fffa	30 One-handed	Armsman
+                2	Attacks with war axes cause more bleeding damage.	000c3678	60 One-handed	
+                3	Attacks with war axes cause even more bleeding damage.	000c3679	90 One-handed	
+
+Tow Handed
+Barbarian	1	Two-Handed weapons do 20% more damage.	000babe8		
+            2	Two-Handed weapons do 40% more damage.	00079346	20 Two-handed	
+            3	Two-Handed weapons do 60% more damage.	00079347	40 Two-handed	
+            4	Two-Handed weapons do 80% more damage.	00079348	60 Two-handed	
+            5	Two-Handed weapons do twice as much damage.	00079349	80 Two-handed	
+Champion's Stance		Power attacks with two-handed weapons cost 25% less stamina.	00052d51	20 Two-handed	Barbarian
+Devastating Blow		Standing power attacks do 25% bonus damage with a chance to decapitate your enemies.	00052d52	50 Two-handed	Champion's Stance
+Great Critical Charge		Can do a two-handed power attack while sprinting that does double critical damage.	000cb407	50 Two-handed	Champion's Stance
+Sweep		Sideways power attacks with two-handed weapons hit all targets in front of you.	0003af9e	70 Two-handed	Great Critical Charge or Devastating Blow
+Warmaster		Backwards power attack has a 25% chance to paralyze the target.	0003afa7	100 Two-handed	Sweep
+Deep Wounds	1	Attacks with greatswords have a 10% chance of doing critical damage.	0003af83	30 Two-handed	Barbarian
+            2	Attacks with greatswords have a 15% chance of doing more critical damage.	000c1e94	60 Two-handed	
+            3	Attacks with greatswords have a 20% chance of doing even more critical damage.	000c1e95	90 Two-handed	
+Limbsplitter	1	Attacks with battle axes cause extra bleeding damage.	000c5c05	30 Two-handed	Barbarian
+                2	Attacks with battle axes cause more bleeding damage.	000c5c06	60 Two-handed	
+                3	Attacks with battle axes cause even more bleeding damage.	000c5c07	90 Two-handed	
+Skullcrusher	1	Attacks with warhammers ignore 25% of armor.	0003af84	30 Two-handed	Barbarian
+                2	Attacks with warhammers ignore 50% of armor.	000c1e96	60 Two-handed	
+                3	Attacks with warhammers ignore 75% of armor.	000c1e97	90 Two-handed	
+
+Alchemy
+Alchemist	1	Potions and poisons you make are 20% stronger.	000be127		
+            2	Potions and poisons you make are 40% stronger.	000c07ca	20 Alchemy	
+            3	Potions and poisons you make are 60% stronger.	000c07cb	40 Alchemy	
+            4	Potions and poisons you make are 80% stronger.	000c07cc	60 Alchemy	
+            5	Potions and poisons you make are twice as strong.	000c07cd	80 Alchemy	
+Physician		Potions you mix that restore Health, Magicka or Stamina are 25% more powerful.	00058215	20 Alchemy	Alchemist
+Benefactor		Potions you mix with beneficial effects have an additional 25% greater magnitude.	00058216	30 Alchemy	Physician
+Experimenter	1	Eating an ingredient reveals first two effects.	00058218	50 Alchemy	Benefactor
+                2	Eating an ingredient reveals first three effects.	00105f2a	70 Alchemy	
+                3	Eating an ingredient reveals all its effects.	00105f2b	90 Alchemy	
+Poisoner		Poisons you mix are 25% more effective.	00058217	30 Alchemy	Physician
+Concentrated Poison		Poisons applied to weapons last for twice as many hits.	00105f2f	60 Alchemy	Poisoner
+Green Thumb		Two ingredients are gathered from plants.†	00105f2e	70 Alchemy	Concentrated Poison
+Snakeblood		50% resistance to all poisons.	00105f2c	80 Alchemy	Experimenter or Concentrated Poison
+Purity		All negative effects are removed from created potions, and all positive effects are removed from created poisons.	0005821d	100 Alchemy	Snakeblood‡
+
+Light Armor
+Agile Defender	1	Increase armor rating for Light armor by 20%.[1]	000be123		
+                2	Increase armor rating for Light armor by 40%.[1]	00079376	20 Light Armor	
+                3	Increase armor rating for Light armor by 60%.[1]	00079389	40 Light Armor	
+                4	Increase armor rating for Light armor by 80%.[1]	00079391	60 Light Armor	
+                5	Increase armor rating for Light armor by 100%.[1]	00079392	80 Light Armor	
+Custom Fit		25% Armor bonus if wearing all Light Armor: head, chest, hands, feet.[2]	00051b1b	30 Light Armor	Agile Defender
+Matching Set		Additional 25% Armor bonus if wearing a matched set[3] of Light Armor.	00051b17	70 Light Armor	Custom Fit
+Unhindered		Light Armor weighs nothing and doesn't slow you down when worn.[1]	00051b1c	50 Light Armor	Custom Fit
+Wind Walker		Stamina regenerates 50% faster in all Light Armor: head, chest, hands, feet.[2]	00105f22	60 Light Armor	Unhindered
+Deft Movement		10% chance of avoiding all damage from a melee attack while wearing all Light Armor: head, chest, hands, feet.[2][4]	00107831	100 Light Armor	Wind Walker or Matching Set
+
+Lockpicking
+Novice Locks	Novice locks are much easier to pick.	000f392a		
+Apprentice Locks	Apprentice locks are much easier to pick.	000be125	25 Lockpicking	Novice Locks
+Quick Hands	Able to pick locks without being noticed.	00106259	40 Lockpicking	Apprentice Locks
+Wax Key	Automatically gives you a copy of a picked lock's key if it has one.	00107830	50 Lockpicking	Quick Hands
+Adept Locks	Adept locks are much easier to pick.	000c3680	50 Lockpicking	Apprentice Locks
+Expert Locks	Expert locks are much easier to pick.	000c3681	75 Lockpicking	Adept Locks
+Golden Touch	Find more gold in chests.†	0005820a	60 Lockpicking	Adept Locks
+Treasure Hunter	50% greater chance of finding special treasure.‡	00105f26	70 Lockpicking	Golden Touch
+Locksmith	Pick starts close to the lock opening position.	00058208	80 Lockpicking	Expert Locks
+Unbreakable	Lockpicks never break.	00058209	100 Lockpicking	Locksmith
+Master Locks	Master locks are much easier to pick.	000c3682	100 Lockpicking	Expert Locks
+
+Pickpocket
+Light Fingers	1	Pickpocketing bonus of 20%. Item weight and value reduce pickpocketing odds.	000be124		
+                2	Pickpocketing bonus of 40%. Item weight and value reduce pickpocketing odds.	00018e6a	20 Pickpocket	
+                3	Pickpocketing bonus of 60%. Item weight and value reduce pickpocketing odds.	00018e6b	40 Pickpocket	
+                4	Pickpocketing bonus of 80%. Item weight and value reduce pickpocketing odds.	00018e6c	60 Pickpocket	
+                5	Pickpocketing bonus of 100%. Item weight and value reduce pickpocketing odds.	00018e6d	80 Pickpocket	
+Night Thief		+25% chance to pickpocket if the target is asleep.	00058202	30 Pickpocket	Light Fingers
+Cutpurse		Pickpocketing gold is 50% easier.	00058204	40 Pickpocket	Night Thief
+Keymaster		Pickpocketing keys almost always works.	000d79a0	60 Pickpocket	Cutpurse
+Misdirection		Can pickpocket equipped weapons.	00058201	70 Pickpocket	Cutpurse
+Perfect Touch		Can pickpocket equipped items.	00058205	100 Pickpocket	Misdirection
+Extra Pockets		Carrying capacity is increased by 100.	00096590	50 Pickpocket	Night Thief
+Poisoned		Silently harm enemies by placing poisons in their pockets.	00105f28	40 Pickpocket	Night Thief
+
+Sneak
+Stealth	1	You are 20% harder to detect when sneaking.	000be126		
+        2	You are 25% harder to detect when sneaking.	000c07c6	20 Sneak	
+        3	You are 30% harder to detect when sneaking.	000c07c7	40 Sneak	
+        4	You are 35% harder to detect when sneaking.	000c07c8	60 Sneak	
+        5	You are 40% harder to detect when sneaking.	000c07c9	80 Sneak	
+Backstab		Sneak attacks with one-handed weapons now do six times damage.	00058210	30 Sneak	Stealth
+Deadly Aim		Sneak attacks with bows now do three times damage.	001036f0	40 Sneak	Backstab
+Assassin's Blade		Sneak attacks with daggers now do a total of fifteen times normal damage.	00058211	50 Sneak	Deadly Aim
+Muffled Movement		Wearing armor makes half as much noise when you move (see muffle).	00058213	30 Sneak	Stealth
+Light Foot		You won't trigger pressure plates.†	0005820c	40 Sneak	Muffled Movement
+Silent Roll		Sprinting while sneaking executes a silent forward roll.	00105f23	50 Sneak	Light Foot
+Silence		Walking and running does not affect detection.	00105f24	70 Sneak	Silent Roll
+Shadow Warrior		Crouching stops combat for a moment and forces distant opponents to search for a target.	00058214	100 Sneak	Silence
+
+Speech
+Haggling	1	Buying and selling prices are 10% better.	000be128		
+            2	Buying and selling prices are 15% better.	000c07ce	20 Speech	
+            3	Buying and selling prices are 20% better.	000c07cf	40 Speech	
+            4	Buying and selling prices are 25% better.	000c07d0	60 Speech	
+            5	Buying and selling prices are 30% better.	000c07d1	80 Speech	
+Allure		10% better prices with the opposite sex.	00058f75	30 Speech	Haggling
+Merchant		Can sell any type of item to any kind of merchant.†	00058f7a	50 Speech	Allure
+Investor		Can invest 500 gold with a shopkeeper to increase his available gold permanently. ‡ 00058f7b	70 Speech	Merchant
+Fence		Can barter stolen goods with any merchant you have invested in.	00058f79	90 Speech	Investor
+Master Trader		Every merchant in the world gains 1000 gold for bartering.¥	001090a5	100 Speech	Fence
+Bribery		Can bribe guards to ignore crimes.	00058f72	30 Speech	Haggling
+Persuasion		Persuasion attempts are 30% easier.	001090a2	50 Speech	Bribery
+Intimidation		Intimidation is twice as likely to be successful.	00105f29	70 Speech	Persuasion

@@ -20,8 +20,8 @@ def progress(request):
     switch_db(cls=Progress, db_alias="skyrimse")
     # Pull list of progress objects
     docs = Progress.objects.all()
-    data = {"Novice": None, "Apprentice": None, "Adept": None,
-            "Expert": None, "Master": None, "Legendary": None}
+    data = {"novice": None, "apprentice": None, "adept": None,
+            "expert": None, "master": None, "legendary": None}
     # Set whether an object exists
     for doc in docs:
         data[doc.difficulty] = doc
@@ -143,6 +143,24 @@ def progressDetail(request):
 def refreshProgress(request):
     return(HttpResponse("Test"))
 
+def levelProgress(request):
+    # Pull stat and difficulty to level up
+    paramStr = request.path.split("/skyrimse/progress/")[1]
+    stat = paramStr.split("&")[0].split("=")[1]
+    difficulty = paramStr.split("&")[1].split("=")[1]
+    # Pull the progress object
+    progress = Progress.objects(difficulty=difficulty).first()
+    if(stat == "level"):
+        progress.update(inc__level=1)
+    elif(stat == "health"):
+        progress.update(inc__health=10)
+    elif(stat == "magicka"):
+        progress.update(inc__magicka=10)
+    elif(stat == "stamina"):
+        progress.update(inc__stamina=10)
+    progress.save()
+    return redirect("/skyrimse/progress")
+
 ##########################
 ##### Quests Related #####
 ##########################
@@ -199,8 +217,8 @@ def questLine(request):
     allQuests = Quest.objects(source=questSource, questLine=questLine)
     allSections = [q.section for q in allQuests]
     data = {"source": questSource, "questLine": questLine, "test": allQuests[0], "sections": {},
-            "progress": {"Novice": None, "Apprentice": None, "Adept": None, 
-                            "Expert": None, "Master": None, "Legendary": None}}
+            "progress": {"novice": None, "apprentice": None, "adept": None, 
+                            "expert": None, "master": None, "legendary": None}}
     # Add each quest to the appropriate section
     for section in allSections:
         data["sections"][section] = []
@@ -219,7 +237,7 @@ def completeQuest(request):
     questLine = params.split("&")[2].split("=")[1]
     # Pull the Quest and Progress objects
     quest = Quest.objects(id=questID).first()
-    progress = Progress.objects(difficulty=difficulty.capitalize()).first()
+    progress = Progress.objects(difficulty=difficulty).first()
     # Update the Quest Object
     if(difficulty == "novice"):
         if(quest.completion.novice == 0):
