@@ -47,7 +47,9 @@
                 <!-- Novice -->
                 <div class="row">
                   <div class="col">Novice</div>
-                  {% if quest.radiant %}
+                  {% if data.progress.Novice == None %}
+                    <div class="col">Difficulty not started</div>
+                  {% elif quest.radiant %}
                     <div class="col">{{quest.completion.novice}} times</div>
                     <div class="col"><input type="button" onclick="window.location.href='completeQuest={{quest.id}}&difficulty=novice&questLine={{quest.source}}-{{quest.questLine}}'" value="Complete"></div>
                   {% else %}
@@ -60,8 +62,10 @@
                 </div>
                 <!-- Apprentice -->
                 <div class="row">
-                  <div class="col">Novice</div>
-                  {% if quest.radiant %}
+                  <div class="col">Apprentice</div>
+                  {% if data.progress.Apprentice == None %}
+                    <div class="col">Difficulty not started</div>
+                  {% elif quest.radiant %}
                     <div class="col">{{quest.completion.apprentice}} times</div>
                     <div class="col"><input type="button" onclick="window.location.href='completeQuest={{quest.id}}&difficulty=apprentice&questLine={{quest.source}}-{{quest.questLine}}'" value="Complete"></div>
                   {% else %}
@@ -75,7 +79,9 @@
                 <!-- Adept -->
                 <div class="row">
                   <div class="col">Adept</div>
-                  {% if quest.radiant %}
+                  {% if data.progress.Adept == None %}
+                    <div class="col">Difficulty not started</div>
+                  {% elif quest.radiant %}
                     <div class="col">{{quest.completion.adept}} times</div>
                     <div class="col"><input type="button" onclick="window.location.href='completeQuest={{quest.id}}&difficulty=adept&questLine={{quest.source}}-{{quest.questLine}}'" value="Complete"></div>
                   {% else %}
@@ -89,7 +95,9 @@
                 <!-- Expert -->
                 <div class="row">
                   <div class="col">Expert</div>
-                  {% if quest.radiant %}
+                  {% if data.progress.Expert == None %}
+                    <div class="col">Difficulty not started</div>
+                  {% elif quest.radiant %}
                     <div class="col">{{quest.completion.expert}} times</div>
                     <div class="col"><input type="button" onclick="window.location.href='completeQuest={{quest.id}}&difficulty=expert&questLine={{quest.source}}-{{quest.questLine}}'" value="Complete"></div>
                   {% else %}
@@ -103,7 +111,9 @@
                 <!-- Master -->
                 <div class="row">
                   <div class="col">Master</div>
-                  {% if quest.radiant %}
+                  {% if data.progress.Master == None %}
+                    <div class="col">Difficulty not started</div>
+                  {% elif quest.radiant %}
                     <div class="col">{{quest.completion.master}} times</div>
                     <div class="col"><input type="button" onclick="window.location.href='completeQuest={{quest.id}}&difficulty=master&questLine={{quest.source}}-{{quest.questLine}}'" value="Complete"></div>
                   {% else %}
@@ -117,7 +127,9 @@
                 <!-- Legendary -->
                 <div class="row">
                   <div class="col">Legendary</div>
-                  {% if quest.radiant %}
+                  {% if data.progress.Legendary == None %}
+                    <div class="col">Difficulty not started</div>
+                  {% elif quest.radiant %}
                     <div class="col">{{quest.completion.legendary}} times</div>
                     <div class="col"><input type="button" onclick="window.location.href='completeQuest={{quest.id}}&difficulty=legendary&questLine={{quest.source}}-{{quest.questLine}}'" value="Complete"></div>
                   {% else %}

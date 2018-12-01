@@ -18,18 +18,27 @@ def index(request):
 ############################
 def progress(request):
     switch_db(cls=Progress, db_alias="skyrimse")
+    # Pull list of progress objects
     docs = Progress.objects.all()
     data = {"Novice": None, "Apprentice": None, "Adept": None,
             "Expert": None, "Master": None, "Legendary": None}
+    # Set whether an object exists
     for doc in docs:
         data[doc.difficulty] = doc
     return render(request, 'skyrimseProgress.html', {'data': data})
 
 def addDifficulty(request):
+    # Start a new progress object
     progress = Progress()
+    # Pull difficulty from HTTP Request.path
     difficulty = request.path.split("=")[1]
+    # Set/save starting info for a progress object
     progress.created = datetime.strftime(datetime.now(), "%A %B %d, %Y %H:%M:%S:%f %Z")
     progress.difficulty = difficulty
+    progress.level = 0
+    progress.health = 0
+    progress.magicka = 0
+    progress.stamina = 0
     progress.completion = Completion(vanilla=0, mod=0)
     progress.skills = Skills(alchemy=0, alteration=0, archery=0, block=0, conjuration=0, 
             destruction=0, enchanting=0, heavyArmor=0, illusion=0, lightArmor=0, 
@@ -42,23 +51,43 @@ def addDifficulty(request):
     progress.collected = Collected(quests=0, modQuests=0, total=0, modTotal=0)
     progress.collectedTotal = Collected(quests=questCount, modQuests=modQuestCount, total=totalCount, modTotal=modTotalCount)
     progress.save()
+    # Generate a Radar Graph for the progress
     plotRader(values=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], difficulty=progress.difficulty)
     return redirect("/skyrimse/progress")
 
 def deleteDifficulty(request):
+    # Pull progress.id from HTTP request.path
     deleteID = request.path.split("=")[1]
     progress = Progress.objects(id=deleteID).first()
+    # Delete the Radar Graph graph
     strFile = "skyrimse/static/images/progress/skills-{difficulty}.png".format(difficulty=progress.difficulty)
     if(os.path.isfile(strFile)):
         os.remove(strFile)
     progress.delete()
+    # Delete Quest Data
+    for quest in Quest.objects.all():
+        if(progress.difficulty == "Novice"):
+            quest.update(set__completion__novice=0)
+        elif(progress.difficulty == "Apprentice"):
+            quest.update(set__completion__apprentice=0)
+        elif(progress.difficulty == "Adept"):
+            quest.update(set__completion__adept=0)
+        elif(progress.difficulty == "Expert"):
+            quest.update(set__completion__expert=0)
+        elif(progress.difficulty == "Master"):
+            quest.update(set__completion__master=0)
+        elif(progress.difficulty == "Legendary"):
+            quest.update(set__completion__legendary=0)
+        quest.save()
     return redirect("/skyrimse/progress")
 
 def levelSkill(request):
+    # Pull skill and difficulty from HTTP request.path
     paramsStr = request.path.split("/skyrimse/progress/")[1]
     skill = paramsStr.split("&")[0].split("=")[1]
     difficulty = paramsStr.split("&")[1].split("=")[1]
     progress = Progress.objects(id=difficulty).first()
+    # Update skill level
     if(skill == "alchemy"):
         progress.update(inc__skills__alchemy=1)
     elif(skill == "alteration"):
@@ -96,6 +125,7 @@ def levelSkill(request):
     elif(skill == "twoHanded"):
         progress.update(inc__skills__twoHanded=1)
     progress.save()
+    # Pull levels for new Radar Graph
     newLevels = [progress.skills.alchemy, progress.skills.alteration, progress.skills.archery, progress.skills.block,
         progress.skills.conjuration, progress.skills.destruction, progress.skills.enchanting, progress.skills.heavyArmor,
         progress.skills.illusion, progress.skills.lightArmor, progress.skills.lockpicking, progress.skills.oneHanded,
@@ -105,6 +135,7 @@ def levelSkill(request):
     return redirect("/skyrimse/progress/{difficulty}".format(difficulty=progress.difficulty))
 
 def progressDetail(request):
+    # Pull id from HTTP request.path
     progressID = request.path.split("/skyrimse/progress/")[1]
     data = Progress.objects(difficulty=progressID).first()
     return render(request, "skyrimseProgressDetail.html", {'data': data})
@@ -116,6 +147,7 @@ def refreshProgress(request):
 ##### Quests Related #####
 ##########################
 def quests(request):
+    # Pull all the quests, quest's cources, and quest's questlines
     allQuests = Quest.objects.all()
     allSources = set([q.source for q in allQuests])
     allQuestLines = set([q.questLine for q in allQuests])
@@ -124,6 +156,7 @@ def quests(request):
                 "dawnguard": len(Quest.objects(source="dawnguard")),
                 "dragonborn": len(Quest.objects(source="dragonborn"))},
             "sources": {}}
+    # Sort questlines into sources, and get counts per difficulty per questline
     for source in allSources:
         data["sources"][source] = {}
         for quest in allQuests:
@@ -145,10 +178,12 @@ def quests(request):
     return render(request, "skyrimseQuests.html", {'data': data})
 
 def questsLoad(request):
+    # Pull data from JSON file
     toLoad = "skyrimse/static/json/{source}Quests.json".format(source=request.path.split("=")[1])
     with open(file=toLoad, mode="r") as f:
         jsonData = load(f)
         f.close()
+    # Create and save a Quest object
     for questData in jsonData:
         quest = Quest(name=questData["name"], questLine=questData["questLine"], source=questData["source"],
                       section=questData["section"], radiant=questData["radiant"],
@@ -157,16 +192,23 @@ def questsLoad(request):
     return redirect("/skyrimse/quests")
 
 def questLine(request):
+    # Pull source and questline from HTTP request.path
     questSource = request.path.replace("/skyrimse/quests/", "").split("-")[0]
     questLine = request.path.replace("/skyrimse/quests/", "").split("-")[1]
+    # Pull all quests and quest's sections
     allQuests = Quest.objects(source=questSource, questLine=questLine)
     allSections = [q.section for q in allQuests]
-    data = {"source": questSource, "questLine": questLine, "test": allQuests[0], "sections": {}}
+    data = {"source": questSource, "questLine": questLine, "test": allQuests[0], "sections": {},
+            "progress": {"Novice": None, "Apprentice": None, "Adept": None, 
+                            "Expert": None, "Master": None, "Legendary": None}}
+    # Add each quest to the appropriate section
     for section in allSections:
         data["sections"][section] = []
         for quest in allQuests:
             if(quest.section == section):
                 data["sections"][section].append(quest)
+    for doc in Progress.objects.all():
+        data["progress"][doc.difficulty] = doc
     return render(request, "skyrimseQuestLine.html", {'data': data})
 
 def completeQuest(request):

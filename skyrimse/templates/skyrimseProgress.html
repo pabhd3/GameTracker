@@ -18,7 +18,28 @@
         {% if data.Novice == None %}
           <input type="button" onclick="window.location.href='addDifficulty=Novice'" value="Start Novice">
         {% else %}
-          <input type="button" value="Refresh" onclick="window.location.href='refreshProgress=novice'" disabled>
+          <input type="button" value="Refresh" onclick="window.location.href='refreshProgress=novice'" disabled><br><br>
+          <div class="row">
+            <div class="col">
+              <b>Level: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.Novice.level}}&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=level'">
+            </div>
+            <div class="col">
+              <b>Health: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.Novice.health}}&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=health'">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <b>Magicka: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.Novice.magicka}}&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=magicka'">
+            </div>
+            <div class="col">
+              <b>Stamina: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.Novice.stamina}}&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=stamina'">
+            </div>
+          </div>
+          <br>
           <div class="row">
             <div class="col">Vanilla</div>
             <div class="col"><progress value={{data.Novice.completion.vanilla}} x max="100"></progress></div>
@@ -37,7 +58,28 @@
         {% if data.Apprentice == None %}
           <input type="button" onclick="window.location.href='addDifficulty=Apprentice'" value="Start Apprentice">
         {% else %}
-          <input type="button" value="Refresh" onclick="window.location.href='refreshProgress=apprentice'" disabled>
+          <input type="button" value="Refresh" onclick="window.location.href='refreshProgress=apprentice'" disabled><br><br>
+          <div class="row">
+            <div class="col">
+              <b>Level: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.Apprentice.level}}&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=level'">
+            </div>
+            <div class="col">
+              <b>Health: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.Apprentice.health}}&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=health'">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <b>Magicka: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.Apprentice.magicka}}&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=magicka'">
+            </div>
+            <div class="col">
+              <b>Stamina: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.Apprentice.stamina}}&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=stamina'">
+            </div>
+          </div>
+          <br>
           <div class="row">
             <div class="col">Vanilla</div>
             <div class="col"><progress value={{data.Apprentice.completion.vanilla}} max="100"></progress></div>
@@ -58,7 +100,28 @@
         {% if data.Adept == None %}
           <input type="button" onclick="window.location.href='addDifficulty=Adept'" value="Start Adept">
         {% else %}
-          <input type="button" value="Refresh" onclick="window.location.href='refreshProgress=adept'" disabled>
+          <input type="button" value="Refresh" onclick="window.location.href='refreshProgress=adept'" disabled><br><br>
+          <div class="row">
+            <div class="col">
+              <b>Level: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.Adept.level}}&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=level'">
+            </div>
+            <div class="col">
+              <b>Health: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.Adept.health}}&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=health'">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <b>Magicka: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.Adept.magicka}}&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=magicka'">
+            </div>
+            <div class="col">
+              <b>Stamina: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.Adept.stamina}}&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=stamina'">
+            </div>
+          </div>
+          <br>
           <div class="row">
             <div class="col">Vanilla</div>
             <div class="col"><progress value={{data.Adept.completion.vanilla}} max="100"></progress></div>
@@ -77,7 +140,28 @@
         {% if data.Expert == None %}
           <input type="button" onclick="window.location.href='addDifficulty=Expert'" value="Start Expert">
         {% else %}
-          <input type="button" value="Refresh" onclick="window.location.href='refreshProgress=expert'" disabled>
+          <input type="button" value="Refresh" onclick="window.location.href='refreshProgress=expert'" disabled><br><br>
+          <div class="row">
+            <div class="col">
+              <b>Level: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.Expert.level}}&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=level'">
+            </div>
+            <div class="col">
+              <b>Health: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.Expert.health}}&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=health'">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <b>Magicka: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.Expert.magicka}}&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=magicka'">
+            </div>
+            <div class="col">
+              <b>Stamina: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.Expert.stamina}}&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=stamina'">
+            </div>
+          </div>
+          <br>
           <div class="row">
             <div class="col">Vanilla</div>
             <div class="col"><progress value={{data.Expert.completion.vanilla}} max="100"></progress></div>
@@ -98,7 +182,28 @@
         {% if data.Master == None %}
           <input type="button" onclick="window.location.href='addDifficulty=Master'" value="Start Master">
         {% else %}
-          <input type="button" value="Refresh" onclick="window.location.href='refreshProgress=master'" disabled>
+          <input type="button" value="Refresh" onclick="window.location.href='refreshProgress=master'" disabled><br><br>
+          <div class="row">
+            <div class="col">
+              <b>Level: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.Master.level}}&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=level'">
+            </div>
+            <div class="col">
+              <b>Health: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.Master.health}}&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=health'">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <b>Magicka: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.Master.magicka}}&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=magicka'">
+            </div>
+            <div class="col">
+              <b>Stamina: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.Master.stamina}}&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=stamina'">
+            </div>
+          </div>
+          <br>
           <div class="row">
             <div class="col">Vanilla</div>
             <div class="col"><progress value={{data.Master.completion.vanilla}} max="100"></progress></div>
@@ -117,7 +222,28 @@
         {% if data.Legendary == None %}
           <input type="button" onclick="window.location.href='addDifficulty=Legendary'" value="Start Legendary">
         {% else %}
-          <input type="button" value="Refresh" onclick="window.location.href='refreshProgress=legendary'" disabled>
+          <input type="button" value="Refresh" onclick="window.location.href='refreshProgress=legendary'" disabled><br><br>
+          <div class="row">
+            <div class="col">
+              <b>Level: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.Legendary.level}}&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=level'">
+            </div>
+            <div class="col">
+              <b>Health: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.Legendary.health}}&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=health'">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <b>Magicka: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.Legendary.magicka}}&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=magicka'">
+            </div>
+            <div class="col">
+              <b>Stamina: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.Legendary.stamina}}&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=stamina'">
+            </div>
+          </div>
+          <br>
           <div class="row">
             <div class="col">Vanilla</div>
             <div class="col"><progress value={{data.Legendary.completion.vanilla}} max="100"></progress></div>
