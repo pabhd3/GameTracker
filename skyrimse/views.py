@@ -181,11 +181,12 @@ def quests(request):
     allQuests = Quest.objects.all()
     allSources = set([q.source for q in allQuests])
     allQuestLines = set([q.questLine for q in allQuests])
-    data = {"counts": {
-                "vanilla": len(Quest.objects(source="vanilla")),
-                "dawnguard": len(Quest.objects(source="dawnguard")),
-                "dragonborn": len(Quest.objects(source="dragonborn"))},
-            "sources": {}}
+    # Dynamically load quest sources
+    questFiles = list(filter(lambda x: "Quests" in x, [f for f in os.listdir('skyrimse/static/json/')]))
+    data = {"counts": {}, "sources": {}}
+    for f in questFiles:
+        source = f.replace("Quests.json", "")
+        data["counts"][source] = len(Quest.objects(source=source))
     # Sort questlines into sources, and get counts per difficulty per questline
     for source in allSources:
         data["sources"][source] = {}
