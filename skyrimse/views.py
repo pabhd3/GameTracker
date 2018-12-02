@@ -40,10 +40,15 @@ def addDifficulty(request):
     progress.magicka = 0
     progress.stamina = 0
     progress.completion = Completion(vanilla=0, mod=0)
-    progress.skills = Skills(alchemy=0, alteration=0, archery=0, block=0, conjuration=0, 
-            destruction=0, enchanting=0, heavyArmor=0, illusion=0, lightArmor=0, 
-            lockpicking=0, oneHanded=0, pickPocket=0, restoration=0, smithing=0, 
-            sneak=0, speech=0, twoHanded=0)
+    progress.skills = Skills(alchemy=Skill(level=0, legendary=0), alteration=Skill(level=0, legendary=0), 
+            archery=Skill(level=0, legendary=0), block=Skill(level=0, legendary=0), 
+            conjuration=Skill(level=0, legendary=0), destruction=Skill(level=0, legendary=0), 
+            enchanting=Skill(level=0, legendary=0), heavyArmor=Skill(level=0, legendary=0), 
+            illusion=Skill(level=0, legendary=0), lightArmor=Skill(level=0, legendary=0), 
+            lockpicking=Skill(level=0, legendary=0), oneHanded=Skill(level=0, legendary=0), 
+            pickPocket=Skill(level=0, legendary=0), restoration=Skill(level=0, legendary=0), 
+            smithing=Skill(level=0, legendary=0), sneak=Skill(level=0, legendary=0), 
+            speech=Skill(level=0, legendary=0), twoHanded=Skill(level=0, legendary=0))
     questCount = sum([len(Quest.objects(source=source)) for source in ["vanilla", "dawnguard", "dragonborn"]])
     modQuestCount = len(Quest.objects.all()) - questCount
     totalCount = sum([questCount])
@@ -86,51 +91,58 @@ def levelSkill(request):
     paramsStr = request.path.split("/skyrimse/progress/")[1]
     skill = paramsStr.split("&")[0].split("=")[1]
     difficulty = paramsStr.split("&")[1].split("=")[1]
+    levelType = paramsStr.split("&")[2].split("=")[1]
     progress = Progress.objects(id=difficulty).first()
     # Update skill level
     if(skill == "alchemy"):
-        progress.update(inc__skills__alchemy=1)
+        if(levelType == "level"):
+            progress.update(inc__skills__alchemy__level=1)
+        else:
+            progress.update(set__skills__alchemy__level=0)
+            progress.update(inc__skills__alchemy__legendary=1)
     elif(skill == "alteration"):
-        progress.update(inc__skills__alteration=1)
+        progress.update(inc__skills__alteration__level=1)
     elif(skill == "archery"):
-        progress.update(inc__skills__archery=1)
+        progress.update(inc__skills__archery__level=1)
     elif(skill == "block"):
-        progress.update(inc__skills__block=1)
+        progress.update(inc__skills__block__level=1)
     elif(skill == "conjuration"):
-        progress.update(inc__skills__conjuration=1)
+        progress.update(inc__skills__conjuration__level=1)
     elif(skill == "destruction"):
-        progress.update(inc__skills__destruction=1)
+        progress.update(inc__skills__destruction__level=1)
     elif(skill == "enchanting"):
-        progress.update(inc__skills__enchanting=1)
+        progress.update(inc__skills__enchanting__level=1)
     elif(skill == "heavyArmor"):
-        progress.update(inc__skills__heavyArmor=1)
+        progress.update(inc__skills__heavyArmor__level=1)
     elif(skill == "illusion"):
-        progress.update(inc__skills__illusion=1)
+        progress.update(inc__skills__illusion__level=1)
     elif(skill == "lightArmor"):
-        progress.update(inc__skills__lightArmor=1)
+        progress.update(inc__skills__lightArmor__level=1)
     elif(skill == "lockpicking"):
-        progress.update(inc__skills__lockpicking=1)
+        progress.update(inc__skills__lockpicking__level=1)
     elif(skill == "oneHanded"):
-        progress.update(inc__skills__oneHanded=1)
+        progress.update(inc__skills__oneHanded__level=1)
     elif(skill == "pickPocket"):
-        progress.update(inc__skills__pickPocket=1)
+        progress.update(inc__skills__pickPocket__level=1)
     elif(skill == "restoration"):
-        progress.update(inc__skills__restoration=1)
+        progress.update(inc__skills__restoration__level=1)
     elif(skill == "smithing"):
-        progress.update(inc__skills__smithing=1)
+        progress.update(inc__skills__smithing__level=1)
     elif(skill == "sneak"):
-        progress.update(inc__skills__sneak=1)
+        progress.update(inc__skills__sneak__level=1)
     elif(skill == "speech"):
-        progress.update(inc__skills__speech=1)
+        progress.update(inc__skills__speech__level=1)
     elif(skill == "twoHanded"):
-        progress.update(inc__skills__twoHanded=1)
+        progress.update(inc__skills__twoHanded__level=1)
     progress.save()
     # Pull levels for new Radar Graph
-    newLevels = [progress.skills.alchemy, progress.skills.alteration, progress.skills.archery, progress.skills.block,
-        progress.skills.conjuration, progress.skills.destruction, progress.skills.enchanting, progress.skills.heavyArmor,
-        progress.skills.illusion, progress.skills.lightArmor, progress.skills.lockpicking, progress.skills.oneHanded,
-        progress.skills.pickPocket, progress.skills.restoration, progress.skills.smithing, progress.skills.sneak,
-        progress.skills.speech, progress.skills.twoHanded]
+    newLevels = [progress.skills.alchemy.level, progress.skills.alteration.level, 
+        progress.skills.archery.level, progress.skills.block.level, progress.skills.conjuration.level, 
+        progress.skills.destruction.level, progress.skills.enchanting.level, progress.skills.heavyArmor.level, 
+        progress.skills.illusion.level, progress.skills.lightArmor.level, progress.skills.lockpicking.level, 
+        progress.skills.oneHanded.level, progress.skills.pickPocket.level, progress.skills.restoration.level, 
+        progress.skills.smithing.level, progress.skills.sneak.level, progress.skills.speech.level, 
+        progress.skills.twoHanded.level]
     plotRader(values=newLevels, difficulty=progress.difficulty)
     return redirect("/skyrimse/progress/{difficulty}".format(difficulty=progress.difficulty))
 
