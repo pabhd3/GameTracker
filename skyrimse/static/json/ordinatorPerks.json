@@ -3,20 +3,20 @@ Alchemy
 0 - Alchemy Mastery (2) - Potions and poisons you make are 20/40% stronger.
 20 - Physician - You may choose a type of beneficial potion: Health, Magicka or Stamina. Potions you mix that restore or fortify the chosen attribute are 50% stronger.
 20 - Stimulants - When you use a beneficial potion or ingredient, you regenerate 2% of your Magicka and Stamina per second for 30 seconds.
-30 - Advanced Lab - You may choose to upgrade one alchemy lab to an Advanced version for 2500 gold. Potions you mix are 25% stronger at an Advanced Lab. Can be "Disassembled" by sneaking, allowing you to upgrade another.
+30 - Advanced Lab - You may choose to upgrade one alchemy lab to an Advanced version for 2500 gold. Potions you mix are 25% stronger at an Advanced Lab. Can be 'Disassembled' by sneaking, allowing you to upgrade another.
 30 - Experimenter - Eating an ingredient reveals all effects.
 30 - Poisoner - Poisons you mix are 1% more powerful per level of Alchemy.
 40 - Bottomless Cup - Poisons applied to weapons last for one additional hit per 10 levels of Alchemy.
 40 - Crimson Haze - Stimulants also increases movement speed by 10% for its duration.
-40 - Elemental Oil - You may choose a power: "Fire Oil", "Frost Oil" or "Shock Oil". At will, create a pool of oil that lasts 20 seconds. It reacts violently when struck by a projectile or explosion, exploding and dealing damage equal to your Alchemy skill level.
+40 - Elemental Oil - You may choose a power: 'Fire Oil', 'Frost Oil' or 'Shock Oil'. At will, create a pool of oil that lasts 20 seconds. It reacts violently when struck by a projectile or explosion, exploding and dealing damage equal to your Alchemy skill level.
 50 - Alkahest - Your poisons are highly corrosive, enabling you to ignore 40% of the armor rating of an affected target for their duration.
 50 - Lab Skeever - For 20 seconds after using any alchemy lab, beneficial potions you drink last 15 times longer and are 25% stronger.
 60 - Green Thumb - Twice as many ingredients are gathered from most harvestable objects.
 60 - Maenad - Magicka and Stamina are increased by 50 points when you are under the effect of a beneficial potion or ingredient, but reduced by 25 points when you are not.
-60 - The Alchemist's Cookbook - You may choose a second Elemental Oil power. In addition to "Fire Oil", "Frost Oil" and "Shock Oil", you may also choose "Calming Oil", "Frenzy Oil", "Paralysis Oil" or "Hallowed Oil".
+60 - The Alchemist's Cookbook - You may choose a second Elemental Oil power. In addition to 'Fire Oil', 'Frost Oil' and 'Shock Oil', you may also choose 'Calming Oil', 'Frenzy Oil', 'Paralysis Oil' or 'Hallowed Oil'.
 70 - Double Toil and Trouble - You mix twice as many potions at your Advanced Lab.
 70 - Pure Mixture - All negative effects are removed from created potions, and all positive effects are removed from created poisons.
-80 - Amplify Lethality - Grants the "Amplify Lethality" power. Once a day, point at a victim to silently reduce their poison resistance by 250% for 10 seconds.
+80 - Amplify Lethality - Grants the 'Amplify Lethality' power. Once a day, point at a victim to silently reduce their poison resistance by 250% for 10 seconds.
 80 - Witchmaster - When you use a beneficial potion or ingredient, 50% chance to receive a powerful side effect, randomly chosen from a range of 40 side effects.
 90 - Chymical Wedding - Witchmaster side effects have 50% chance to cause side effects themselves.
 90 - Walking Disaster - In combat, periodically spill a random oil puddle on the ground. Puddles last 60 seconds.
@@ -46,12 +46,12 @@ Alteration
 70 - Energy Roil - Whenever you cast a spell with one hand, reduces the armor of nearby enemies within 10 feet by 150 points for 4 seconds.
 70 - The Monarch - You cannot regenerate Magicka and lose 10 points of Magicka per second but absorb 25 points of Magicka per second from living creatures within 20 feet, whether friend or foe.
 80 - Aurification - Once every 12 ingame hours, activate a paralyzed target below half Health to transmute its body into gold worth 100 times its level, killing the target. Has a 50% chance of creating gold ore. No effect on essential targets.
-80 - Dimension Door - Grants the "Dimension Door" power. At will, creates a magical doorway that teleports you to the location of your Home Mythal.
+80 - Dimension Door - Grants the 'Dimension Door' power. At will, creates a magical doorway that teleports you to the location of your Home Mythal.
 80 - Throne of Nirn - Standing still for 5 seconds while holding a spell summons a pillar of earth under your feet that carries you into the air and out of melee range. While standing on the pillar, your spells are 20% more powerful or last 40% longer. This effect is disabled when your hands are lowered.
 90 - Emergency Teleport - When you fall below 15% Health due to combat damage, you briefly turn invulnerable and teleport back to the location where you entered combat.
 90 - Nullifier - You radiate a dampening field, preventing enemies within 25 feet from regenerating Magicka and Stamina.
 90 - Rend Resistances - Whenever you attack with a weapon, reduces the magic resistance of nearby enemies within 10 feet by 15% for 4 seconds.
-100 - Arcane Thesis - Grants the "Arcane Thesis" power: use it to master the spell you are dual casting. A mastered spell is 20% more powerful or lasts 40% longer. Only one spell can be mastered.
+100 - Arcane Thesis - Grants the 'Arcane Thesis' power: use it to master the spell you are dual casting. A mastered spell is 20% more powerful or lasts 40% longer. Only one spell can be mastered.
 
 Archery
 
@@ -71,10 +71,10 @@ Archery
 70 - Ambush Predator - After standing still for 6 seconds with a bow or crossbow out, it does 25% more damage until you move.
 70 - Beak and Talon - Your shots disrupt targets within 25 feet, disarming them if they are power attacking and knocking them down if they are staggered.
 80 - Hailstorm - Attack 8% faster with bows and crossbows for 10 seconds after shooting a fully drawn bow or crossbow in combat. This effect stacks.
-80 - Hawkeye - Grants the "Hawkeye" power. Once a day, slow time and focus on your foes for 10 seconds, looking for opportunities for a killing shot. Finding their vulnerability takes 1 second per 125 Health. Once you do, you may shoot them for an instant kill.
+80 - Hawkeye - Grants the 'Hawkeye' power. Once a day, slow time and focus on your foes for 10 seconds, looking for opportunities for a killing shot. Finding their vulnerability takes 1 second per 125 Health. Once you do, you may shoot them for an instant kill.
 80 - Trick Arrows - Able to upgrade many types of arrows at a forge or anvil, adding a bonus effect (Force, Immolation, Freezing, Grounding, Maze or Death) based on its material.
 90 - Hunt Together - When fighting only one enemy, hitting the target with a bow or crossbow manifests a Spirit Wolf for 30 seconds. The wolf deals damage equal to 15% of your current Stamina. This effect has a 30 second cooldown per target.
-90 - Lion's Arrow - Grants the "Lion's Arrow" power: use it to store the spell you are dual casting. Shooting a fully drawn bow in combat also releases the stored spell in the direction of the crosshair. Only works with spells that affect other targets.
+90 - Lion's Arrow - Grants the 'Lion's Arrow' power: use it to store the spell you are dual casting. Shooting a fully drawn bow in combat also releases the stored spell in the direction of the crosshair. Only works with spells that affect other targets.
 90 - Three Crows - Shooting a target beyond 25 feet three times in rapid succession, leaving less than 2.75 seconds between each hit, deals bonus damage equal to 15% of the target's current Health (max. 150 damage) and knocks the target to the ground.
 100 - Perfect Aim - Bows deal 25% more damage if the shot strikes a target within 2 seconds after the bow is fully drawn. Crossbows deal triple damage to targets with 20% or less Health remaining.
 
@@ -113,7 +113,7 @@ Conjuration
 40 - Atromancy - Summoned Daedra and other non-undead minions last three times as long (or five times at night).
 40 - Barrow Lord - You may give commands to all Skeletons within 150 feet at once, instead of one at a time. Skeletons take 25% less damage from attacks.
 40 - Preservation - Summoned and reanimated undead last three times as long (or twenty times if you place Hagraven Feathers into their inventory or use the Dread Zombie or Dead Thrall spells). Reanimated undead also gain 500 armor for 60 seconds after being reanimated.
-40 - Rat King - When entering combat, creates 3 undead Skeevers under your control. Their corpses can be raised, but they dissipate when combat ends. Use the "Merciful King" power to temporarily prevent this ability from activating.
+40 - Rat King - When entering combat, creates 3 undead Skeevers under your control. Their corpses can be raised, but they dissipate when combat ends. Use the 'Merciful King' power to temporarily prevent this ability from activating.
 40 - Reap and Sow (2) - You loot 60/100% more bones from corpses and recover 50% more/all bones when you destroy a created Skeleton. Created Skeletons last 75/200% longer.
 40 - Rend From This World - Bound weapons banish conjured Daedra, turn reanimated undead and deal 100 extra damage to non-conjured Daedra.
 40 - Signed in Blood - When a friendly conjured Daedra within 15 feet is below full Health, it absorbs your lifeforce to heal itself, preventing you from regenerating Health but regenerating 10 points per second (increased by 4% of its maximum Health when out of combat).
@@ -123,7 +123,7 @@ Conjuration
 50 - Undead Crown - Restores 10 points of Health and Magicka per second to summoned or reanimated undead within 15 feet.
 50 - Void Burn - Bound weapons brand victims with unholy energy for 5 seconds, halting Magicka and Stamina regeneration while draining 15 points per second. When both are depleted, the energy starts devouring their flesh, dealing 15 points of magic damage per second.
 60 - A Plague Upon Thee - If a reanimated undead is destroyed within 20 seconds, the attacker is stricken with a Daedric disease that deals 40 damage per second for 20 seconds. Those who have this perk are immune.
-60 - Conjure Altar - Grants the "Conjure Altar" power. At will, summons a Bone Altar for 60 seconds.
+60 - Conjure Altar - Grants the 'Conjure Altar' power. At will, summons a Bone Altar for 60 seconds.
 60 - Fire Ritual - Able to ritually burn 1 of each bone at a Bone Altar, strengthening all Skeletons within 150 feet. Lasts until the Skeleton is destroyed and increases weapon damage by 15%, spell damage by 30% and Health by 50 points. This effect stacks.
 60 - Hollow Binding - Bound weapons cut through flesh and spirit, reducing magic resistance by 30% for 5 seconds.
 60 - Maelstrom - While you charge or concentrate on a spell, friendly conjured Daedra within 30 feet gain 30% extra attack damage.
@@ -189,18 +189,18 @@ Enchanting
 30 - Thunderstruck - Weapon enchantments are 25% more effective when delivered by a power attack (or 50% for a two-handed power attack).
 40 - Gem Dust - You may choose to destroy a Flawless Gem when you begin the enchanting process and sprinkle its dust on the Arcane Enchanter. New enchantments are 25% stronger when placed upon an item of the type corresponding to the gem.
 40 - Secretkeeper - When a staff is equipped in your left hand, your attacks deal 25% more damage and critical damage. When a staff is equipped in your right hand, your spells and scrolls are 25% more effective.
-40 - Spellscribe - Grants the "Spellscribe" power: use it to store the spell you are dual casting. Your power attacks and power bashes unleash the stored spell for free, with a cooldown based on Enchanting skill. Only works with spells that affect other targets.
+40 - Spellscribe - Grants the 'Spellscribe' power: use it to store the spell you are dual casting. Your power attacks and power bashes unleash the stored spell for free, with a cooldown based on Enchanting skill. Only works with spells that affect other targets.
 50 - Flame of Magnus - While casting or concentrating on a staff in your left hand, you may attack with your right hand, dealing 50% more damage and critical damage.
 50 - Preserver - Learning an item's enchantment does not destroy it.
 60 - Might and Magic - You are adept at weaving blade and magic. Spells cast with your left hand are 10% more effective if you are wielding a weapon in your right hand. Attacks with a weapon in your right hand deal 10% more damage if you are holding a spell in your left hand.
 60 - Regalia - New enchantments placed upon robes, circlets, hoods and necklaces are 30% stronger.
 60 - Staff Recharge - Equipped staves regenerate 5 points of charge per second, up to their charge level when you last equipped them or recharged them with a soul gem.
 70 - Attunement - All enchantments on equipped weapons and armor are 10% more powerful and last 10% longer.
-70 - Charge Tap - Grants the "Charge Tap" power. At will, drains a quarter of your current weapon charge to restore Health by 15% of the amount drained and Magicka and Stamina by 25% of the amount drained. (If you have two enchanted weapons equipped, the drain is split.)
+70 - Charge Tap - Grants the 'Charge Tap' power. At will, drains a quarter of your current weapon charge to restore Health by 15% of the amount drained and Magicka and Stamina by 25% of the amount drained. (If you have two enchanted weapons equipped, the drain is split.)
 70 - Power Echoes - Spellscribe activates twice before going on cooldown.
 80 - Heart of the Sun - Use an equipped staff as an energy source, causing it to lose charge at a rate of 15 points per second but making your weapon enchantments 1% more effective per 50 points of charge remaining in the staff. (This effect stacks if more than one staff is equipped.) Sheathe to cancel.
 80 - Twin Enchantment - Can place two enchantments upon the same item.
-90 - Arcane Nexus - You may choose to upgrade one arcane enchanter to an Arcane Nexus for 2500 gold. New enchantments created at an Arcane Nexus are 25% stronger. Can be "Disassembled" by sneaking, allowing you to upgrade another.
+90 - Arcane Nexus - You may choose to upgrade one arcane enchanter to an Arcane Nexus for 2500 gold. New enchantments created at an Arcane Nexus are 25% stronger. Can be 'Disassembled' by sneaking, allowing you to upgrade another.
 90 - You Shall Not Pass - Simultaneously (within 1 second) using an enchanted staff in your left hand and striking with an enchanted weapon in your right hand releases a flash of light that staggers enemies and deals damage equal to half your Enchanting skill level.
 100 - Miracle - You put your heart and soul into the next item you enchant at an Arcane Nexus, placing up to three enchantments upon it that are 25% stronger. Try as you might, you will never be able to repeat this feat.
 
@@ -211,8 +211,8 @@ Heavy Armor
 30 - Battle Weary - Tired enemies have a harder time defeating your armor. You take up to 20% less attack damage from enemies with half or less Stamina, if wearing all Heavy Armor. The lower their Stamina, the less damage you take.
 30 - Heavy Armor Fit - Armor rating of Heavy Armor increased by 25% if wearing all Heavy Armor.
 40 - Defiance - You are trained to deflect incoming attacks while wearing all Heavy Armor. Whenever an enemy attacks you, you gain 15 points of armor rating for 10 seconds. This effect stacks.
-40 - Face of Death - You no longer need to wear a helmet to benefit from perks that require "wearing all Heavy Armor". If you are not wearing a helmet, Heavy Armor pieces have 20% increased armor rating.
-40 - Rallying Standard - Grants the "Rallying Standard" power. Once a day, place a banner that grants 150 points of armor and 25% melee damage to allies within 25 feet wearing all Heavy Armor (including you) and prevents them from fleeing. Lasts 60 seconds.
+40 - Face of Death - You no longer need to wear a helmet to benefit from perks that require 'wearing all Heavy Armor'. If you are not wearing a helmet, Heavy Armor pieces have 20% increased armor rating.
+40 - Rallying Standard - Grants the 'Rallying Standard' power. Once a day, place a banner that grants 150 points of armor and 25% melee damage to allies within 25 feet wearing all Heavy Armor (including you) and prevents them from fleeing. Lasts 60 seconds.
 50 - Born to Fight - Heavy Armor weighs half as much and slows you down half as much when worn.
 50 - Revel in Battle - Defiance also increases melee weapon damage by 3% for 10 seconds. This effect stacks.
 60 - Bedrock - If wearing all Heavy Armor, you have 20% chance to brace for impact when attacked by an enemy, becoming immune to stagger for 4 seconds.
@@ -237,7 +237,7 @@ Illusion
 30 - Commanding Presence - In combat, you radiate an aura of mystical nobility that touches allied creatures and people within 40 feet. Those affected gain 20% extra attack damage and have 20% chance of a critical strike.
 30 - Entice Barter - Activate any target under the effect of a Calm spell to initiate trade.
 30 - Imposing Presence - You radiate an aura of mystical charisma that touches all within 40 feet. Any Illusion spell you cast on those affected is 25% more powerful and lasts 30% longer.
-30 - Night Eye - Grants the "Night Eye" power. At will, grants improved night vision for 120 seconds.
+30 - Night Eye - Grants the 'Night Eye' power. At will, grants improved night vision for 120 seconds.
 40 - Crown of the False King - Commanding Presence also increases armor by 80 points and magic resistance by 20%.
 40 - Kindred Mage - Mind affecting spells and effects are 15 points stronger (or 30 points if you are the same race as the target).
 40 - Quiet Before the Storm (2) - All spells you cast from any school of magic/, as well as all shouts, are silent to others.
@@ -270,7 +270,7 @@ Light Armor
 30 - As a Leaf - While sprinting in Light Armor, you cannot be staggered and take 50% less damage from power attacks.
 30 - Light Armor Fit - Armor rating of Light Armor increased by 25% if wearing all Light Armor.
 40 - Initiative (2) - When you enter combat, if wearing all Light Armor, regenerate up to 10/20% of your maximum Stamina per second. This bonus gradually diminishes over the course of 15 seconds.
-40 - Keen Senses - You no longer need to wear a helmet to benefit from perks that require "wearing all Light Armor". If you are not wearing a helmet, Light Armor pieces have 20% increased armor rating.
+40 - Keen Senses - You no longer need to wear a helmet to benefit from perks that require 'wearing all Light Armor'. If you are not wearing a helmet, Light Armor pieces have 20% increased armor rating.
 40 - Sweeping Wind - Unarmed power attacks do 25% more damage. Additionally, if your movement speed is increased, they do 2% damage per 1% movement speed. Requires two free hands.
 50 - Rushing Tide - Unarmed attacks grant 10% increased Stamina regeneration and 5% movement speed for 8 seconds. This effect stacks. Requires two free hands.
 50 - Unhindered - Light Armor weighs nothing and doesn't slow you down when worn.
@@ -304,7 +304,7 @@ Lockpicking
 50 - Nose for Treasure - You may choose an item type (gold, jewelry, books, ingredients, potions, ingots, weapons, armor, scrolls). Containers illuminated by Robber's Eye are three times more likely to contain items of your chosen type over other types.
 60 - Dungeoneer - Robber's Eye also works in dungeons and lasts three times as long.
 60 - Golden Touch - Find 20-100 more gold in many dungeon chests and 2-10 more gold in some corpses, urns, etc.
-70 - Bait - Grants the "Bait" power. At will, lures the nearest hostile target within 75 feet to the location of the nearest Bear Trap placed within 50 feet (not during combat or conversation). Lasts 30 seconds.
+70 - Bait - Grants the 'Bait' power. At will, lures the nearest hostile target within 75 feet to the location of the nearest Bear Trap placed within 50 feet (not during combat or conversation). Lasts 30 seconds.
 80 - Bushwhack - If the victim of your Bear Trap is not detecting you, the trap is five times as effective.
 80 - The Revenge - You can pick up and carry 3 Bear Traps.
 90 - Percussive Maintenance - Your Hotwired Automaton moves 30% faster and attacks 20% faster. Hitting your Hotwired Automaton with a mace or warhammer repairs it 150 points (or 300 points on a power attack) and further increases attack speed by 50% for 10 seconds.
@@ -354,7 +354,7 @@ Pickpocket
 
 0 - Pickpocket Mastery (2) - Adds 20/40% to your pickpocket chance and increases carry weight by 50/100 points.
 20 - Blood Money - You find 10-100 more gold when looting humanoid corpses you have slain in an especially violent fashion (with an attack that dealt at least 100 more damage than their remaining Health or a killmove).
-20 - Trained Rabbit - Grants the "Trained Rabbit" power. At will, silently sends out a trained rabbit to lead you to the nearest loose valuable item (armor, weapon, key, book, soul gem, ingredient). It then returns to you.
+20 - Trained Rabbit - Grants the 'Trained Rabbit' power. At will, silently sends out a trained rabbit to lead you to the nearest loose valuable item (armor, weapon, key, book, soul gem, ingredient). It then returns to you.
 30 - Cutpurse - Adds 25% to your chance to pickpocket gold, keys and jewelry.
 30 - Thief's Eye - When you enter a major city, illuminates a random citizen on the streets for 300 seconds. If you interact with the target during this time, they will carry valuable items (based on your Pickpocket skill). This can only occur once every 12-60 ingame hours.
 40 - Brotherhood Cocktail - Silently harm enemies by placing poisons in their pockets while pickpocketing.
@@ -366,8 +366,8 @@ Pickpocket
 70 - Doomed to Plunder - Killing a victim in possession of the Death's Emperor grants 100-300 more gold.
 70 - Trickster - Can pickpocket equipped weapons. If the target is sleeping, can pickpocket any equipped item.
 80 - Crime Wave - Shortly after you pickpocket or speak with the target illuminated by Thief's Eye, a new victim is illuminated, up to 4 times in a row.
-80 - You Saw Nothing - Grants the "You Saw Nothing" power. Once a day, distract a target and others in a 40 foot radius around the target. For 45 seconds, you will not receive a bounty if they are the only witness of your crimes. Does not prevent them from defending themselves.
-90 - Mutiny - Grants the "Mutiny" power. At will, activates the curse of the Death's Emperor, causing whoever is in possession of the coin to attack randomly for 30 seconds. Any deaths resulting from this can't be traced back to you.
+80 - You Saw Nothing - Grants the 'You Saw Nothing' power. Once a day, distract a target and others in a 40 foot radius around the target. For 45 seconds, you will not receive a bounty if they are the only witness of your crimes. Does not prevent them from defending themselves.
+90 - Mutiny - Grants the 'Mutiny' power. At will, activates the curse of the Death's Emperor, causing whoever is in possession of the coin to attack randomly for 30 seconds. Any deaths resulting from this can't be traced back to you.
 90 - Robbed Blind - Adds the Thief's Eye effect to You Saw Nothing.
 100 - Dragon Hoard - Whenever you sleep with 50000 or more gold in your inventory, you may choose to spend it to purchase a perk point.
 
@@ -380,8 +380,8 @@ Restoration
 30 - Hallowed Burial (2) - Your attacks and Restoration spells and effects are 20/30% more powerful against undead enemies.
 30 - Spirit Tutors - Two spirit tutors roam Skyrim. Find them and speak with them to receive a permanent blessing that makes Restoration spells 1% stronger per 20 points of Magicka. Each spirit tutor grants one blessing.
 30 - Vigilant - The first ward you cast in combat costs no Magicka to maintain.
-40 - Necromanticon - Study the arts of disease, learning the "Putrefy" spell. When your Restoration skill reaches 50, you learn "Death Cloud". When your Restoration skill reaches 75, you learn "Carrion Wind". These spells deal disease damage to nonmechanical targets.
-40 - Exorcist - Study the arts of destroying the undead, learning the "Sunblast" spell. When your Restoration skill reaches 50, you learn "Holy Hands". When your Restoration skill reaches 75, you learn "Stellar Core". These spells deal damage to the undead.
+40 - Necromanticon - Study the arts of disease, learning the 'Putrefy' spell. When your Restoration skill reaches 50, you learn 'Death Cloud'. When your Restoration skill reaches 75, you learn 'Carrion Wind'. These spells deal disease damage to nonmechanical targets.
+40 - Exorcist - Study the arts of destroying the undead, learning the 'Sunblast' spell. When your Restoration skill reaches 50, you learn 'Holy Hands'. When your Restoration skill reaches 75, you learn 'Stellar Core'. These spells deal damage to the undead.
 40 - False Light - While in combat, you may cast targeted healing spells and effects on enemies to inflict damage equal to 75% of the heal amount.
 40 - Respite - Healing spells also restore Stamina equal to their power.
 50 - Antimagic Field - Staying within 8 feet of an enemy while maintaining a ward prevents them from casting spells. No effect on massive targets.
@@ -406,13 +406,13 @@ Restoration
 90 - Eternal Flame - Warrior's Flame lasts twice as long.
 90 - Gods and Mortals - Shrine blessings last 50% longer, and the blessings of the Divines (Akatosh, Arkay, Dibella, Julianos, Kynareth, Mara, Stendarr, Talos, Zenithar) confer powerful additional effects.
 90 - Tome of Many Pages - Teaches 18 different Restoration spells. Each fortifies a single skill by 15 levels for 120 seconds.
-100 - Apotheosis - Grants the "Apotheosis" power. Once a day, casts Warrior's Flame on all nearby for 20 seconds. Costs 250 Magicka.
+100 - Apotheosis - Grants the 'Apotheosis' power. Once a day, casts Warrior's Flame on all nearby for 20 seconds. Costs 250 Magicka.
 
 Smithing
 
 0 - Smithing Mastery (2) - You can create Novice (Steel/Bonemold) items at a forge or anvil, and improve them twice as much./All items can be improved 10% more.
-20 - Dwarven Autocannon (2) - You can create Dwemer Autocannons at a forge or anvil. Use the "Dwarven Autocannon" power to deploy them. Cannons fire parallel to your crosshair for 30/60 seconds, dealing damage equal to 30/40% of your Smithing skill, if you are within 12 feet.
-30 - Advanced Workshop - You may choose to upgrade one grindstone or workbench to an Advanced version for 2500 gold. It improves items one tier higher (items can be improved beyond Legendary). Can be "Disassembled" by sneaking, allowing you to upgrade another of the same type.
+20 - Dwarven Autocannon (2) - You can create Dwemer Autocannons at a forge or anvil. Use the 'Dwarven Autocannon' power to deploy them. Cannons fire parallel to your crosshair for 30/60 seconds, dealing damage equal to 30/40% of your Smithing skill, if you are within 12 feet.
+30 - Advanced Workshop - You may choose to upgrade one grindstone or workbench to an Advanced version for 2500 gold. It improves items one tier higher (items can be improved beyond Legendary). Can be 'Disassembled' by sneaking, allowing you to upgrade another of the same type.
 30 - Meric Smithing (2) - Choose an item type: Contemporary Meric (Elven/Chitin), Dwarven. You can create items of the chosen type at a forge or anvil, and improve them twice as much. Investing a second perk point lets you choose both./You can create both Contemporary Meric (Elven/Chitin) and Dwarven items at a forge or anvil, and improve them twice as much.
 40 - Arcane Blacksmith - You can improve enchanted weapons and armor.
 40 - Electrobolt (2) - Every fifth Dwarven Autocannon shot is an electromagnetic blast that moves slower than a regular shell but deals shock damage to Health and Magicka equal to 80/240% of your Smithing skill level.
@@ -433,11 +433,11 @@ Sneak
 
 0 - Sneak Mastery (2) - Sneaking is 15/30% more effective. Sneak success depends on visibility (movement and light level), sound (movement and armor weight), skill level and distance.
 20 - Sneak Attack - Sneak attacks with one-handed weapons deal 100% more damage. Sneak attacks with any other weapon or fists deal 25% more damage.
-20 - Tripwire - Grants the "Tripwire" power. At will, places a tripwire in front of you for 120 seconds. It snaps when tripped, knocking all targets hit by it to the floor.
+20 - Tripwire - Grants the 'Tripwire' power. At will, places a tripwire in front of you for 120 seconds. It snaps when tripped, knocking all targets hit by it to the floor.
 30 - Demolition Job - All Destruction spells and scrolls are 1% more powerful per level of Sneak if the target is not detecting the caster (2% for rune spells).
 30 - Fog of War - Sneaking is 15% more effective against targets that are in combat with you, or 30% if they are in combat with someone else.
 30 - Silent Roll - Sprinting while sneaking executes a silent forward roll.
-30 - Spot Detection - Grants the "Spot Detection" power. At will, outlines all humanoids within 150 feet that are detecting you with a green glow. Lasts 30 seconds.
+30 - Spot Detection - Grants the 'Spot Detection' power. At will, outlines all humanoids within 150 feet that are detecting you with a green glow. Lasts 30 seconds.
 40 - Assassin's Blade - Sneak attacks with daggers deal 1% more damage per level of Sneak.
 40 - Dynamic Entry - Performing a silent roll increases your weapon damage by 40% and unarmed damage by 40 points for 3 seconds.
 40 - Infiltrator - Your footsteps and equipped armor make 75% less noise when sneaking.
@@ -445,9 +445,9 @@ Sneak
 50 - Backstab (2) - You deal 25/50% more damage and critical damage with daggers when striking a target from behind.
 50 - Light Foot - You won't trigger pressure plates.
 50 - Right Behind You - You are adept at hiding in your target's blind spot. Sneaking is 15% more effective within 30 feet and 30% more effective within 15 feet.
-60 - Disengage - Grants the "Disengage" power. Once a day, all enemies within 100 feet who are attacking you or searching for you instantly stop and resume their normal activities.
+60 - Disengage - Grants the 'Disengage' power. Once a day, all enemies within 100 feet who are attacking you or searching for you instantly stop and resume their normal activities.
 60 - Dodge Roll - Performing a silent roll makes you ethereal for 1 second, causing all incoming attacks and spells to miss.
-60 - Smokescreen - Grants the "Smokescreen" power. Once a day, creates a 35 foot cloud for 180 seconds that blinds those in the cloud, preventing them from seeing sneaking targets. Sneak attacks against them deal 50% more damage.
+60 - Smokescreen - Grants the 'Smokescreen' power. Once a day, creates a 35 foot cloud for 180 seconds that blinds those in the cloud, preventing them from seeing sneaking targets. Sneak attacks against them deal 50% more damage.
 70 - Backup Plan - After being out of combat for at least 5 seconds, entering combat will place a Tripwire behind you for 60 seconds. This does not count against the limit of one Tripwire at a time.
 70 - Clean Escape - When you stand still for 8 seconds while sneaking, enemies within 150 feet no longer search for you.
 80 - Behind Enemy Lines - Sneaking is 15% more effective for each enemy within 100 feet that is not detecting you.
@@ -456,13 +456,13 @@ Sneak
 90 - Cloak and Dagger - Breaking invisibility with a power attack is a guaranteed critical strike that deals 50% more critical damage.
 90 - Greased Lightning - A hidden bottle enables you to leave a trail of grease whenever you perform a silent roll in combat. The grease lasts for 10 seconds and staggers running enemies, while sprinting enemies slip and fall to the ground.
 90 - Shadow Warrior - Entering sneak mode in combat grants 2 seconds of invisibility, briefly leaving combat and forcing distant opponents to search for you. This effect has an 8 second cooldown.
-100 - Laughing Ghost - Grants the "Laughing Ghost" power. At will, while sneaking, teleport through the shadows behind a target to attempt a sneak power attack with your right weapon that deals double sneak attack damage. The target must be out of combat.
+100 - Laughing Ghost - Grants the 'Laughing Ghost' power. At will, while sneaking, teleport through the shadows behind a target to attempt a sneak power attack with your right weapon that deals double sneak attack damage. The target must be out of combat.
 
 Speech
 
 0 - Speech Mastery (2) - Sell items for 10/20% more. Your intimidation attempts are twice/four times as likely to succeed.
 20 - And the Universe Listens - Shouting restores points of Health, Magicka and Stamina equal to your shout cooldown in seconds. You gain Speech experience when shouting based on your shout cooldown.
-20 - Performer - Grants the "Perform" power. Once a day, play a song to entertain up to five people within 50 feet and collect a donation from each, based on your Speech skill and the amount of gold they are carrying.
+20 - Performer - Grants the 'Perform' power. Once a day, play a song to entertain up to five people within 50 feet and collect a donation from each, based on your Speech skill and the amount of gold they are carrying.
 30 - Bribery - Can bribe guards to ignore crimes.
 30 - Kinship - Buy items for 15% less when trading with the same race.
 30 - Irresistible Dance - Can Perform in combat to force the two nearest enemy people within 100 feet to dance spellbound, preventing them from acting and reducing their armor skills by 50 levels. Use again to stop.
@@ -473,15 +473,15 @@ Speech
 40 - Windborne - Shouting summons up a divine wind, granting 30% extra attack damage and 15% increased movement speed for 15 seconds. This effect stacks.
 50 - Force Redoubled (2) - 25/50% chance to reduce the cooldown of any shout to 3 seconds.
 50 - Salesman - Can sell any type of item to any kind of merchant.
-50 - Speak with Animals - Can Activate animals to tame them, forcing them to follow you anywhere you go and fight for you until released. You can only have one Wild Companion at a time. Use the "Release Companion" power to release your Wild Companion.
+50 - Speak with Animals - Can Activate animals to tame them, forcing them to follow you anywhere you go and fight for you until released. You can only have one Wild Companion at a time. Use the 'Release Companion' power to release your Wild Companion.
 60 - Earthquake Drum - Can Perform in combat to unleash shockwaves. Each drumbeat deals 50 points of damage to nearby enemies within 30 feet. Use again to stop.
 60 - Hurricane Force - Shouts that affect others are 1% more powerful per level of Speech.
 60 - Investor - Can invest 500 gold with a shopkeeper to increase his or her available gold by 500 permanently.
 70 - Fence - Can barter stolen goods with any merchant.
-70 - Horn of Sovngarde (2) - Grants the "Horn of Sovngarde" power. Once a day, blow a horn to call the nearest three friendly people (except followers) within 200 feet to follow you for 600 seconds/one ingame day.
+70 - Horn of Sovngarde (2) - Grants the 'Horn of Sovngarde' power. Once a day, blow a horn to call the nearest three friendly people (except followers) within 200 feet to follow you for 600 seconds/one ingame day.
 70 - Thu'um of War - Your shouts stagger nearby enemies within 25 feet, reducing armor rating by 300 points for 10 seconds and knocking enemies below 25% Health to the ground.
 80 - Gift of Kynareth - Improves your Wild Companion. Wolves gain 100% extra attack damage. Spiders gain magic immunity. Bears gain 150 points of Health. Chaurus gain 300 points of armor. Saber cats gain 40% movement speed and move silently.
-80 - Merciless Storm - Grants the "Merciless Storm" power. Once a day, cancels an active shout cooldown, allowing you to shout again immediately afterwards.
+80 - Merciless Storm - Grants the 'Merciless Storm' power. Once a day, cancels an active shout cooldown, allowing you to shout again immediately afterwards.
 80 - Witching Rhythm - Earthquake Drum deals 50% more damage. Each beat of Earthquake Drum also briefly reduces the magic resistance of affected enemies by 200% for 0.4 seconds.
 90 - Lord of the Dance - Irresistible Dance can affect up to five enemies.
 90 - War Drummer - Each beat of Earthquake Drum also heals nearby allies by up to 20 points based on their missing Health percentage, and grants them 100% extra attack damage for 0.4 seconds.

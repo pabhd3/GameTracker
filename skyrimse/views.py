@@ -321,3 +321,52 @@ def completeQuest(request):
     quest.save()
     progress.save()
     return(redirect("/skyrimse/quests/{questLine}".format(questLine=questLine)))
+
+########################
+##### Perk Related #####
+########################
+def perks(request):
+    # Pull all the questsallPerks, quest's cources, and quest's questlines
+    allPerks = Perk.objects.all()   
+    allSources = set([p.source for p in allPerks])
+    # Dynamically load quest sources
+    perkFiles = list(filter(lambda x: "Perks" in x, [f for f in os.listdir('skyrimse/static/json/')]))
+    data = {"counts": {}, "sources": {}}
+    for p in perkFiles:
+        source = p.replace("Perks.json", "")
+        data["counts"][source] = len(Perk.objects(source=source))
+    # Sort questlines into sources, and get counts per difficulty per questline
+    for source in allSources:
+        data["sources"][source] = {}
+        for perk in allPerks:
+            if(perk.skill not in data["sources"][source] and perk.source == source):
+                    total = len(Perk.objects(skill=perk.skill, source=source))
+                    progData = {"novice": {"complete": len(Perk.objects(skill=perk.skill, source=source, completion__novice__gt=0)), 
+                                "total": total},
+                                "apprentice": {"complete": len(Perk.objects(skill=perk.skill, source=source, completion__apprentice__gt=0)), 
+                                "total": total},
+                                "adept": {"complete": len(Perk.objects(skill=perk.skill, source=source, completion__adept__gt=0)), 
+                                "total": total},
+                                "expert": {"complete": len(Perk.objects(skill=perk.skill, source=source, completion__expert__gt=0)), 
+                                "total": total},
+                                "master": {"complete": len(Perk.objects(skill=perk.skill, source=source, completion__master__gt=0)), 
+                                "total": total},
+                                "legendary": {"complete": len(Perk.objects(skill=perk.skill, source=source, completion__legendary__gt=0)), 
+                                "total": total}}
+                    data["sources"][source][perk.skill] = progData
+    print("\n\n", data, "\n\n")
+    return render(request, "skyrimsePerks.html", {'data': data})
+
+def perksLoad(request):
+    # Pull data from JSON file
+    toLoad = "skyrimse/static/json/{source}Perks.json".format(source=request.path.split("=")[1])
+    with open(file=toLoad, mode="r") as f:
+        jsonData = load(f)
+        f.close()
+    # Create and save a Quest object
+    for perkData in jsonData:
+        perk = Perk(skill=perkData["skill"], source=perkData["source"], name=perkData["name"],
+            description=perkData["description"], level=perkData["level"], 
+            completion = Tracker(novice=0, apprentice=0, adept=0, expert=0, master=0, legendary=0))
+        perk.save()
+    return redirect("/skyrimse/perks")

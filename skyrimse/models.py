@@ -74,3 +74,14 @@ class Quest(Document):
     section = fields.StringField()
     completion = fields.EmbeddedDocumentField(Tracker)
     radiant = fields.BooleanField()
+
+###############################
+##### Perk Related Models #####
+###############################
+class Perk(Document):
+    skill = fields.StringField()
+    name = fields.StringField()
+    description = fields.StringField()
+    level = fields.IntField()
+    source = fields.StringField()
+    completion = fields.EmbeddedDocumentField(Tracker)
