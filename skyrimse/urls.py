@@ -19,5 +19,7 @@ urlpatterns = [
     url(r"^quests/completeQuest=\w+", views.completeQuest),
     # Perk Related
     url(r"^perks/$", views.perks),
-    url(r"^perks/perksLoad=\w+", views.perksLoad)
+    url(r"^perks/perksLoad=\w+", views.perksLoad),
+    url(r"^perks/\w+-\w+", views.perkDetail),
+    url(r"^perks/learnPerk=\w+", views.learnPerk)
 ]

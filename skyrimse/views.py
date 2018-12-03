@@ -51,10 +51,13 @@ def addDifficulty(request):
             speech=Skill(level=0, legendary=0), twoHanded=Skill(level=0, legendary=0))
     questCount = sum([len(Quest.objects(source=source)) for source in ["vanilla", "dawnguard", "dragonborn"]])
     modQuestCount = len(Quest.objects.all()) - questCount
+    perkCount = len(Perk.objects(source="vanilla"))
+    modPerkCount = len(Perk.objects.all()) - perkCount
     totalCount = sum([questCount])
     modTotalCount = sum([modQuestCount])
-    progress.collected = Collected(quests=0, modQuests=0, total=0, modTotal=0)
-    progress.collectedTotal = Collected(quests=questCount, modQuests=modQuestCount, total=totalCount, modTotal=modTotalCount)
+    progress.collected = Collected(quests=0, modQuests=0, perks=0, modPerks=0, total=0, modTotal=0)
+    progress.collectedTotal = Collected(quests=questCount, modQuests=modQuestCount, perks=perkCount, 
+        modPerks=modPerkCount, total=totalCount, modTotal=modTotalCount)
     progress.save()
     # Generate a Radar Graph for the progress
     plotRader(values=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], difficulty=progress.difficulty)
@@ -71,19 +74,12 @@ def deleteDifficulty(request):
     progress.delete()
     # Delete Quest Data
     for quest in Quest.objects.all():
-        if(progress.difficulty == "Novice"):
-            quest.update(set__completion__novice=0)
-        elif(progress.difficulty == "Apprentice"):
-            quest.update(set__completion__apprentice=0)
-        elif(progress.difficulty == "Adept"):
-            quest.update(set__completion__adept=0)
-        elif(progress.difficulty == "Expert"):
-            quest.update(set__completion__expert=0)
-        elif(progress.difficulty == "Master"):
-            quest.update(set__completion__master=0)
-        elif(progress.difficulty == "Legendary"):
-            quest.update(set__completion__legendary=0)
+        quest["completion"][progress.difficulty] = 0
         quest.save()
+    # Delete Perk Data
+    for perk in Perk.objects.all():
+        perk["completion"][progress.difficulty] = 0
+        perk.save
     return redirect("/skyrimse/progress")
 
 def levelSkill(request):
@@ -94,46 +90,11 @@ def levelSkill(request):
     levelType = paramsStr.split("&")[2].split("=")[1]
     progress = Progress.objects(id=difficulty).first()
     # Update skill level
-    if(skill == "alchemy"):
-        if(levelType == "level"):
-            progress.update(inc__skills__alchemy__level=1)
-        else:
-            progress.update(set__skills__alchemy__level=0)
-            progress.update(inc__skills__alchemy__legendary=1)
-    elif(skill == "alteration"):
-        progress.update(inc__skills__alteration__level=1)
-    elif(skill == "archery"):
-        progress.update(inc__skills__archery__level=1)
-    elif(skill == "block"):
-        progress.update(inc__skills__block__level=1)
-    elif(skill == "conjuration"):
-        progress.update(inc__skills__conjuration__level=1)
-    elif(skill == "destruction"):
-        progress.update(inc__skills__destruction__level=1)
-    elif(skill == "enchanting"):
-        progress.update(inc__skills__enchanting__level=1)
-    elif(skill == "heavyArmor"):
-        progress.update(inc__skills__heavyArmor__level=1)
-    elif(skill == "illusion"):
-        progress.update(inc__skills__illusion__level=1)
-    elif(skill == "lightArmor"):
-        progress.update(inc__skills__lightArmor__level=1)
-    elif(skill == "lockpicking"):
-        progress.update(inc__skills__lockpicking__level=1)
-    elif(skill == "oneHanded"):
-        progress.update(inc__skills__oneHanded__level=1)
-    elif(skill == "pickPocket"):
-        progress.update(inc__skills__pickPocket__level=1)
-    elif(skill == "restoration"):
-        progress.update(inc__skills__restoration__level=1)
-    elif(skill == "smithing"):
-        progress.update(inc__skills__smithing__level=1)
-    elif(skill == "sneak"):
-        progress.update(inc__skills__sneak__level=1)
-    elif(skill == "speech"):
-        progress.update(inc__skills__speech__level=1)
-    elif(skill == "twoHanded"):
-        progress.update(inc__skills__twoHanded__level=1)
+    if(levelType == "level"):
+        progress["skills"][skill]["level"] += 1
+    else:
+        progress["skills"][skill]["level"] = 0
+        progress["skills"][skill]["legendary"] += 1
     progress.save()
     # Pull levels for new Radar Graph
     newLevels = [progress.skills.alchemy.level, progress.skills.alteration.level, 
@@ -252,72 +213,16 @@ def completeQuest(request):
     quest = Quest.objects(id=questID).first()
     progress = Progress.objects(difficulty=difficulty).first()
     # Update the Quest Object
-    if(difficulty == "novice"):
-        if(quest.completion.novice == 0):
-            if(quest.source in ("vanilla", "dawnguard", "dragonborn")):
-                progress.update(inc__collected__quests=1)
-                progress.update(inc__collected__total=1)
-                progress.update(set__completion__vanilla=progress.collected.total/progress.collectedTotal.total)
-            else:
-                progress.update(inc__collected__modQuests=1)
-                progress.update(inc__collected__modTotal=1)
-                progress.update(set__completion__vanilla=progress.collected.modTotal/progress.collectedTotal.modTotal)
-        quest.update(inc__completion__novice=1)
-    elif(difficulty == "apprentice"):
-        if(quest.completion.apprentice == 0):
-            if(quest.source in ("vanilla", "dawnguard", "dragonborn")):
-                progress.update(inc__collected__quests=1)
-                progress.update(inc__collected__total=1)
-                progress.update(set__completion__vanilla=progress.collected.total/progress.collectedTotal.total)
-            else:
-                progress.update(inc__collected__modQuests=1)
-                progress.update(inc__collected__modTotal=1)
-                progress.update(set__completion__vanilla=progress.collected.modTotal/progress.collectedTotal.modTotal)
-        quest.update(inc__completion__apprentice=1)
-    elif(difficulty == "adept"):
-        if(quest.completion.adept == 0):
-            if(quest.source in ("vanilla", "dawnguard", "dragonborn")):
-                progress.update(inc__collected__quests=1)
-                progress.update(inc__collected__total=1)
-                progress.update(set__completion__vanilla=progress.collected.total/progress.collectedTotal.total)
-            else:
-                progress.update(inc__collected__modQuests=1)
-                progress.update(inc__collected__modTotal=1)
-                progress.update(set__completion__vanilla=progress.collected.modTotal/progress.collectedTotal.modTotal)
-        quest.update(inc__completion__adept=1)
-    elif(difficulty == "expert"):
-        if(quest.completion.expert == 0):
-            if(quest.source in ("vanilla", "dawnguard", "dragonborn")):
-                progress.update(inc__collected__quests=1)
-                progress.update(inc__collected__total=1)
-                progress.update(set__completion__vanilla=progress.collected.total/progress.collectedTotal.total)
-            else:
-                progress.update(inc__collected__modQuests=1)
-                progress.update(inc__collected__modTotal=1)
-                progress.update(set__completion__vanilla=progress.collected.modTotal/progress.collectedTotal.modTotal)
-        quest.update(inc__completion__expert=1)
-    elif(difficulty == "master"):
-        if(quest.completion.master == 0):
-            if(quest.source in ("vanilla", "dawnguard", "dragonborn")):
-                progress.update(inc__collected__quests=1)
-                progress.update(inc__collected__total=1)
-                progress.update(set__completion__vanilla=progress.collected.total/progress.collectedTotal.total)
-            else:
-                progress.update(inc__collected__modQuests=1)
-                progress.update(inc__collected__modTotal=1)
-                progress.update(set__completion__vanilla=progress.collected.modTotal/progress.collectedTotal.modTotal)
-        quest.update(inc__completion__master=1)
-    elif(difficulty == "legendary"):
-        if(quest.completion.legendary == 0):
-            if(quest.source in ("vanilla", "dawnguard", "dragonborn")):
-                progress.update(inc__collected__quests=1)
-                progress.update(inc__collected__total=1)
-                progress.update(set__completion__vanilla=progress.collected.total/progress.collectedTotal.total)
-            else:
-                progress.update(inc__collected__modQuests=1)
-                progress.update(inc__collected__modTotal=1)
-                progress.update(set__completion__vanilla=progress.collected.modTotal/progress.collectedTotal.modTotal)
-        quest.update(inc__completion__legendary=1)
+    if(quest["completion"][difficulty] == 0):
+        if(quest.source in ("vanilla", "dawnguard", "dragonborn")):
+            progress["collected"]["quests"] += 1
+            progress["collected"]["total"] += 1
+            progress["completion"]["vanilla"] = progress.collected.total / progress.collectedTotal.total
+        else:
+            progress["collected"]["modQuests"] += 1
+            progress["collected"]["modTotal"] += 1
+            progress["completion"]["mod"] = progress.collected.modTotal / progress.collectedTotal.modTotal
+        quest["completion"][difficulty] += 1
     quest.save()
     progress.save()
     return(redirect("/skyrimse/quests/{questLine}".format(questLine=questLine)))
@@ -329,32 +234,31 @@ def perks(request):
     # Pull all the questsallPerks, quest's cources, and quest's questlines
     allPerks = Perk.objects.all()   
     allSources = set([p.source for p in allPerks])
+    allSkills = set([p.skill for p in allPerks])
     # Dynamically load quest sources
     perkFiles = list(filter(lambda x: "Perks" in x, [f for f in os.listdir('skyrimse/static/json/')]))
-    data = {"counts": {}, "sources": {}}
+    data = {"counts": {}, "skills": {}}
     for p in perkFiles:
         source = p.replace("Perks.json", "")
         data["counts"][source] = len(Perk.objects(source=source))
-    # Sort questlines into sources, and get counts per difficulty per questline
-    for source in allSources:
-        data["sources"][source] = {}
-        for perk in allPerks:
-            if(perk.skill not in data["sources"][source] and perk.source == source):
-                    total = len(Perk.objects(skill=perk.skill, source=source))
-                    progData = {"novice": {"complete": len(Perk.objects(skill=perk.skill, source=source, completion__novice__gt=0)), 
-                                "total": total},
-                                "apprentice": {"complete": len(Perk.objects(skill=perk.skill, source=source, completion__apprentice__gt=0)), 
-                                "total": total},
-                                "adept": {"complete": len(Perk.objects(skill=perk.skill, source=source, completion__adept__gt=0)), 
-                                "total": total},
-                                "expert": {"complete": len(Perk.objects(skill=perk.skill, source=source, completion__expert__gt=0)), 
-                                "total": total},
-                                "master": {"complete": len(Perk.objects(skill=perk.skill, source=source, completion__master__gt=0)), 
-                                "total": total},
-                                "legendary": {"complete": len(Perk.objects(skill=perk.skill, source=source, completion__legendary__gt=0)), 
-                                "total": total}}
-                    data["sources"][source][perk.skill] = progData
-    print("\n\n", data, "\n\n")
+    # Sort skills into sources, and get counts per difficulty per questline
+    for skill in allSkills:
+        data["skills"][skill] = {}
+        for source in allSources:
+            total = len(Perk.objects(skill=skill, source=source))
+            progData = {"novice": {"complete": len(Perk.objects(skill=skill, source=source, completion__novice__gt=0)), 
+                        "total": total},
+                        "apprentice": {"complete": len(Perk.objects(skill=skill, source=source, completion__apprentice__gt=0)), 
+                        "total": total},
+                        "adept": {"complete": len(Perk.objects(skill=skill, source=source, completion__adept__gt=0)), 
+                        "total": total},
+                        "expert": {"complete": len(Perk.objects(skill=skill, source=source, completion__expert__gt=0)), 
+                        "total": total},
+                        "master": {"complete": len(Perk.objects(skill=skill, source=source, completion__master__gt=0)), 
+                        "total": total},
+                        "legendary": {"complete": len(Perk.objects(skill=skill, source=source, completion__legendary__gt=0)), 
+                        "total": total}}
+            data["skills"][skill][source] = progData
     return render(request, "skyrimsePerks.html", {'data': data})
 
 def perksLoad(request):
@@ -370,3 +274,41 @@ def perksLoad(request):
             completion = Tracker(novice=0, apprentice=0, adept=0, expert=0, master=0, legendary=0))
         perk.save()
     return redirect("/skyrimse/perks")
+
+def perkDetail(request):
+    # Pull source and questline from HTTP request.path
+    perkSource = request.path.replace("/skyrimse/perks/", "").split("-")[0]
+    skill = request.path.replace("/skyrimse/perks/", "").split("-")[1]
+    # Pull all perks
+    allPerks = Perk.objects(source=perkSource, skill=skill)
+    data = {"source": perkSource, "skill": skill.capitalize(), "perks": allPerks,
+            "skillLevels": {"novice": None, "apprentice": None, "adept": None, 
+                            "expert": None, "master": None, "legendary": None}}
+    # Find character skill levels
+    for progress in Progress.objects.all():
+        data["skillLevels"][progress.difficulty] = progress["skills"][skill]["level"]
+    return render(request, 'skyrimsePerksDetail.html', {'data': data})
+
+def learnPerk(request):
+    # Determine params from HTTP request
+    params = request.path.split("/skyrimse/perks/")[1]
+    perkID = params.split("&")[0].split("=")[1]
+    difficulty = params.split("&")[1].split("=")[1]
+    sourceSkill = params.split("&")[2].split("=")[1]
+    # Pull the Perk and Progress objects
+    perk = Perk.objects(id=perkID).first()
+    progress = Progress.objects(difficulty=difficulty).first()
+    # Update the Quest Object
+    if(perk["completion"][difficulty] == 0):
+        if(perk.source in ("vanilla", "dawnguard", "dragonborn")):
+            progress["collected"]["perks"] += 1
+            progress["collected"]["total"] += 1
+            progress["completion"]["vanilla"] = progress.collected.total / progress.collectedTotal.total
+        else:
+            progress["collected"]["modPerks"] += 1
+            progress["collected"]["modTotal"] += 1
+            progress["completion"]["mod"] = progress.collected.modTotal / progress.collectedTotal.modTotal
+        perk["completion"][difficulty] += 1
+    perk.save()
+    progress.save()
+    return redirect("/skyrimse/perks/{sourceSkill}".format(sourceSkill=sourceSkill))

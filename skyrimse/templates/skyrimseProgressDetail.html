@@ -199,6 +199,7 @@
     </div>
     <div>
       <h2>Stats</h2>
+      <!-- Quests -->
       <div class="row">
         <div class="col">
           <b>Quests<b>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -209,6 +210,19 @@
           <b>Quests (mods)<b>&nbsp;&nbsp;&nbsp;&nbsp;
           <progress value={{data.collected.modQuests}} max={{data.collectedTotal.modQuests}}></progress>&nbsp;&nbsp;&nbsp;&nbsp;
           {{data.collected.modQuests}} / {{data.collectedTotal.modQuests}}
+        </div>
+      </div>
+      <!-- Perks -->
+      <div class="row">
+        <div class="col">
+          <b>Perks<b>&nbsp;&nbsp;&nbsp;&nbsp;
+          <progress value={{data.collected.perks}} max={{data.collectedTotal.perks}}></progress>&nbsp;&nbsp;&nbsp;&nbsp;
+          {{data.collected.perks}} / {{data.collectedTotal.perks}}
+        </div>
+        <div class="col">
+          <b>Perks (mods)<b>&nbsp;&nbsp;&nbsp;&nbsp;
+          <progress value={{data.collected.modPerks}} max={{data.collectedTotal.modPerks}}></progress>&nbsp;&nbsp;&nbsp;&nbsp;
+          {{data.collected.modPerks}} / {{data.collectedTotal.modPerks}}
         </div>
       </div>
     </div>

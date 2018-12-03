@@ -16,21 +16,23 @@
       {% endif %}
     {% endfor %}
   </div>
-  {% for source, questLines in data.sources.items%}
-    <h2>{{source}}</h2>
+  <!-- List out Progress of Skills by Source -->
+  {% for skill, skillInfo in data.skills.items%}
+    <h2>{{skill}}</h2>
     <div class="row">
-      {% for questLine, stats in questLines.items %}
-        <div class="col-sm-6" style="padding:0;">
-          <a href="{{source}}-{{questLine}}"><h5>{{questLine}}</h5></a>
+      {% for source, sourceInfo in skillInfo.items %}
+        <div class="col-4">
+          <a href="{{source}}-{{skill}}"><h5>{{source}}</h5></a>
           <table border="1">
-          <tr>
-            <td>TODO: Add Description</td>
-            <td>
-              {% for difficulty, progress in stats.items %}
-                {{difficulty}}: <progress value={{progress.complete}} max={{progress.total}}></progress> {{progress.complete}}/{{progress.total}}<br>
-              {% endfor %}
-            </td>
-          </tr>
+            <tr><td>
+              {% for difficulty, progress in sourceInfo.items %}
+              <div class="col-12">
+                {{difficulty}}: 
+                <progress value={{progress.complete}} max={{progress.total}}></progress> 
+                {{progress.complete}}/{{progress.total}}
+              </div>
+            {% endfor %}
+            </td></tr>
           </table>
         </div>
       {% endfor %}

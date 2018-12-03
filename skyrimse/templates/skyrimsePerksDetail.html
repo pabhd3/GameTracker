@@ -1,0 +1,132 @@
+<!-- Extending from base.html -->
+{% extends 'base.html' %}
+<!-- Used to load in static files -->
+{% load static %}
+
+{% block content %}
+  <!-- Page Title Descriptor -->
+  <h1>{{data.skill}}</h1>
+  <h5>Source: {{data.source}}</h5>
+  <!-- Link back to previous page -->
+  <a href="/skyrimse/perks/">The Elder Scrolls V: Skyrim Special Edition (Perks Page)</a>
+  <!-- List our the Perks -->
+  <div class="row">
+    {% for perk in data.perks %}
+      <div class="col-6">
+        <h6>{{ perk.name }}</h6>
+        <table border="1">
+          <tr>
+            <td>
+              <b>Description: </b>{{ perk.description }}<br>
+              <b>Level: </b>{{ perk.level }}
+            </td>
+            <td style="width:70%;">
+              <!-- Novice -->
+              <div class="row">
+                <div class="col">Novice</div>
+                {% if perk.completion.novice > 0 %}
+                  <div class="col">Leared</div>
+                {% else %}
+                  {% if data.skillLevels.novice != None %}
+                    {% if data.skillLevels.novice >= perk.level %}
+                      <div class="col"><input type="button" onclick="window.location.href='learnPerk={{perk.id}}&difficulty=novice&sourceSkill={{perk.source}}-{{perk.skill}}'" value="Learn"></div>
+                    {% else %}
+                      <div class="col">Level not high enough</div>
+                    {% endif %}
+                  {% else %}
+                    <div class="col">Difficulty not started</div>
+                  {% endif %}
+                {% endif %}
+              </div>
+              <!-- Apprentice -->
+              <div class="row">
+                <div class="col">Apprentice</div>
+                {% if perk.completion.apprentice > 0 %}
+                  <div class="col">Leared</div>
+                {% else %}
+                  {% if data.skillLevels.apprentice != None %}
+                    {% if data.skillLevels.apprentice >= perk.level %}
+                      <div class="col"><input type="button" onclick="window.location.href='learnPerk={{perk.id}}&difficulty=apprentice&sourceSkill={{perk.source}}-{{perk.skill}}'" value="Learn"></div>
+                    {% else %}
+                      <div class="col">Level not high enough</div>
+                    {% endif %}
+                  {% else %}
+                    <div class="col">Difficulty not started</div>
+                  {% endif %}
+                {% endif %}
+              </div>
+             <!-- Adept -->
+              <div class="row">
+                <div class="col">Adept</div>
+                {% if perk.completion.adept > 0 %}
+                  <div class="col">Leared</div>
+                {% else %}
+                  {% if data.skillLevels.adept != None %}
+                    {% if data.skillLevels.adept >= perk.level %}
+                      <div class="col"><input type="button" onclick="window.location.href='learnPerk={{perk.id}}&difficulty=adept&sourceSkill={{perk.source}}-{{perk.skill}}'" value="Learn"></div>
+                    {% else %}
+                      <div class="col">Level not high enough</div>
+                    {% endif %}
+                  {% else %}
+                    <div class="col">Difficulty not started</div>
+                  {% endif %}
+                {% endif %}
+              </div>
+              <!-- Expert -->
+              <div class="row">
+                <div class="col">Expert</div>
+                {% if perk.completion.expert > 0 %}
+                  <div class="col">Leared</div>
+                {% else %}
+                  {% if data.skillLevels.expert != None %}
+                    {% if data.skillLevels.expert >= perk.level %}
+                      <div class="col"><input type="button" onclick="window.location.href='learnPerk={{perk.id}}&difficulty=expert&sourceSkill={{perk.source}}-{{perk.skill}}'" value="Learn"></div>
+                    {% else %}
+                      <div class="col">Level not high enough</div>
+                    {% endif %}
+                  {% else %}
+                    <div class="col">Difficulty not started</div>
+                  {% endif %}
+                {% endif %}
+              </div>
+              <!-- Master -->
+              <div class="row">
+                <div class="col">Master</div>
+                {% if perk.completion.master > 0 %}
+                  <div class="col">Leared</div>
+                {% else %}
+                  {% if data.skillLevels.master != None %}
+                    {% if data.skillLevels.master >= perk.level %}
+                      <div class="col"><input type="button" onclick="window.location.href='learnPerk={{perk.id}}&difficulty=master&sourceSkill={{perk.source}}-{{perk.skill}}'" value="Learn"></div>
+                    {% else %}
+                      <div class="col">Level not high enough</div>
+                    {% endif %}
+                  {% else %}
+                    <div class="col">Difficulty not started</div>
+                  {% endif %}
+                {% endif %}
+              </div>
+              <!-- Legendary -->
+              <div class="row">
+                <div class="col">Legendary</div>
+                {% if perk.completion.legendary > 0 %}
+                  <div class="col">Leared</div>
+                {% else %}
+                  {% if data.skillLevels.legendary != None %}
+                    {% if data.skillLevels.legendary >= perk.level %}
+                      <div class="col"><input type="button" onclick="window.location.href='learnPerk={{perk.id}}&difficulty=legendary&sourceSkill={{perk.source}}-{{perk.skill}}'" value="Learn"></div>
+                    {% else %}
+                      <div class="col">Level not high enough</div>
+                    {% endif %}
+                  {% else %}
+                    <div class="col">Difficulty not started</div>
+                  {% endif %}
+                {% endif %}
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
