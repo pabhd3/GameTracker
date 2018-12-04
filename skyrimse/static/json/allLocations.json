@@ -1,0 +1,559 @@
+Vanilla
+    Cities
+        Dawnstar
+        Falkreath
+        Markarth
+        Morthal
+        Riften
+        Solitude
+        Whiterun
+        Windhelm
+        Winterhold
+    Towns
+        Dragon Bridge
+        Helgen
+        Ivarstead
+        Karthwaster
+        Riverwood
+        Rorikstead
+        Shor's Stone
+    Homesteads
+        Windstad Manor
+        Lakeview Manor
+        Heljarchen Hall
+    Settlements
+        Black-Briar Lodge
+        Brandy-Mug Farm
+        Dark Brotherhood Sanctuary
+        Dawnstar Sanctuary
+        Goldenglow Estate
+        Honningbrew Meadery
+        Japhet's Folly
+        Kynesgrove
+        Nightgate Inn
+        Old Hroldan
+        Thalmor Embassy
+    Daedric Shrines
+        Sacellum of Beothaih
+        Shrine of Azura
+        Shrine of Mehrunes Dagon
+        Shrine of Nocturnal
+        Shrine to Peryite
+        Statue to Meridia
+    Standing Stones
+        The Apprentice Stone
+        The Atronach Stone
+        The Guardian Stones
+        The Lady Stone
+        The Lord Stone
+        The Lover Stone
+        The Mage Stone
+        The Ritual Stone
+        The Serpent Stone
+        The Shadow Stone
+        The Steed Stone
+        The Thief Stone
+        The Tower Stone
+        The Warrior Stone
+    Landmarks
+        Bard's Leap Summit
+        Deep Folk Crossing
+        Gjukar's Monument
+        Orphan Rock
+        Reachwind Eyrie
+        Ruins of Bthalft
+        Ruins of Rkund
+        Sky Haven Temple
+        Throat of the World
+        Weynon Stones
+    Camps
+        Dragon Bridge Overlook
+        Druadach Redoubt
+        Halted Stream Camp
+        Karthspire Camp
+        Knifepoint Ridge
+        Robber's Cove
+        Robber's Gorge
+        Serpent's Bluff Redoubt
+    Caves
+        Bleakcoast Cave
+        Blindcliff Cave
+        Bloated Man's Grotto
+        Bonechill Passage
+        Boulderfall Cave
+        Brinewater Grotto
+        Brittleshin Pass
+        Broken Fang Cave
+        Broken Helm Hollow
+        Broken Oar Grotto
+        Bronze Water Cave
+        Brood Cavern
+        Bruca's Leap Redoubt
+        Chillwind Depths
+        Cragslane Cavern
+        Cragwallow Slope
+        Cronvangr Cave
+        Crystaldrift Cave
+        Darkshade
+        Darkwater Pass
+        Duskglow Crevice
+        Eldergleam Sanctuary
+        Fallowstone Cave
+        Forsaken Cave
+        Glenmoril Coven
+        Gloomreach
+        Gulden Rock Cave
+        Graywinter Watch
+        Greenwall Cave
+        Greywater Grotto
+        Haemar's Shame
+        Halldir's Carin
+        Hob's Fall Cave
+        Honeystrand Cave
+        Liar's Retreat
+        Lost Echo Cave
+        Lost Knife Cave
+        Lost Knife Hideout
+        Moss Mother Cavern
+        Movarth's Lair
+        Nightingale Hall
+        Orotheim
+        Pinewood Cave
+        Pinepeak Cavern
+        Purewater Run
+        Ravenscar Hollow
+        Reachcliff Cave
+        Reachwater Rock
+        Rebel's Carin
+        Red Eagle Redoubt
+        Redoran's Retreat
+        Rimerock Burrow
+        Septimus Signus' Outpost
+        Shadowgreen Cavern
+        Shimmermist Cave
+        Sightless Pit
+        Sleeping Tree Cave
+        Snapleg Cave
+        Soljund's Sinkhole
+        Southfringe Sanctum
+        Steepfall Burrow
+        Stillborn Cave
+        Stony Creek Cave
+        Sunderstone Gorge
+        Swindler's Den
+        The Chill
+        Tolvald's Cave
+        Uttering Hill's Cave
+        White River Watch
+        Wolfskull Cave
+        Yngvild
+    Clearings
+        Autumnshade Clearing
+        Clearpine Pond
+        Clearspring Tarn
+        Mara's Eye Pond
+    Docks
+        East Empire Company Warehouse
+        Windhelm Docks
+        Icewater Jetty
+    Dragon Lairs
+        Ancient's Ascent
+        Autumnwatch Tower
+        Bonestrew Crest
+        Dragontooth Crater
+        Eldersblood Peak
+        Lost Tongue Overlook
+        Mount Anthor
+        Northwind Summit
+        Shearpoint
+        Skyborn Altar
+    Dwarven Ruins
+        Alftand
+        Arkngthamz
+        Avanchzel
+        Blackreach
+        Bthardamz
+        Fahlbtharz
+        Great Lift of Alftand
+        Great Lift of Mzinchaleft
+        Great Lift of Raldbthar
+        Irkngthand
+        Kagrenzel
+        Kagrumez
+        Mzinchaleft
+        Mzulft
+        Nchardak
+        Nchuand-Zel
+        Nchuand-Zel Excavation Site
+        Raldbthar
+        Ruins of Bthalft
+        Shimmermist Cave
+        Temple of Xrib
+        Tower of Mzark
+        Understone Keep
+    Farms
+        Battle-Born Farm
+        Brandy-Mug Farm
+        Chillfurrow Farm
+        Corpselight Farm
+        Hlaalu Farm
+        Hollyfrost Farm
+        Katla's Farm
+        Loreius Farm
+        Merryfair Farm
+        Pelagia Farm
+        Salvius Farm
+        Sarethi Farm
+        Snow-Shod Farm
+    Forts
+        Bloodlet Throne
+        Broken Tower Redoubt
+        Cracked Tusk Keep
+        Darklight Tower
+        Driftshade Refuge
+        Faldar's Tooth
+        Fellglow Keep
+        Fort Amol
+        Fort Dunstad
+        Fort Fellhammer
+        Fort Greenwall
+        Fort Greymoor
+        Fort Hraggstad
+        Fort Kastav
+        Fort Neugrad
+        Fort Snowhawk
+        Fort Sungard
+        Gallows Rock
+        Harmugstahl
+        High Hrothgar
+        Ilinalta's Deep
+        Mistwatch
+        Morvunskar
+        Nightcaller Temple
+        Northwatch Keep
+        Treva's Watch
+        Western Watchtower
+    Giant Camps
+        Bleakwind Basin
+        Blizzard Rest
+        Broken Limb Camp
+        Cradlecrush Rock
+        Guldun Rock
+        Red Road Pass
+        Secunda's Kiss
+        Sleeping Tree Camp
+        Steamcrag Camp
+        Stonehill Bluff
+        Talking Stone Camp
+        Tumble Arch Pass
+    Groves
+        Evergreen Grove
+        Giant's Grove
+        Greenspring Hollow
+        Shrouded Grove
+        Witchmist Grove
+    Imperial Camps
+        Eastmarch Imperial Camp
+        Falkreath Imperial Camp
+        Hjaalmarch Imperial Camp
+        Pale Imperial Camp
+        Reach Imperial Camp
+        Rift Imperial Camp
+        Whiterun Imperial Camp
+        Winterhold Imperial Camp
+    Lighthouses
+        Frostflow Lighthouse
+        Solitude Lighthouse
+    Mines
+        Bilegulch Mine
+        Cidhna Mine
+        Darkwater Crossing
+        Dushnikh Mine
+        Embershard Mine
+        Fenn's Gulch Mine
+        Gloombound Mine
+        Goldenrock Mine
+        Iron-Breaker Mine
+        Knifepoint Mine
+        Kolskeggr Mine
+        Left Hand Mine
+        Lost Prospect Mine
+        Mor Khazgur Mine
+        Northwind Mine
+        Redbelly Mine
+        Rockwallow Mine
+        Sanuarach Mine
+        Steamscorch Mine
+        Stonehills
+        Whistiling Mine
+    Nordic Towers
+        Bannermist Tower
+        Bleakwind Bluff
+        Cradle Stone Tower
+        Dead Crone Rock
+        Nilheim
+        Peak's Shade Tower
+        South Skybound Tower
+        Sundered Towers
+        Valtheim Towers
+    Orc Strongholds
+        Dushnikh Yal
+        Largashbur
+        Mor Khazgur
+        Nazzulbur
+    Passes
+        Cold Rock Pass
+        Wayward Pass
+    Ruins
+        Four Skull Lookout
+        Hamvir's Rest
+        Journeyman's Nook
+        Kjenstag Ruins
+        Lost Valkygg
+        North Skybound Watch
+        Roadside Ruins
+        Skytemple Ruins
+        Wayward Ruins
+        Yorgrim Overlook
+    Shacks
+        Abandoned Shack
+        Alchemist's Shack
+        Angi's Camp
+        Anise's Cabin
+        Cliffside Retreat
+        Crabber's Shanty
+        Drelas' Cottage
+        Froki's Shack
+        Hall of the Vigilant
+        Hunter's Rest
+        Ironback Hideout
+        Lund's Hut
+        Meeko's Shack
+        Pinewatch
+        Riverside Shack
+        Traitor's Post
+    Ships & Shipwrecks
+        Dainty Sload
+        Hela's Folly
+        Orphan's Tear
+        Pilgrim's Trench
+        Read Wave
+        Shipwrech
+        The Katariah
+        Wreck of the Icerunner
+        Wreck of the Pride of Tel Vos
+        Wreck of the Winter War
+        Wreck of the Brinehammer
+    Stables
+        Katia's Farm
+        Markath Stables
+        Riften Stables
+        Whiterun Stables
+        Windhelm Stables
+    Stormcloak Camps
+        Falkreath Stormcloak Camp
+        Haafingar Stormcloak Camp
+        Hjaalmarch Stormcloak Camp
+        Pale Stormcloak Camp
+        Reach Stormcloak Camp
+        Rift Stormcloak Camp
+        Solitude Military Camp
+        Whiterun Stormcloak Camp
+        Whiterun Military Camp
+        Winterhold Stormcloak Camp
+    Tombs
+        Angarvunde
+        Ansilvund
+        Arcwind Point
+        Bleak Falls Barrow
+        Dead Man's Respite
+        Deepwood Redoubt
+        Dustman's Carin
+        Folgunthur
+        Forelhost
+        Frostmere Crypt
+        Geirmund's Hall
+        Hag Rock Redoubt
+        Hag's End
+        High Gate Ruins
+        Hillgrund's Tomb
+        Ironbind Barrow
+        Korvanjund
+        Labyrinthian
+        Lost Valley Redoubt
+        Ragnvald
+        Rannveig's Fast
+        Rebel's Carin
+        Saarthal
+        North Shriekwind Bastion
+        Shroud Hearth Barrow
+        Silent Moons Camp
+        Silverdrift Lair
+        Skuldafn
+        Snow Veil Sanctum
+        Twilight Sepulcher
+        Ustengrav
+        Valthume
+        Volskygge
+        Volunruud
+        Yngol Barrow
+        Ysgramor's Tomb
+    Watchtowers
+        Abandoned Prison
+        Bleakwind Bluff
+        Falkreath Watchtower
+        Pinefrost Tower
+        Refugees' Rest
+        Rift Watchtower
+        Shor's Watchtower
+        Snowpoint Beacon
+        Stendarr's Beacon
+        Sundered Towers
+        Valtheim Towers
+        Whitewatch Tower
+        Widow's Watch Ruins
+    Wheat Mills
+        Battle-Born Farm
+        Chillfurrow Farm
+        Loreius Farm
+        Pelagia Farm
+        Salvius Farm
+        Sarethi Farm
+        Snow-Shod Farm
+    Lumber Mills
+        Anga's Mill
+        Deadwood Lumber Mill
+        Half-Moon Mill
+        Heartwood Mill
+        Lumber Mill
+        Mixwater Mill
+        Solitude Sawmill
+    Castles
+        Blue Palace
+        Castle Dour
+        Dragonsreach
+        Highmoon Hall
+        Jarl's Longhouse (Falkreath)
+        Jarl's Longhouse (Winterhold)
+        Mistveil Keep
+        Palace of the Kings
+        The White Hall
+        Understone Keep
+    Guild Headquarters
+        Bards College
+        College of Winterhold
+        Dark Brotherhood Sanctuary
+        Dawnstar Sanctuary
+        Jorrvaskr
+        The Ragged Flagon - Cistern
+Dawngaurd 
+    Forts
+        Castle Volkihar
+        Fort Dawnguard
+    Shacks
+        Redwater Den
+    Groves
+        Ancestor Glade
+    Caves
+        Darkfall Cave
+        Dead Drop Falls
+        Dimhollow Crpyt
+        Forbears' Holdout
+        Mossy Glen Cave
+        Ruunvald
+    Dwemer Ruins
+        Arkngthamz
+        Aetherium Forge
+    Valleys
+        Forgotten Vale
+        Darkfall Grotto
+        Forgotten Vale Cave
+        Forgotten Vale Forest
+        Glacial Crevice
+        Inner Sanctum
+        Paragon Platform
+        Sharpslope Cave
+    Docks
+        Icewater Jetty
+    Ruins
+        Moldering Ruins
+    Other
+        Chantry of Auri-El
+        Dayspring Canyon
+        Soul Cairn
+        Ancient King
+Dragonborn
+    Cities
+        Raven Rock
+        Tel Mithryn
+    Marker Stones
+        Beast Stone
+        Earth Stone
+        Sun Stone
+        Tree Stone
+        Water Stone
+        Wind Stone
+    Camps
+        Bujold's Retreat
+        Haknir's Shoal
+        Last Vigil
+    Caves
+        Bristleback Cave
+        Benkongerike
+        Castle Karstaag Caverns
+        Castle Karstaag Ruins
+        Frossel
+        Frostmoon Crag
+        Glacial Cave
+        Hrothmund's Barrow
+    Clearings
+        Headwaters of Harstrad
+    Docks
+        Northshore Landing
+    Dragon Lairs
+        Saering's Watch
+    Dwemer Ruins
+        Fahlbtharz
+        Kagrumez
+        Nchardak
+    Farms
+        Old Attius Farm
+    Forts
+        Ashfallow Citadel
+        Fort Frostmoth
+        Highpoint Tower
+    Landmarks
+        Altar of Thrond
+        Bordir Grove
+        Frykte Peak
+        Horker Island
+        Hvitkald Peak
+        Mount Moesring
+        Mortrag Peak
+        Stalhrim Source
+    Mines
+        Broken Tusk Mine
+        Damphall Mine
+    Passes
+        Moesring Pass
+    Ruins
+        Snowclad Ruins
+    Nordic Tombs
+        Bloodskal Barrow
+        Gyledenhul Barrow
+        Kolbjorn Barrow
+        Vahlok's Tomb
+        White Ridge Barrow
+    Towns
+        Skaal Village
+    Settlements
+        Thrisk Mead Hall
+    Shacks
+        Abandoned Lodge
+        Hrofulf's House
+        Ramshackle Trading Post
+    Ships & Shipwrecks
+        Northern Maiden
+        Wreck of the Strident Squall
+    Temples
+        Temple of Miraak

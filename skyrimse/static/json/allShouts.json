@@ -1,0 +1,228 @@
+Dragon Shout (ID)	Word of Power	Translation	Word Wall Location	Cool Down Time
+SR-icon-shout-White.png	Animal Allegiance
+(0005fc77)	A Shout for help from the beasts of the wild, who come to fight in your defense.
+R1N	(Raan)	Animal	
+Ancient's Ascent
+Angarvunde
+Ysgramor's Tomb (atop the hill, quest locked)
+50
+M7	(Mir)	Allegiance	60
+T4	(Tah)	Pack	70
+SR-icon-shout-Pink.png	Aura Whisper
+(0007097b)	Your Voice is not a Shout, but a whisper, revealing the life forces of any and all.
+L1S	(Laas)	Life	
+Northwind Summit
+Valthume
+Volunruud
+30
+Y4	(Yah)	Seek	40
+N7	(Nir)	Hunt	50
+SR-icon-shout-Dragonrend.png	Battle FuryDB
+(xx02ad09)	Your Thu'um enchants your nearby allies' weapons, allowing them to attack faster.
+MID	(Mid)	Loyal	
+All three words are found in Vahlok's Tomb
+20
+V6	(Vur)	Valor	30
+SH1N	(Shaan)	Inspire	40
+SR-icon-shout-Ethereal.png	Become Ethereal
+(00032920)	The Thu'um reaches out to the Void, changing your form to one that cannot harm, or be harmed.
+F2M	(Feim)	Fade	
+Ironbind Barrow
+Lost Valley Redoubt
+Ustengrav (quest locked)
+20
+Z3	(Zii)	Spirit	30
+GRON	(Gron)	Bind	40
+DB-icon-shout-Bend Will.png	Bend WillDB
+(xx0179d8)	Your voice bends the very stones to your will. As it gains power, animals, people, and even dragons must do your bidding.
+GOL	(Gol)	Earth	
+Saering's Watch
+Taught to you by Hermaeus Mora (during The Path of Knowledge)
+Taught to you by Hermaeus Mora (during The Gardener of Men)
+10
+H4	(Hah)	Mind	90
+DOV	(Dov)	Dragon	120
+SR-icon-shout-White.png	Call Dragon
+(00046b8c)	Odahviing! Hear my Voice and come forth. I summon you in my time of need.
+OD	(Od)	Snow	
+High Hrothgar (all words learned together during The Fallen)
+5
+4	(Ah)	Hunter	5
+V3NG	(Viing)	Wing	300
+SR-icon-shout-Ethereal.png	Call of Valor
+(0005196a)	The valiant of Sovngarde hear your Voice, and journey beyond space and time to lend aid.
+HUN	(Hun)	Hero	
+Sovngarde (all words learned together during Dragonslayer)
+180
+K1L	(Kaal)	Champion	180
+Z8R	(Zoor)	Legend	180
+SR-icon-shout-Force.png	Clear Skies
+(0003cd34)	Skyrim itself yields before the Thu'um, as you clear away fog and inclement weather.
+LOK	(Lok)	Sky	
+High Hrothgar (during The Throat of the World)
+5
+V4	(Vah)	Spring	10
+K8R	(Koor)	Summer	15
+SR-icon-shout-White.png	CycloneDB
+(xx0200c0)	Your Thu'um creates a whirling cyclone that sows chaos among your enemies.
+VEN	(Ven)	Wind	
+White Ridge Sanctum
+Benkongerike
+Kolbjorn Barrow
+30
+G1R	(Gaar)	Unleash	45
+NOS	(Nos)	Strike	60
+SR-icon-shout-Force.png	Disarm
+(00070981)	Shout defies steel, as you rip the weapon from an opponent's grasp.
+ZUN	(Zun)	Weapon	
+Eldersblood Peak
+Silverdrift Lair
+Snow Veil Sanctum (quest locked)
+30
+H1L	(Haal)	Hand	35
+V3K	(Viik)	Defeat	40
+SR-icon-shout-Pink.png	Dismay
+(0002395a)	And the weak shall fear the Thu'um, and flee in terror.
+F1S	(Faas)	Fear	
+Dead Crone Rock
+Lost Tongue Overlook
+Shalidor's Maze
+40
+RU	(Ru)	Run	45
+M1R	(Maar)	Terror	50
+DB-icon-shout-Dragon Aspect.png	Dragon AspectDB
+(xx01df92)	Once a day, take on the mighty aspect of a dragon, delivering colossal blows, with an armored hide, and more powerful shouts.
+MUL	(Mul)	Strength	
+Raven Rock Mine
+Temple of Miraak
+Apocrypha (Waking Dreams)
+5
+Q4	(Qah)	Armor	5
+D3V	(Diiv)	Wyrm	5
+SR-icon-shout-Dragonrend.png	Dragonrend
+(00044250)	Your Voice lashes out at a dragon's very soul, forcing the beast to land.
+J8R	(Joor)	Mortal	
+Throat of the World (during Alduin's Bane)
+10
+Z4	(Zah)	Finite	12
+FRUL	(Frul)	Temporary	15
+SR-icon-shout-Marked for Death.png	Drain VitalityDG
+(xx008a62)	Coax both magical and mortal energies from your hapless opponent.
+G1N	(Gaan)	Stamina	
+Dimhollow Crypt
+Forgotten Vale
+Arcwind Point
+30
+L4	(Lah)	Magicka	60
+H1S	(Haas)	Health	90
+SR-icon-shout-White.png	Elemental Fury
+(00032921)	The Thu'um imbues your arms with the speed of wind, allowing for faster weapon strikes.
+SU	(Su)	Air	
+Dragontooth Crater
+Shriekwind Bastion
+Statue to Meridia (just uphill to the northeast)
+30
+GR4	(Grah)	Battle	40
+DUN	(Dun)	Grace	50
+SR-icon-shout-Fire Breath.png	Fire Breath
+(0003f9ea)	Inhale air, exhale flame, and behold the Thu'um as inferno.
+YOL	(Yol)	Fire	
+Dustman's Cairn (quest locked)
+Sunderstone Gorge
+Throat of the World (during The Throat of the World)
+30
+T8R	(Toor)	Inferno	50
+SHUL	(Shul)	Sun	100
+SR-icon-shout-Frost Breath.png	Frost Breath
+(0005d16b)	Your breath is winter, you [sic] Thu'um a blizzard.
+FO	(Fo)	Frost	
+Bonestrewn Crest
+Folgunthur
+Skyborn Altar
+30
+KR4	(Krah)	Cold	50
+D3N	(Diin)	Freeze	100
+SR-icon-shout-Ice Form.png	Ice Form
+(00070980)	Your Thu'um freezes an opponent solid.
+3Z	(Iiz)	Ice	
+Frostmere Crypt
+Mount Anthor
+Saarthal (quest locked)
+60
+SLEN	(Slen)	Flesh	90
+NUS	(Nus)	Statue	120
+SR-icon-shout-Kyne's Peace.png	Kyne's Peace
+(0007097e)	The Voice soothes wild beasts, who lose their desire to fight or flee.
+K1N	(Kaan)	Kyne	
+Ragnvald
+Rannveig's Fast
+Shroud Hearth Barrow
+40
+DREM	(Drem)	Peace	50
+OV	(Ov)	Trust	60
+SR-icon-shout-Marked for Death.png	Marked for Death
+(0007097c)	Speak, and let your Voice herald doom, as an opponent's armor and lifeforce are weakened.
+KR3	(Krii)	Kill	
+Autumnwatch Tower
+Dark Brotherhood Sanctuary (quest locked)
+Forsaken Cave
+20
+LUN	(Lun)	Leech	30
+AUS	(Aus)	Suffer	40
+SR-icon-shout-Slow Time.png	Slow Time
+(00048ac9)	Shout at time, and command it to obey, as the world around you stands still.
+T3D	(Tiid)	Time	
+Hag's End
+Korvanjund (quest locked)
+Labyrinthian (quest locked)
+30
+KLO	(Klo)	Sand	45
+UL	(Ul)	Eternity	60
+SR-icon-shout-Kyne's Peace.png	Soul TearDG
+(xx007cb6)	Your Thu'um cuts through flesh and shatters soul, commanding the will of the fallen.
+R3	(Rii)	Essence	
+Durnehviir teaches you a word each time you summon him from the Soul Cairn.
+5
+V1Z	(Vaaz)	Tear	5
+ZOL	(Zol)	Zombie	90
+SR-icon-shout-White.png	Storm Call
+(0007097d)	A Shout to the skies, a cry to the clouds, that awakens the destructive force of Skyrim's lightning.
+STRUN	(Strun)	Storm	
+Forelhost
+High Gate Ruins
+Skuldafn Temple (quest locked)
+300
+B4	(Bah)	Wrath	480
+QO	(Qo)	Lightning	600
+SR-icon-shout-Marked for Death.png	Summon DurnehviirDG
+(xx0030d2)	Durnehviir! Hear my Voice and come forth from the Soul Cairn. I summon you in my time of need.
+D6	(Dur)	Curse	
+Soul Cairn (all words learned together after Beyond Death)
+5
+NEH	(Neh)	Never	5
+V3R	(Viir)	Dying	300
+SR-icon-shout-White.png	Throw Voice
+(0007097f)	The Thu'um is heard, but its source unknown, fooling those into seeking it out.
+ZUL	(Zul)	Voice	
+Shearpoint (all words learned together)
+30
+M9	(Mey)	Fool	15
+GUT	(Gut)	Far	5
+SR-icon-shout-Force.png	Unrelenting Force
+(00013e07)	Your Voice is raw power, pushing aside anything - or anyone - who stands in your path.
+FUS	(Fus)	Force	
+Bleak Falls Barrow
+High Hrothgar (during The Way of the Voice)
+High Hrothgar (during The Horn of Jurgen Windcaller)
+15
+RO	(Ro)	Balance	20
+D4	(Dah)	Push	45
+SR-icon-shout-White.png	Whirlwind Sprint
+(0002f7ba)	The Thu'um rushes forward, carrying you in its wake with the speed of a tempest.
+WULD	(Wuld)	Whirlwind	
+Dead Men's Respite
+High Hrothgar (during The Way of the Voice)
+Volskygge (atop the hill)
+20
+N4	(Nah)	Fury	25
+KEST	(Kest)	Tempest	35
