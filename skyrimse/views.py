@@ -24,7 +24,9 @@ def progress(request):
             "expert": None, "master": None, "legendary": None}
     # Set whether an object exists
     for doc in docs:
-        data[doc.difficulty] = doc
+        data[doc.difficulty] = {"level": doc.level, "health": doc.health, 
+            "magicka": doc.magicka,"stamina": doc.stamina,
+            "completion": {"vanilla": doc.completion.vanilla, "mod": doc.completion.mod}}
     return render(request, 'skyrimseProgress.html', {'data': data})
 
 def addDifficulty(request):
@@ -110,7 +112,12 @@ def levelSkill(request):
 def progressDetail(request):
     # Pull id from HTTP request.path
     progressID = request.path.split("/skyrimse/progress/")[1]
-    data = Progress.objects(difficulty=progressID).first()
+    progress = Progress.objects(difficulty=progressID).first()
+    data = {"id": progress.id, "difficulty": progress.difficulty, "created": progress.created, 
+        "skills": {}, "collected": progress.collected, "collectedTotal": progress.collectedTotal}
+    for skill in progress.skills:
+        data["skills"][skill] = {"level": progress["skills"][skill]["level"],
+                                    "legendary": progress["skills"][skill]["legendary"]}
     return render(request, "skyrimseProgressDetail.html", {'data': data})
 
 def refreshProgress(request):
@@ -190,17 +197,25 @@ def questLine(request):
     # Pull all quests and quest's sections
     allQuests = Quest.objects(source=questSource, questLine=questLine)
     allSections = [q.section for q in allQuests]
-    data = {"source": questSource, "questLine": questLine, "test": allQuests[0], "sections": {},
+    data = {"source": questSource, "questLine": questLine, "sections": {},
             "progress": {"novice": None, "apprentice": None, "adept": None, 
                             "expert": None, "master": None, "legendary": None}}
     # Add each quest to the appropriate section
     for section in allSections:
-        data["sections"][section] = []
+        data["sections"][section] = {}
         for quest in allQuests:
             if(quest.section == section):
-                data["sections"][section].append(quest)
+                data["sections"][section][quest.name] ={"id": quest.id, "radiant": quest.radiant,
+                    "completion": {"novice": {"times": quest.completion.novice, "started": None}, 
+                        "apprentice": {"times": quest.completion.apprentice, "started": None},
+                        "adept": {"times": quest.completion.adept, "started": None}, 
+                        "expert": {"times": quest.completion.expert, "started": None},
+                        "master": {"times": quest.completion.master, "started": None}, 
+                        "legendary": {"times": quest.completion.legendary, "started": None}}}
     for doc in Progress.objects.all():
         data["progress"][doc.difficulty] = doc
+        for quest in allQuests:
+            data["sections"][quest.section][quest.name]["completion"][doc.difficulty]["started"] = True
     return render(request, "skyrimseQuestLine.html", {'data': data})
 
 def completeQuest(request):
@@ -281,12 +296,22 @@ def perkDetail(request):
     skill = request.path.replace("/skyrimse/perks/", "").split("-")[1]
     # Pull all perks
     allPerks = Perk.objects(source=perkSource, skill=skill)
-    data = {"source": perkSource, "skill": skill.capitalize(), "perks": allPerks,
+    data = {"source": perkSource, "skill": skill, "perks": {}, 
             "skillLevels": {"novice": None, "apprentice": None, "adept": None, 
                             "expert": None, "master": None, "legendary": None}}
+    # Add perk data
+    for perk in allPerks:
+        data["perks"][perk.name] = {"id": perk.id, "description": perk.description, "level": perk.level,
+            "completion": {"novice": {"learned": perk.completion.novice, "skillLevel": None},
+                        "apprentice": {"learned": perk.completion.apprentice, "skillLevel": None},
+                        "adept": {"learned": perk.completion.adept, "skillLevel": None},
+                        "expert": {"learned": perk.completion.expert, "skillLevel": None},
+                        "master": {"learned": perk.completion.master, "skillLevel": None},
+                        "legendary": {"learned": perk.completion.legendary, "skillLevel": None}}}
     # Find character skill levels
     for progress in Progress.objects.all():
-        data["skillLevels"][progress.difficulty] = progress["skills"][skill]["level"]
+        for perk in data["perks"]:
+            data["perks"][perk]["completion"][progress.difficulty]["skillLevel"] = progress["skills"][skill]["level"]
     return render(request, 'skyrimsePerksDetail.html', {'data': data})
 
 def learnPerk(request):

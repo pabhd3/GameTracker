@@ -11,252 +11,58 @@
   <!-- Link back to previous page -->
   <a href="/skyrimse/">The Elder Scrolls V: Skyrim Special Edition (Home Page)</a>
   <!-- Table containing difficulty progress -->
-  <table style="width:90%" border="1">
-    <tr>
-      <td>
-        <b style="font-size:20px;">Novice</b>&nbsp;&nbsp;&nbsp;&nbsp;
-        {% if data.novice == None %}
-          <input type="button" onclick="window.location.href='addDifficulty=novice'" value="Start Novice">
-        {% else %}
-          <input type="button" value="Refresh" onclick="window.location.href='refreshProgress=novice'" disabled><br><br>
-          <div class="row">
-            <div class="col">
-              <b>Level: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.novice.level}}&nbsp;&nbsp;&nbsp;&nbsp;
-              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=level&difficulty=novice'">
+  <table border="1" style="width:100%">
+    {% for difficulty, stats in data.items %}
+      {% if forloop.counter0|divisibleby:2 %}<tr>{% endif %}
+        <td>
+          <!-- Difficulty -->
+          <b style="font-size:20px;">{{ difficulty }}</b>&nbsp;&nbsp;&nbsp;&nbsp;
+          {% if stats == None %}
+            <!-- Create Button -->
+            <input type="button" onclick="window.location.href='addDifficulty={{ difficulty }}'" value="Start {{ difficulty }}">
+          {% else %}
+            <!-- Refresh Button -->
+            <input type="button" value="Refresh" onclick="window.location.href='refreshProgress={{ difficulty }}'" disabled><br><br>
+            <!-- Level & Health -->
+            <div class="row">
+              <div class="col">
+                <b>Level: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{stats.level}}&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="button" value="Level Up" onclick="window.location.href='levelProgress=level&difficulty={{ difficulty }}'">
+              </div>
+              <div class="col">
+                <b>Health: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{stats.health}}&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="button" value="Level Up" onclick="window.location.href='levelProgress=health&difficulty={{ difficulty }}'">
+              </div>
             </div>
-            <div class="col">
-              <b>Health: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.novice.health}}&nbsp;&nbsp;&nbsp;&nbsp;
-              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=health&difficulty=novice'">
+            <!-- Magicka & Stamina -->
+            <div class="row">
+              <div class="col">
+                <b>Magicka: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{stats.magicka}}&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="button" value="Level Up" onclick="window.location.href='levelProgress=magicka&difficulty={{ difficulty }}'">
+              </div>
+              <div class="col">
+                <b>Stamina: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{stats.stamina}}&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="button" value="Level Up" onclick="window.location.href='levelProgress=stamina&difficulty={{ difficulty }}'">
+              </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <b>Magicka: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.novice.magicka}}&nbsp;&nbsp;&nbsp;&nbsp;
-              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=magicka&difficulty=novice'">
+            <br>
+            <!-- Vanilla Progress -->
+            <div class="row">
+              <div class="col">Vanilla</div>
+              <div class="col"><progress value={{stats.completion.vanilla}} max="100"></progress></div>
+              <div class="col">{{stats.completion.vanilla}}%</div>
             </div>
-            <div class="col">
-              <b>Stamina: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.novice.stamina}}&nbsp;&nbsp;&nbsp;&nbsp;
-              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=stamina&difficulty=novice'">
+            <!-- Mod Progress -->
+            <div class="row">
+              <div class="col">Mod(s)</div>
+              <div class="col"><progress value={{stats.completion.mod}} max="100"></progress></div>
+              <div class="col">{{stats.completion.mod}}%</div>
             </div>
-          </div>
-          <br>
-          <div class="row">
-            <div class="col">Vanilla</div>
-            <div class="col"><progress value={{data.novice.completion.vanilla}} x max="100"></progress></div>
-            <div class="col">{{data.novice.completion.vanilla}}%</div>
-          </div>
-          <div class="row">
-            <div class="col">Mod(s)</div>
-            <div class="col"><progress value={{data.novice.completion.mod}} max="100"></progress></div>
-            <div class="col">{{data.novice.completion.mod}}%</div>
-          </div>
-          <a href={{data.novice.difficulty}}>Full Details</a>
-        {% endif %}
-      </td>
-      <td>
-        <b style="font-size:20px;">Apprentice</b>&nbsp;&nbsp;&nbsp;&nbsp;
-        {% if data.apprentice == None %}
-          <input type="button" onclick="window.location.href='addDifficulty=apprentice'" value="Start Apprentice">
-        {% else %}
-          <input type="button" value="Refresh" onclick="window.location.href='refreshProgress=apprentice'" disabled><br><br>
-          <div class="row">
-            <div class="col">
-              <b>Level: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.apprentice.level}}&nbsp;&nbsp;&nbsp;&nbsp;
-              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=level&difficulty=apprentice'">
-            </div>
-            <div class="col">
-              <b>Health: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.apprentice.health}}&nbsp;&nbsp;&nbsp;&nbsp;
-              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=health&difficulty=apprentice'">
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <b>Magicka: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.apprentice.magicka}}&nbsp;&nbsp;&nbsp;&nbsp;
-              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=magicka&difficulty=apprentice'">
-            </div>
-            <div class="col">
-              <b>Stamina: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.apprentice.stamina}}&nbsp;&nbsp;&nbsp;&nbsp;
-              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=stamina&difficulty=apprentice'">
-            </div>
-          </div>
-          <br>
-          <div class="row">
-            <div class="col">Vanilla</div>
-            <div class="col"><progress value={{data.apprentice.completion.vanilla}} max="100"></progress></div>
-            <div class="col">{{data.apprentice.completion.vanilla}}%</div>
-          </div>
-          <div class="row">
-            <div class="col">Mod(s)</div>
-            <div class="col"><progress value={{data.apprentice.completion.mod}} max="100"></progress></div>
-            <div class="col">{{data.apprentice.completion.mod}}%</div>
-          </div>
-          <a href={{data.apprentice.difficulty}}>Full Details</a>
-        {% endif %}
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <b style="font-size:20px;">Adept</b>&nbsp;&nbsp;&nbsp;&nbsp;
-        {% if data.adept == None %}
-          <input type="button" onclick="window.location.href='addDifficulty=adept'" value="Start Adept">
-        {% else %}
-          <input type="button" value="Refresh" onclick="window.location.href='refreshProgress=adept'" disabled><br><br>
-          <div class="row">
-            <div class="col">
-              <b>Level: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.adept.level}}&nbsp;&nbsp;&nbsp;&nbsp;
-              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=level&difficulty=adept'">
-            </div>
-            <div class="col">
-              <b>Health: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.adept.health}}&nbsp;&nbsp;&nbsp;&nbsp;
-              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=health&difficulty=adept'">
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <b>Magicka: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.adept.magicka}}&nbsp;&nbsp;&nbsp;&nbsp;
-              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=magicka&difficulty=adept'">
-            </div>
-            <div class="col">
-              <b>Stamina: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.adept.stamina}}&nbsp;&nbsp;&nbsp;&nbsp;
-              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=stamina&difficulty=adept'">
-            </div>
-          </div>
-          <br>
-          <div class="row">
-            <div class="col">Vanilla</div>
-            <div class="col"><progress value={{data.adept.completion.vanilla}} max="100"></progress></div>
-            <div class="col">{{data.adept.completion.vanilla}}%</div>
-          </div>
-          <div class="row">
-            <div class="col">Mod(s)</div>
-            <div class="col"><progress value={{data.adept.completion.mod}} max="100"></progress></div>
-            <div class="col">{{data.adept.completion.mod}}%</div>
-          </div>
-          <a href={{data.adept.difficulty}}>Full Details</a>
-        {% endif %}
-      </td>
-      <td>
-        <b style="font-size:20px;">Expert</b>&nbsp;&nbsp;&nbsp;&nbsp;
-        {% if data.expert == None %}
-          <input type="button" onclick="window.location.href='addDifficulty=expert'" value="Start Expert">
-        {% else %}
-          <input type="button" value="Refresh" onclick="window.location.href='refreshProgress=expert'" disabled><br><br>
-          <div class="row">
-            <div class="col">
-              <b>Level: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.expert.level}}&nbsp;&nbsp;&nbsp;&nbsp;
-              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=level&difficulty=expert'">
-            </div>
-            <div class="col">
-              <b>Health: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.expert.health}}&nbsp;&nbsp;&nbsp;&nbsp;
-              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=health&difficulty=expert'">
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <b>Magicka: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.expert.magicka}}&nbsp;&nbsp;&nbsp;&nbsp;
-              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=magicka&difficulty=expert'">
-            </div>
-            <div class="col">
-              <b>Stamina: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.expert.stamina}}&nbsp;&nbsp;&nbsp;&nbsp;
-              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=stamina&difficulty=expert'">
-            </div>
-          </div>
-          <br>
-          <div class="row">
-            <div class="col">Vanilla</div>
-            <div class="col"><progress value={{data.expert.completion.vanilla}} max="100"></progress></div>
-            <div class="col">{{data.expert.completion.vanilla}}%</div>
-          </div>
-          <div class="row">
-            <div class="col">Mod(s)</div>
-            <div class="col"><progress value={{data.expert.completion.mod}} max="100"></progress></div>
-            <div class="col">{{data.expert.completion.mod}}%</div>
-          </div>
-          <a href={{data.expert.difficulty}}>Full Details</a>
-        {% endif %}
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <b style="font-size:20px;">Master</b>&nbsp;&nbsp;&nbsp;&nbsp;
-        {% if data.master == None %}
-          <input type="button" onclick="window.location.href='addDifficulty=master'" value="Start Master">
-        {% else %}
-          <input type="button" value="Refresh" onclick="window.location.href='refreshProgress=master'" disabled><br><br>
-          <div class="row">
-            <div class="col">
-              <b>Level: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.master.level}}&nbsp;&nbsp;&nbsp;&nbsp;
-              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=level&difficulty=master'">
-            </div>
-            <div class="col">
-              <b>Health: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.master.health}}&nbsp;&nbsp;&nbsp;&nbsp;
-              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=health&difficulty=master'">
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <b>Magicka: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.master.magicka}}&nbsp;&nbsp;&nbsp;&nbsp;
-              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=magicka&difficulty=master'">
-            </div>
-            <div class="col">
-              <b>Stamina: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.master.stamina}}&nbsp;&nbsp;&nbsp;&nbsp;
-              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=stamina&difficulty=master'">
-            </div>
-          </div>
-          <br>
-          <div class="row">
-            <div class="col">Vanilla</div>
-            <div class="col"><progress value={{data.master.completion.vanilla}} max="100"></progress></div>
-            <div class="col">{{data.master.completion.vanilla}}%</div>
-          </div>
-          <div class="row">
-            <div class="col">Mod(s)</div>
-            <div class="col"><progress value={{data.master.completion.mod}} max="100"></progress></div>
-            <div class="col">{{data.master.completion.mod}}%</div>
-          </div>
-          <a href={{data.master.difficulty}}>Full Details</a>
-        {% endif %}
-      </td>
-      <td>
-        <b style="font-size:20px;">Legendary</b>&nbsp;&nbsp;&nbsp;&nbsp;
-        {% if data.legendary == None %}
-          <input type="button" onclick="window.location.href='addDifficulty=legendary'" value="Start Legendary">
-        {% else %}
-          <input type="button" value="Refresh" onclick="window.location.href='refreshProgress=legendary'" disabled><br><br>
-          <div class="row">
-            <div class="col">
-              <b>Level: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.legendary.level}}&nbsp;&nbsp;&nbsp;&nbsp;
-              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=level&difficulty=legendary'">
-            </div>
-            <div class="col">
-              <b>Health: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.legendary.health}}&nbsp;&nbsp;&nbsp;&nbsp;
-              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=health&difficulty=legendary'">
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <b>Magicka: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.legendary.magicka}}&nbsp;&nbsp;&nbsp;&nbsp;
-              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=magicka&difficulty=legendary'">
-            </div>
-            <div class="col">
-              <b>Stamina: </b>&nbsp;&nbsp;&nbsp;&nbsp;{{data.legendary.stamina}}&nbsp;&nbsp;&nbsp;&nbsp;
-              <input type="button" value="Level Up" onclick="window.location.href='levelProgress=stamina&difficulty=legendary'">
-            </div>
-          </div>
-          <br>
-          <div class="row">
-            <div class="col">Vanilla</div>
-            <div class="col"><progress value={{data.legendary.completion.vanilla}} max="100"></progress></div>
-            <div class="col">{{data.legendary.completion.vanilla}}%</div>
-          </div>
-          <div class="row">
-            <div class="col">Mod(s)</div>
-            <div class="col"><progress value={{data.legendary.completion.mod}} max="100"></progress></div>
-            <div class="col">{{data.legendary.completion.mod}}%</div>
-          </div>
-          <a href={{data.legendary.difficulty}}>Full Details</a>
-        {% endif %}
-      </td>
-    </tr>
+            <!-- Full Details -->
+            <a href={{difficulty}}>Full Details</a>
+          {% endif %}
+        </td>
+      {% if forloop.counter|divisibleby:2 %}</tr>{% endif %}
+    {% endfor %}
   </table>
 {% endblock %}

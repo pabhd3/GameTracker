@@ -16,6 +16,7 @@
   <!-- Skills Section -->
   <h3>Skills</h3>
   <div class="row">
+    <!-- Display Radar Chart -->
     <div class="col-8">
       {% if data.difficulty == "novice"%}
         <img src="{% static '/images/progress/skills-novice.png' %}" alt="{{data.difficulty}} Skills Graph" height=100% width=100%>
@@ -31,170 +32,24 @@
         <img src="{% static '/images/progress/skills-legendary.png' %}" alt="{{data.difficulty}} Skills Graph" height=100% width=100%>
       {% endif %}
     </div>
-    <div class="col-4" style="overflow:auto">
+    <!-- List out Skills -->
+    <div>
       <table border="1">
-        <tr><td>
-          Alchemy: {{ data.skills.alchemy.level }}&nbsp;&nbsp;&nbsp;&nbsp;
-          Legendary: {{ data.skills.alchemy.legendary}}&nbsp;&nbsp;&nbsp;&nbsp;
-          {% if data.skills.alchemy.level < 100 %}
-            <input type="button" onclick="window.location.href='levelSkill=alchemy&difficulty={{data.id}}&levelType=level'" value="Level up">
-          {% else %}
-            <input type="button" onclick="window.location.href='levelSkill=alchemy&difficulty={{data.id}}&levelType=legendary'" value="Legendary">
-          {% endif %}
-        </td></tr>
-        <tr><td>
-          Alteration: {{ data.skills.alteration.level }}&nbsp;&nbsp;&nbsp;&nbsp;
-          Legendary: {{ data.skills.alteration.legendary}}&nbsp;&nbsp;&nbsp;&nbsp;
-          {% if data.skills.alteration.level < 100 %}
-            <input type="button" onclick="window.location.href='levelSkill=alteration&difficulty={{data.id}}&levelType=level'" value="Level up">
-          {% else %}
-            <input type="button" onclick="window.location.href='levelSkill=alteration&difficulty={{data.id}}&levelType=legendary'" value="Legendary">
-          {% endif %}
-        </td></tr>
-        <tr><td>
-          Archery: {{ data.skills.archery.level }}&nbsp;&nbsp;&nbsp;&nbsp;
-          Legendary: {{ data.skills.archery.legendary}}&nbsp;&nbsp;&nbsp;&nbsp;
-          {% if data.skills.alteration.level < 100 %}
-            <input type="button" onclick="window.location.href='levelSkill=archery&difficulty={{data.id}}&levelType=level'" value="Level up">
-          {% else %}
-            <input type="button" onclick="window.location.href='levelSkill=archery&difficulty={{data.id}}&levelType=legendary'" value="Legendary">
-          {% endif %}
-        </td></tr>
-        <tr><td>
-          Block: {{ data.skills.block.level }}&nbsp;&nbsp;&nbsp;&nbsp;
-          Legendary: {{ data.skills.block.legendary}}&nbsp;&nbsp;&nbsp;&nbsp;
-          {% if data.skills.alteration.level < 100 %}
-            <input type="button" onclick="window.location.href='levelSkill=block&difficulty={{data.id}}&levelType=level'" value="Level up">
-          {% else %}
-            <input type="button" onclick="window.location.href='levelSkill=block&difficulty={{data.id}}&levelType=legendary'" value="Legendary">
-          {% endif %}
-        </td></tr>
-        <tr><td>
-          Conjuration: {{ data.skills.conjuration.level }}&nbsp;&nbsp;&nbsp;&nbsp;
-          Legendary: {{ data.skills.conjuration.legendary}}&nbsp;&nbsp;&nbsp;&nbsp;
-          {% if data.skills.alteration.level < 100 %}
-            <input type="button" onclick="window.location.href='levelSkill=conjuration&difficulty={{data.id}}&levelType=level'" value="Level up">
-          {% else %}
-            <input type="button" onclick="window.location.href='levelSkill=conjuration&difficulty={{data.id}}&levelType=legendary'" value="Legendary">
-          {% endif %}
-        </td></tr>
-        <tr><td>
-          Destruction: {{ data.skills.destruction.level }}&nbsp;&nbsp;&nbsp;&nbsp;
-          Legendary: {{ data.skills.destruction.legendary}}&nbsp;&nbsp;&nbsp;&nbsp;
-          {% if data.skills.alteration.level < 100 %}
-            <input type="button" onclick="window.location.href='levelSkill=destruction&difficulty={{data.id}}&levelType=level'" value="Level up">
-          {% else %}
-            <input type="button" onclick="window.location.href='levelSkill=destruction&difficulty={{data.id}}&levelType=legendary'" value="Legendary">
-          {% endif %}
-        </td></tr>
-        <tr><td>
-          Enchanting: {{ data.skills.enchanting.level }}&nbsp;&nbsp;&nbsp;&nbsp;
-          Legendary: {{ data.skills.enchanting.legendary}}&nbsp;&nbsp;&nbsp;&nbsp;
-          {% if data.skills.alteration.level < 100 %}
-            <input type="button" onclick="window.location.href='levelSkill=enchanting&difficulty={{data.id}}&levelType=level'" value="Level up">
-          {% else %}
-            <input type="button" onclick="window.location.href='levelSkill=enchanting&difficulty={{data.id}}&levelType=legendary'" value="Legendary">
-          {% endif %}
-        </td></tr>
-        <tr><td>
-          Heavy Armor: {{ data.skills.heavyArmor.level }}&nbsp;&nbsp;&nbsp;&nbsp;
-          Legendary: {{ data.skills.heavyArmor.legendary}}&nbsp;&nbsp;&nbsp;&nbsp;
-          {% if data.skills.alteration.level < 100 %}
-            <input type="button" onclick="window.location.href='levelSkill=heavyArmor&difficulty={{data.id}}&levelType=level'" value="Level up">
-          {% else %}
-            <input type="button" onclick="window.location.href='levelSkill=heavyArmor&difficulty={{data.id}}&levelType=legendary'" value="Legendary">
-          {% endif %}
-        </td></tr>
-        <tr><td>
-          Illusion: {{ data.skills.illusion.level }}&nbsp;&nbsp;&nbsp;&nbsp;
-          Legendary: {{ data.skills.illusion.legendary}}&nbsp;&nbsp;&nbsp;&nbsp;
-          {% if data.skills.alteration.level < 100 %}
-            <input type="button" onclick="window.location.href='levelSkill=illusion&difficulty={{data.id}}&levelType=level'" value="Level up">
-          {% else %}
-            <input type="button" onclick="window.location.href='levelSkill=illusion&difficulty={{data.id}}&levelType=legendary'" value="Legendary">
-          {% endif %}
-        </td></tr>
-        <tr><td>
-          Light Armor: {{ data.skills.lightArmor.level }}&nbsp;&nbsp;&nbsp;&nbsp;
-          Legendary: {{ data.skills.lightArmor.legendary}}&nbsp;&nbsp;&nbsp;&nbsp;
-          {% if data.skills.alteration.level < 100 %}
-            <input type="button" onclick="window.location.href='levelSkill=lightArmor&difficulty={{data.id}}&levelType=level'" value="Level up">
-          {% else %}
-            <input type="button" onclick="window.location.href='levelSkill=lightArmor&difficulty={{data.id}}&levelType=legendary'" value="Legendary">
-          {% endif %}
-        </td></tr>
-        <tr><td>
-          Lockpicking: {{ data.skills.lockpicking.level }}&nbsp;&nbsp;&nbsp;&nbsp;
-          Legendary: {{ data.skills.lockpicking.legendary}}&nbsp;&nbsp;&nbsp;&nbsp;
-          {% if data.skills.alteration.level < 100 %}
-            <input type="button" onclick="window.location.href='levelSkill=lockpicking&difficulty={{data.id}}&levelType=level'" value="Level up">
-          {% else %}
-            <input type="button" onclick="window.location.href='levelSkill=lockpicking&difficulty={{data.id}}&levelType=legendary'" value="Legendary">
-          {% endif %}
-        </td></tr>
-        <tr><td>
-          One Handed: {{ data.skills.oneHanded.level }}&nbsp;&nbsp;&nbsp;&nbsp;
-          Legendary: {{ data.skills.oneHanded.legendary}}&nbsp;&nbsp;&nbsp;&nbsp;
-          {% if data.skills.alteration.level < 100 %}
-            <input type="button" onclick="window.location.href='levelSkill=oneHanded&difficulty={{data.id}}&levelType=level'" value="Level up">
-          {% else %}
-            <input type="button" onclick="window.location.href='levelSkill=oneHanded&difficulty={{data.id}}&levelType=legendary'" value="Legendary">
-          {% endif %}
-        </td></tr>
-        <tr><td>
-          Pick Pocketing: {{ data.skills.pickPocket.level }}&nbsp;&nbsp;&nbsp;&nbsp;
-          Legendary: {{ data.skills.pickPocket.legendary}}&nbsp;&nbsp;&nbsp;&nbsp;
-          {% if data.skills.alteration.level < 100 %}
-            <input type="button" onclick="window.location.href='levelSkill=pickPocket&difficulty={{data.id}}&levelType=level'" value="Level up">
-          {% else %}
-            <input type="button" onclick="window.location.href='levelSkill=pickPocket&difficulty={{data.id}}&levelType=legendary'" value="Legendary">
-          {% endif %}
-        </td></tr>
-        <tr><td>
-          Restoration: {{ data.skills.restoration.level }}&nbsp;&nbsp;&nbsp;&nbsp;
-          Legendary: {{ data.skills.restoration.legendary}}&nbsp;&nbsp;&nbsp;&nbsp;
-          {% if data.skills.alteration.level < 100 %}
-            <input type="button" onclick="window.location.href='levelSkill=restoration&difficulty={{data.id}}&levelType=level'" value="Level up">
-          {% else %}
-            <input type="button" onclick="window.location.href='levelSkill=restoration&difficulty={{data.id}}&levelType=legendary'" value="Legendary">
-          {% endif %}
-        </td></tr>
-        <tr><td>
-          Smithing: {{ data.skills.smithing.level }}&nbsp;&nbsp;&nbsp;&nbsp;
-          Legendary: {{ data.skills.smithing.legendary}}&nbsp;&nbsp;&nbsp;&nbsp;
-          {% if data.skills.alteration.level < 100 %}
-            <input type="button" onclick="window.location.href='levelSkill=smithing&difficulty={{data.id}}&levelType=level'" value="Level up">
-          {% else %}
-            <input type="button" onclick="window.location.href='levelSkill=smithing&difficulty={{data.id}}&levelType=legendary'" value="Legendary">
-          {% endif %}
-        </td></tr>
-        <tr><td>
-          Sneak: {{ data.skills.sneak.level }}&nbsp;&nbsp;&nbsp;&nbsp;
-          Legendary: {{ data.skills.sneak.legendary}}&nbsp;&nbsp;&nbsp;&nbsp;
-          {% if data.skills.alteration.level < 100 %}
-            <input type="button" onclick="window.location.href='levelSkill=sneak&difficulty={{data.id}}&levelType=level'" value="Level up">
-          {% else %}
-            <input type="button" onclick="window.location.href='levelSkill=sneak&difficulty={{data.id}}&levelType=legendary'" value="Legendary">
-          {% endif %}
-        </td></tr>
-        <tr><td>
-          Speech: {{ data.skills.speech.level }}&nbsp;&nbsp;&nbsp;&nbsp;
-          Legendary: {{ data.skills.speech.legendary}}&nbsp;&nbsp;&nbsp;&nbsp;
-          {% if data.skills.alteration.level < 100 %}
-            <input type="button" onclick="window.location.href='levelSkill=speech&difficulty={{data.id}}&levelType=level'" value="Level up">
-          {% else %}
-            <input type="button" onclick="window.location.href='levelSkill=speech&difficulty={{data.id}}&levelType=legendary'" value="Legendary">
-          {% endif %}
-        </td></tr>
-        <tr><td>
-          Two Handed: {{ data.skills.twoHanded.level }}&nbsp;&nbsp;&nbsp;&nbsp;
-          Legendary: {{ data.skills.twoHanded.legendary}}&nbsp;&nbsp;&nbsp;&nbsp;
-          {% if data.skills.alteration.level < 100 %}
-            <input type="button" onclick="window.location.href='levelSkill=twoHanded&difficulty={{data.id}}&levelType=level'" value="Level up">
-          {% else %}
-            <input type="button" onclick="window.location.href='levelSkill=twoHanded&difficulty={{data.id}}&levelType=legendary'" value="Legendary">
-          {% endif %}
-        </td></tr>
+        {% for skill, stats in data.skills.items %}
+          <tr><td>
+            <div class="row">
+              <div class="col-5">{{ skill }}: {{ stats.level }}</div>
+              <div class="col-5">Legendary: {{ stats.legendary }}</div>
+              <div class="col-2">
+                {% if stats.level < 100 %}
+                  <input type="button" onclick="window.location.href='levelSkill={{ skill }}&difficulty={{ data.id }}&levelType=level'" value="Level up">
+                {% else %}
+                  <input type="button" onclick="window.location.href='levelSkill={{ skill }}&difficulty={{ data.id }}&levelType=legendary'" value="Legendary">
+                {% endif %}
+              </div>
+            </div>
+          </td></tr>
+        {% endfor %}
       </table>
     </div>
     <div>
