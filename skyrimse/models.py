@@ -87,3 +87,19 @@ class Perk(Document):
     level = fields.IntField()
     source = fields.StringField()
     completion = fields.EmbeddedDocumentField(Tracker)
+
+################################
+##### Shout Related Models #####
+################################
+class Word(EmbeddedDocument):
+    original = fields.StringField()
+    translation = fields.StringField()
+    cooldown = fields.IntField()
+    location = fields.StringField()
+    completion = fields.EmbeddedDocumentField(Tracker)
+
+class Shout(Document):
+    name = fields.StringField()
+    source = fields.StringField()
+    description = fields.StringField()
+    words = fields.EmbeddedDocumentListField(Word)

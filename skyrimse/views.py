@@ -337,3 +337,49 @@ def learnPerk(request):
     perk.save()
     progress.save()
     return redirect("/skyrimse/perks/{sourceSkill}".format(sourceSkill=sourceSkill))
+
+#########################
+##### Shout Related #####
+#########################
+def shouts(request):
+    # Pull all the quests, quest's cources, and quest's questlines
+    allShouts = Shout.objects.all()
+    allSources = set([s.source for s in allShouts])
+    # Dynamically load quest sources
+    shoutFiles = list(filter(lambda x: "Shouts" in x, [f for f in os.listdir('skyrimse/static/json/')]))
+    data = {"counts": {}, "sources": {}}
+    for f in shoutFiles:
+        source = f.replace("Shouts.json", "")
+        data["counts"][source] = len(Shout.objects(source=source))
+    # Start completion data
+    for source in allSources:
+        data["sources"][source] = {"novice": {"complete": 0, "total": 0}, 
+            "apprentice": {"complete": 0, "total": 0}, "adept": {"complete": 0, "total": 0},
+            "expert": {"complete": 0, "total": 0}, "master": {"complete": 0, "total": 0},
+            "legendary": {"complete": 0, "total": 0}}
+    # Count Completion data
+    for shout in allShouts:
+        for word in shout["words"]:
+            for difficulty in word["completion"]:
+                if(shout["words"][shout["words"].index(word)]["completion"][difficulty]):
+                    data["sources"][shout.source][difficulty]["complete"] += 1
+                data["sources"][shout.source][difficulty]["total"] += 1
+    return render(request, "skyrimseShouts.html", {'data': data})
+
+def shoutsLoad(request):
+    # Pull data from JSON file
+    toLoad = "skyrimse/static/json/{source}Shouts.json".format(source=request.path.split("=")[1])
+    with open(file=toLoad, mode="r") as f:
+        jsonData = load(f)
+        f.close()
+    # Create and save a Quest object
+    for shoutData in jsonData:
+        shout = Shout(name=shoutData["name"], source=shoutData["source"], 
+            description=shoutData["description"], words=[])
+        for wordData in shoutData["words"]:
+            word = Word(original=wordData["original"], translation=wordData["translation"],
+                cooldown=wordData["cooldown"], location=wordData["location"],
+                completion=Tracker(novice=0, apprentice=0, adept=0, expert=0, master=0, legendary=0))
+            shout["words"].append(word)
+        shout.save()
+    return redirect("/skyrimse/shouts")

@@ -21,5 +21,8 @@ urlpatterns = [
     url(r"^perks/$", views.perks),
     url(r"^perks/perksLoad=\w+", views.perksLoad),
     url(r"^perks/\w+-\w+", views.perkDetail),
-    url(r"^perks/learnPerk=\w+", views.learnPerk)
+    url(r"^perks/learnPerk=\w+", views.learnPerk),
+    # Shour Related
+    url(r"^shouts/$", views.shouts),
+    url(r"^shouts/loadShouts=\w+", views.shoutsLoad)
 ]

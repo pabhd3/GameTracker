@@ -1,0 +1,18 @@
+[
+    {"name": "Battle Fury", "source": "dragonborn", "description": "Your Thu'um enchants your nearby allies' weapons, allowing them to attack faster.", 
+        "words": [{"original": "Mid", "translation": "Loyal", "cooldown": 20, "location": "Vahlok's Tomb"},
+            {"original": "Vur", "translation": "Valor", "cooldown": 30, "location": "Vahlok's Tomb"},
+            {"original": "Shaan", "translation": "Inspire", "cooldown": 40, "location": "Vahlok's Tomb"}]}, 
+    {"name": "Bend Will", "source": "dragonborn", "description": "Your voice bends the very stones to your will. As it gains power, animals, people, and even dragons must do your bidding.", 
+        "words": [{"original": "Gol", "translation": "Earth", "cooldown": 10, "location": "Saering's Watch"},
+            {"original": "Hah", "translation": "Mind", "cooldown": 90, "location": "The Path of Knowledge"},
+            {"original": "Dov", "translation": "Dragon", "cooldown": 120, "location": "The Gardener of Men"}]}, 
+    {"name": "Cyclone", "source": "dragonborn", "description": "Your Thu'um creates a whirling cyclone that sows chaos among your enemies.", 
+        "words": [{"original": "Ven", "translation": "Wind", "cooldown": 30, "location": "White Ridge Sanctum"},
+            {"original": "Gaar", "translation": "Unleash", "cooldown": 45, "location": "Benkongerike"},
+            {"original": "Nos", "translation": "Strike", "cooldown": 60, "location": "Kolbjorn Barrow"}]}, 
+    {"name": "Dragon Aspect", "source": "dragonborn", "description": "Once a day, take on the mighty aspect of a dragon, delivering colossal blows, with an armored hide, and more powerful shouts.", 
+        "words": [{"original": "Mul", "translation": "Strength", "cooldown": 5, "location": "Raven Rock Mine"},
+            {"original": "Qah", "translation": "Armor", "cooldown": 5, "location": "Temple of Miraak"},
+            {"original": "Diiv", "translation": "Wyrm", "cooldown": 300, "location": "Apocrypha (Waking Dreams)"}]}	
+]

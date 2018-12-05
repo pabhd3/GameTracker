@@ -1,0 +1,14 @@
+[
+    {"name": "Drain Vitality", "source": "dawnguard", "description": "Coax both magical and mortal energies from your hapless opponent.",
+        "words": [{"original": "Gaan", "translation": "Stamina", "cooldown": 30, "location": "Dimhollow Crypt"},
+            {"original": "Lah", "translation": "Stamina", "cooldown": 60, "location": "Forgotten Vale"},
+            {"original": "Haas", "translation": "Stamina", "cooldown": 90, "location": "Arcwind Point"}]},
+    {"name": "Soul Tear", "source": "dawnguard", "description": "Your Thu'um cuts through flesh and shatters soul, commanding the will of the fallen.",
+        "words": [{"original": "Rii", "translation": "Essence", "cooldown": 5, "location": "Dimhollow Crypt"},
+            {"original": "Vaaz", "translation": "Tear", "cooldown": 5, "location": "Forgotten Vale"},
+            {"original": "Zol", "translation": "Zombie", "cooldown": 90, "location": "Arcwind Point"}]},
+    {"name": "Summon Durnehviir", "source": "dawnguard", "description": "Durnehviir! Hear my Voice and come forth from the Soul Cairn. I summon you in my time of need.",
+        "words": [{"original": "Dur", "translation": "Curse", "cooldown": 5, "location": "Dimhollow Crypt"},
+            {"original": "Neh", "translation": "Never", "cooldown": 5, "location": "Forgotten Vale"},
+            {"original": "Viir", "translation": "Dying", "cooldown": 300, "location": "Arcwind Point"}]}
+]
