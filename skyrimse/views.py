@@ -55,11 +55,16 @@ def addDifficulty(request):
     modQuestCount = len(Quest.objects.all()) - questCount
     perkCount = len(Perk.objects(source="vanilla"))
     modPerkCount = len(Perk.objects.all()) - perkCount
-    totalCount = sum([questCount])
-    modTotalCount = sum([modQuestCount])
-    progress.collected = Collected(quests=0, modQuests=0, perks=0, modPerks=0, total=0, modTotal=0)
+    wordCount = sum([len(Shout.objects(source=source)) for source in ["vanilla", "dawnguard", "dragonborn"]]) * 3
+    print("Word Count: {}".format(wordCount))
+    modWordCount = (len(Shout.objects.all()) * 3) - wordCount
+    print("Mod Word Count: {}".format(modWordCount))
+    totalCount = sum([questCount, perkCount, wordCount])
+    modTotalCount = sum([modQuestCount, modPerkCount, modWordCount])
+    progress.collected = Collected(quests=0, modQuests=0, perks=0, modPerks=0, 
+        words=0, modWords=0, total=0, modTotal=0)
     progress.collectedTotal = Collected(quests=questCount, modQuests=modQuestCount, perks=perkCount, 
-        modPerks=modPerkCount, total=totalCount, modTotal=modTotalCount)
+        words=wordCount, modWords=modWordCount, modPerks=modPerkCount, total=totalCount, modTotal=modTotalCount)
     progress.save()
     # Generate a Radar Graph for the progress
     plotRader(values=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], difficulty=progress.difficulty)
@@ -114,10 +119,13 @@ def progressDetail(request):
     progressID = request.path.split("/skyrimse/progress/")[1]
     progress = Progress.objects(difficulty=progressID).first()
     data = {"id": progress.id, "difficulty": progress.difficulty, "created": progress.created, 
-        "skills": {}, "collected": progress.collected, "collectedTotal": progress.collectedTotal}
+        "skills": {}, "stats": {}}
     for skill in progress.skills:
         data["skills"][skill] = {"level": progress["skills"][skill]["level"],
                                     "legendary": progress["skills"][skill]["legendary"]}
+    for stat in progress.collected:
+        data["stats"][stat] = {"collected": progress["collected"][stat], 
+            "total": progress["collectedTotal"][stat]}
     return render(request, "skyrimseProgressDetail.html", {'data': data})
 
 def refreshProgress(request):
@@ -383,3 +391,54 @@ def shoutsLoad(request):
             shout["words"].append(word)
         shout.save()
     return redirect("/skyrimse/shouts")
+
+def shoutsDetail(request):
+    # Pull source from HTTP request.path
+    source = request.path.split("/shouts/")[1]
+    # Load all the shouts from Mongo
+    allShouts = Shout.objects(source=source)
+    data = {"source": source, "shouts": {}}
+    # Pull Progress Data
+    docs = {"novice": None, "apprentice": None, "adept": None,
+        "expert": None, "master": None, "legendary": None}
+    for progress in Progress.objects.all():
+        docs[progress.difficulty] = True
+    # Add the generic shout data
+    for shout in allShouts:
+        data["shouts"][shout.name] = {"id": shout.id, "description": shout.description, "words": []}
+        for word in shout.words:
+            data["shouts"][shout.name]["words"].append({"original": word.original,
+                "translation": word.translation, "cooldown": word.cooldown,
+                "completion": {"novice": {"learned": word.completion.novice, "started": docs["novice"]},
+                    "apprentice": {"learned": word.completion.apprentice, "started": docs["apprentice"]},
+                    "adept": {"learned": word.completion.adept, "started": docs["adept"]},
+                    "expert": {"learned": word.completion.expert, "started": docs["expert"]},
+                    "master": {"learned": word.completion.master, "started": docs["master"]},
+                    "legendary": {"learned": word.completion.legendary, "started": docs["legendary"]}}})
+    return render(request, 'skyrimseShoutsDetail.html', {'data': data})
+
+def learnWord(request):
+    # Pull shout.id, shout.word, and difficulty from HTTP request.path
+    print(request.path)
+    shoutID = request.path.split("/shouts/")[1].split("&")[0].split("=")[1]
+    wordName = request.path.split("/shouts/")[1].split("&")[1].split("=")[1]
+    difficulty = request.path.split("/shouts/")[1].split("&")[2].split("=")[1]
+    # Pull the Shout and Progress object
+    shout = Shout.objects(id=shoutID).first()
+    progress = Progress.objects(difficulty=difficulty).first()
+    # Update the Shout and Progress objects
+    for word in shout.words:
+        if(word.translation == wordName):
+            word["completion"][difficulty] += 1
+            if(shout.source in ("vanilla", "dawnguard", "dragonborn")):
+                progress["collected"]["words"] += 1
+                progress["collected"]["total"] += 1
+                progress["completion"]["vanilla"] = progress.collected.total / progress.collectedTotal.total
+            else:
+                progress["collected"]["modWords"] += 1
+                progress["collected"]["modTotal"] += 1
+                progress["completion"]["mod"] = progress.collected.modTotal / progress.collectedTotal.modTotal
+            break
+    shout.save()
+    progress.save()
+    return redirect("/skyrimse/shouts/{source}".format(source=shout.source))

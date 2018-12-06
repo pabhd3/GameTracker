@@ -39,6 +39,8 @@ class Collected(EmbeddedDocument):
     modQuests = fields.IntField(min_value=0)
     perks = fields.IntField(min_value=0)
     modPerks = fields.IntField(min_value=0)
+    words = fields.IntField(min_value=0)
+    modWords = fields.IntField(min_value=0)
     total = fields.IntField(min_value=0)
     modTotal = fields.IntField(min_value=0)
 
