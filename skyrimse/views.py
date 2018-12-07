@@ -56,15 +56,16 @@ def addDifficulty(request):
     perkCount = len(Perk.objects(source="vanilla"))
     modPerkCount = len(Perk.objects.all()) - perkCount
     wordCount = sum([len(Shout.objects(source=source)) for source in ["vanilla", "dawnguard", "dragonborn"]]) * 3
-    print("Word Count: {}".format(wordCount))
     modWordCount = (len(Shout.objects.all()) * 3) - wordCount
-    print("Mod Word Count: {}".format(modWordCount))
-    totalCount = sum([questCount, perkCount, wordCount])
-    modTotalCount = sum([modQuestCount, modPerkCount, modWordCount])
+    locationCount = sum([len(Location.objects(source=source)) for source in ["vanilla", "dawnguard", "dragonborn"]])
+    modLocationCount = (len(Location.objects.all())) - locationCount
+    totalCount = sum([questCount, perkCount, wordCount, locationCount])
+    modTotalCount = sum([modQuestCount, modPerkCount, modWordCount, modLocationCount])
     progress.collected = Collected(quests=0, modQuests=0, perks=0, modPerks=0, 
-        words=0, modWords=0, total=0, modTotal=0)
+        words=0, modWords=0, locations=0, modLocations=0, total=0, modTotal=0)
     progress.collectedTotal = Collected(quests=questCount, modQuests=modQuestCount, perks=perkCount, 
-        words=wordCount, modWords=modWordCount, modPerks=modPerkCount, total=totalCount, modTotal=modTotalCount)
+        words=wordCount, modWords=modWordCount, modPerks=modPerkCount, locations=locationCount, 
+        modLocations=modLocationCount, total=totalCount, modTotal=modTotalCount)
     progress.save()
     # Generate a Radar Graph for the progress
     plotRader(values=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], difficulty=progress.difficulty)
@@ -158,7 +159,7 @@ def quests(request):
     allSources = set([q.source for q in allQuests])
     allQuestLines = set([q.questLine for q in allQuests])
     # Dynamically load quest sources
-    questFiles = list(filter(lambda x: "Quests" in x, [f for f in os.listdir('skyrimse/static/json/')]))
+    questFiles = list(filter(lambda x: "Quests" in x, [f for f in os.listdir('skyrimse/static/json/quests/')]))
     data = {"counts": {}, "sources": {}}
     for f in questFiles:
         source = f.replace("Quests.json", "")
@@ -186,7 +187,7 @@ def quests(request):
 
 def questsLoad(request):
     # Pull data from JSON file
-    toLoad = "skyrimse/static/json/{source}Quests.json".format(source=request.path.split("=")[1])
+    toLoad = "skyrimse/static/json/quests/{source}Quests.json".format(source=request.path.split("=")[1])
     with open(file=toLoad, mode="r") as f:
         jsonData = load(f)
         f.close()
@@ -259,7 +260,7 @@ def perks(request):
     allSources = set([p.source for p in allPerks])
     allSkills = set([p.skill for p in allPerks])
     # Dynamically load quest sources
-    perkFiles = list(filter(lambda x: "Perks" in x, [f for f in os.listdir('skyrimse/static/json/')]))
+    perkFiles = list(filter(lambda x: "Perks" in x, [f for f in os.listdir('skyrimse/static/json/perks/')]))
     data = {"counts": {}, "skills": {}}
     for p in perkFiles:
         source = p.replace("Perks.json", "")
@@ -286,7 +287,7 @@ def perks(request):
 
 def perksLoad(request):
     # Pull data from JSON file
-    toLoad = "skyrimse/static/json/{source}Perks.json".format(source=request.path.split("=")[1])
+    toLoad = "skyrimse/static/json/perks/{source}Perks.json".format(source=request.path.split("=")[1])
     with open(file=toLoad, mode="r") as f:
         jsonData = load(f)
         f.close()
@@ -354,7 +355,7 @@ def shouts(request):
     allShouts = Shout.objects.all()
     allSources = set([s.source for s in allShouts])
     # Dynamically load quest sources
-    shoutFiles = list(filter(lambda x: "Shouts" in x, [f for f in os.listdir('skyrimse/static/json/')]))
+    shoutFiles = list(filter(lambda x: "Shouts" in x, [f for f in os.listdir('skyrimse/static/json/shouts')]))
     data = {"counts": {}, "sources": {}}
     for f in shoutFiles:
         source = f.replace("Shouts.json", "")
@@ -376,7 +377,7 @@ def shouts(request):
 
 def shoutsLoad(request):
     # Pull data from JSON file
-    toLoad = "skyrimse/static/json/{source}Shouts.json".format(source=request.path.split("=")[1])
+    toLoad = "skyrimse/static/json/shouts/{source}Shouts.json".format(source=request.path.split("=")[1])
     with open(file=toLoad, mode="r") as f:
         jsonData = load(f)
         f.close()
@@ -419,7 +420,6 @@ def shoutsDetail(request):
 
 def learnWord(request):
     # Pull shout.id, shout.word, and difficulty from HTTP request.path
-    print(request.path)
     shoutID = request.path.split("/shouts/")[1].split("&")[0].split("=")[1]
     wordName = request.path.split("/shouts/")[1].split("&")[1].split("=")[1]
     difficulty = request.path.split("/shouts/")[1].split("&")[2].split("=")[1]
@@ -442,3 +442,92 @@ def learnWord(request):
     shout.save()
     progress.save()
     return redirect("/skyrimse/shouts/{source}".format(source=shout.source))
+
+############################
+##### Location Related #####
+############################
+def locations(request):
+    # Pull all the quests, quest's cources, and quest's questlines
+    allLocations = Location.objects.all()
+    allSources = set([s.source for s in allLocations])
+    # Dynamically load quest sources
+    locationFiles = list(filter(lambda x: "Locations" in x, [f for f in os.listdir('skyrimse/static/json/locations')]))
+    data = {"counts": {}, "sources": {}}
+    for f in locationFiles:
+        source = f.replace("Locations.json", "")
+        data["counts"][source] = len(Location.objects(source=source))
+    # Start completion data
+    for source in allSources:
+        data["sources"][source] = {"novice": {"complete": 0, "total": 0}, 
+            "apprentice": {"complete": 0, "total": 0}, "adept": {"complete": 0, "total": 0},
+            "expert": {"complete": 0, "total": 0}, "master": {"complete": 0, "total": 0},
+            "legendary": {"complete": 0, "total": 0}}
+    # Count Completion data
+    for location in allLocations:
+        for difficulty in location["completion"]:
+            if(location["completion"][difficulty]):
+                data["sources"][location.source][difficulty]["complete"] += 1
+            data["sources"][location.source][difficulty]["total"] += 1
+    return render(request, 'skyrimseLocations.html', {'data': data})
+
+def locationsLoad(request):
+    # Pull data from JSON file
+    toLoad = "skyrimse/static/json/locations/{source}Locations.json".format(source=request.path.split("=")[1])
+    with open(file=toLoad, mode="r") as f:
+        jsonData = load(f)
+        f.close()
+    # Create and save a Quest object
+    for locationData in jsonData:
+        location = Location(name=locationData["name"], source=locationData["source"], 
+            locationType=locationData["type"], 
+            completion=Tracker(novice=0, apprentice=0, adept=0, expert=0, master=0, legendary=0))
+        location.save()
+    return redirect("/skyrimse/locations")
+
+def locationsDetail(request):
+    # Pull source from HTTP request.path
+    source = request.path.split("/locations/")[1]
+    # Load all the shouts from Mongo
+    allLocations = Location.objects(source=source)
+    allTypes = set([l.locationType for l in allLocations])
+    data = {"source": source, "types": {}}
+    # Pull Progress Data
+    docs = {"novice": None, "apprentice": None, "adept": None,
+        "expert": None, "master": None, "legendary": None}
+    for progress in Progress.objects.all():
+        docs[progress.difficulty] = True
+    # Load the location data
+    for locationType in allTypes:
+        data["types"][locationType] = {}
+    for location in allLocations:
+        data["types"][location.locationType][location.name] = {"id": location.id,
+            "completion": {
+            "novice": {"visited": location.completion.novice, "started": docs["novice"]},
+            "apprentice": {"visited": location.completion.novice, "started": docs["apprentice"]},
+            "adept": {"visited": location.completion.novice, "started": docs["adept"]},
+            "expert": {"visited": location.completion.novice, "started": docs["expert"]},
+            "master": {"visited": location.completion.novice, "started": docs["master"]},
+            "legendary": {"visited": location.completion.novice, "started": docs["legendary"]}}
+        }
+    return render(request, 'skyrimseLocationsDetail.html', {'data': data})
+
+def visitLocation(request):
+    # Pull shout.id, shout.word, and difficulty from HTTP request.path
+    locationID = request.path.split("/locations/")[1].split("&")[0].split("=")[1]
+    difficulty = request.path.split("/locations/")[1].split("&")[1].split("=")[1]
+    # Pull the Location and Progress objects
+    location = Location.objects(id=locationID).first()
+    progress = Progress.objects(difficulty=difficulty).first()
+    # Update the Location and Progress objects
+    location["completion"][difficulty] += 1
+    if(location.source in ("vanilla", "dawnguard", "dragonborn")):
+        progress["collected"]["locations"] += 1
+        progress["collected"]["total"] += 1
+        progress["completion"]["vanilla"] = progress.collected.total / progress.collectedTotal.total
+    else:
+        progress["collected"]["modLocations"] += 1
+        progress["collected"]["modTotal"] += 1
+        progress["completion"]["mod"] = progress.collected.modTotal / progress.collectedTotal.modTotal
+    location.save()
+    progress.save()
+    return redirect("/skyrimse/locations/{source}".format(source=location.source))

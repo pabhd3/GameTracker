@@ -1,0 +1,44 @@
+<!-- Extending from base.html -->
+{% extends 'base.html' %}
+<!-- Used to load in static files -->
+{% load static %}
+
+{% block content %}
+  <!-- Page Title Descriptor -->
+  <h1>{{ data.source }} Locations</h1>
+  <!-- Link back to previous page -->
+  <a href="/skyrimse/locations/">The Elder Scrolls V: Skyrim Special Edition (Locations Page)</a>
+  <!-- List our the Perks -->
+  {% for type, typeLocations in data.types.items %}
+    <h3>{{ type }}</h3>
+    <div class="row">
+      {% for location, locationData in typeLocations.items %}
+        <div class="col-4">
+          <h5>{{ location }}</h5>
+          <table border="1">
+            <tr><td>
+              {% for difficulty, difficultyData in locationData.completion.items %}
+                <div class="row">
+                  <div class="col">{{ difficulty }}</div>
+                  <div class="col">
+                    {% if difficultyData.started == None %}
+                      Difficulty not started
+                    {% else %}
+                      {% if difficultyData.visited > 0 %}
+                        Visited
+                      {% else %}
+                        <div class="col"><input type="button" onclick="window.location.href='visitLocation={{ locationData.id }}&difficulty={{ difficulty }}'" value="Learn"></div>
+                      {% endif %}
+                    {% endif %}
+                  </div>
+                </div>
+              {% endfor %}
+            </td></tr>
+          </table>
+        </div>
+      {% endfor %}
+    </div>
+  {% endfor %}
+  <h1>All Data</h1>
+  {{ data }}
+{% endblock %}

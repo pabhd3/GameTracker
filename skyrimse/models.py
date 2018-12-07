@@ -41,6 +41,8 @@ class Collected(EmbeddedDocument):
     modPerks = fields.IntField(min_value=0)
     words = fields.IntField(min_value=0)
     modWords = fields.IntField(min_value=0)
+    locations = fields.IntField(min_value=0)
+    modLocations = fields.IntField(min_value=0)
     total = fields.IntField(min_value=0)
     modTotal = fields.IntField(min_value=0)
 
@@ -105,3 +107,12 @@ class Shout(Document):
     source = fields.StringField()
     description = fields.StringField()
     words = fields.EmbeddedDocumentListField(Word)
+
+############################
+##### Location Related #####
+############################
+class Location(Document):
+    name = fields.StringField()
+    source = fields.StringField()
+    locationType = fields.StringField()
+    completion = fields.EmbeddedDocumentField(Tracker)

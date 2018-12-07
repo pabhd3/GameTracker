@@ -22,9 +22,14 @@ urlpatterns = [
     url(r"^perks/perksLoad=\w+", views.perksLoad),
     url(r"^perks/\w+-\w+", views.perkDetail),
     url(r"^perks/learnPerk=\w+", views.learnPerk),
-    # Shour Related
+    # Shout Related
     url(r"^shouts/$", views.shouts),
     url(r"^shouts/loadShouts=\w+", views.shoutsLoad),
     url(r"^shouts/learnWord=\w+", views.learnWord),
-    url(r"^shouts/\w+", views.shoutsDetail)
+    url(r"^shouts/\w+", views.shoutsDetail),
+    # Location Related
+    url(r"^locations/$", views.locations),
+    url(r"^locations/locationsLoad=\w+", views.locationsLoad),
+    url(r"^locations/visitLocation=\w+", views.visitLocation),
+    url(r"^locations/\w+", views.locationsDetail)
 ]

@@ -1,0 +1,40 @@
+<!-- Extending from base.html -->
+{% extends 'base.html' %}
+<!-- Used to load in static files -->
+{% load static %}
+
+{% block content %}
+  <!-- Page Title Descriptor -->
+  <h1>Locations</h1>
+  <!-- Link back to previous page -->
+  <a href="/skyrimse/">The Elder Scrolls V: Skyrim Special Edition (Home Page)</a>
+  <!-- Load Quests into MongoDB -->
+  <div class="row">
+    {% for key, value in data.counts.items %}
+      {% if value == 0 %}
+        <div class="col-sm-2"><input type="button" onclick="window.location.href='locationsLoad={{ key }}'" value="Load {{ key }}"></div>
+      {% endif %}
+    {% endfor %}
+  </div>
+  <!-- List out Progress of Skills by Source -->
+  <div class="row">
+    {% for source, sourceData in data.sources.items %}
+      <div class="col-6">
+        <a href="{{ source }}"><h2>{{ source }}</h2></a>
+        <div class="row">
+          <table border="1">
+            <tr><td>
+              {% for difficulty, stats in sourceData.items %}
+                <div class="row">
+                  <div class="col">{{ difficulty }}</div>
+                  <div class="col"><progress value={{stats.complete}} max={{stats.total}}></progress></div>
+                  <div class="col">{{stats.complete}} / {{stats.total}}</div>
+                </div>
+              {% endfor %}
+            </td></tr>
+          </table>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
