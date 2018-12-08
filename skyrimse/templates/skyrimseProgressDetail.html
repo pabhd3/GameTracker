@@ -16,32 +16,62 @@
   <!-- Skills Section -->
   <h3>Skills</h3>
   <div class="row">
-    <!-- Display Radar Chart -->
-    <div class="col-8">
+    <div class="col" style="padding:0;margin:0">
       {% if data.difficulty == "novice"%}
-        <img src="{% static '/images/progress/skills-novice.png' %}" alt="{{data.difficulty}} Skills Graph" height=100% width=100%>
+        <img src="{% static '/images/progress/combat-skills-novice.png' %}" alt="{{data.difficulty}} Skills Graph" height=100% width=100%>
       {% elif data.difficulty == "apprentice"%}
-        <img src="{% static '/images/progress/skills-apprentice.png' %}" alt="{{data.difficulty}} Skills Graph" height=100% width=100%>
+        <img src="{% static '/images/progress/combat-skills-apprentice.png' %}" alt="{{data.difficulty}} Skills Graph" height=100% width=100%>
       {% elif data.difficulty == "adept"%}
-        <img src="{% static '/images/progress/skills-adept.png' %}" alt="{{data.difficulty}} Skills Graph" height=100% width=100%>
+        <img src="{% static '/images/progress/combat-skills-adept.png' %}" alt="{{data.difficulty}} Skills Graph" height=100% width=100%>
       {% elif data.difficulty == "expert"%}
-        <img src="{% static '/images/progress/skills-expert.png' %}" alt="{{data.difficulty}} Skills Graph" height=100% width=100%>
+        <img src="{% static '/images/progress/combat-skills-expert.png' %}" alt="{{data.difficulty}} Skills Graph" height=100% width=100%>
       {% elif data.difficulty == "master"%}
-        <img src="{% static '/images/progress/skills-master.png' %}" alt="{{data.difficulty}} Skills Graph" height=100% width=100%>
+        <img src="{% static '/images/progress/combat-skills-master.png' %}" alt="{{data.difficulty}} Skills Graph" height=100% width=100%>
       {% elif data.difficulty == "legendary"%}
-        <img src="{% static '/images/progress/skills-legendary.png' %}" alt="{{data.difficulty}} Skills Graph" height=100% width=100%>
+        <img src="{% static '/images/progress/combat-skills-legendary.png' %}" alt="{{data.difficulty}} Skills Graph" height=100% width=100%>
       {% endif %}
     </div>
-    <!-- List out Skills -->
-    <div>
+    <div class="col" style="padding:0;margin:0">
+      {% if data.difficulty == "novice"%}
+        <img src="{% static '/images/progress/magic-skills-novice.png' %}" alt="{{data.difficulty}} Skills Graph" height=100% width=100%>
+      {% elif data.difficulty == "apprentice"%}
+        <img src="{% static '/images/progress/magic-skills-apprentice.png' %}" alt="{{data.difficulty}} Skills Graph" height=100% width=100%>
+      {% elif data.difficulty == "adept"%}
+        <img src="{% static '/images/progress/magic-skills-adept.png' %}" alt="{{data.difficulty}} Skills Graph" height=100% width=100%>
+      {% elif data.difficulty == "expert"%}
+        <img src="{% static '/images/progress/magic-skills-expert.png' %}" alt="{{data.difficulty}} Skills Graph" height=100% width=100%>
+      {% elif data.difficulty == "master"%}
+        <img src="{% static '/images/progress/magic-skills-master.png' %}" alt="{{data.difficulty}} Skills Graph" height=100% width=100%>
+      {% elif data.difficulty == "legendary"%}
+        <img src="{% static '/images/progress/magic-skills-legendary.png' %}" alt="{{data.difficulty}} Skills Graph" height=100% width=100%>
+      {% endif %}
+    </div>
+    <div class="col" style="padding:0;margin:0">
+      {% if data.difficulty == "novice"%}
+        <img src="{% static '/images/progress/stealth-skills-novice.png' %}" alt="{{data.difficulty}} Skills Graph" height=100% width=100%>
+      {% elif data.difficulty == "apprentice"%}
+        <img src="{% static '/images/progress/stealth-skills-apprentice.png' %}" alt="{{data.difficulty}} Skills Graph" height=100% width=100%>
+      {% elif data.difficulty == "adept"%}
+        <img src="{% static '/images/progress/stealth-skills-adept.png' %}" alt="{{data.difficulty}} Skills Graph" height=100% width=100%>
+      {% elif data.difficulty == "expert"%}
+        <img src="{% static '/images/progress/stealth-skills-expert.png' %}" alt="{{data.difficulty}} Skills Graph" height=100% width=100%>
+      {% elif data.difficulty == "master"%}
+        <img src="{% static '/images/progress/stealth-skills-master.png' %}" alt="{{data.difficulty}} Skills Graph" height=100% width=100%>
+      {% elif data.difficulty == "legendary"%}
+        <img src="{% static '/images/progress/stealth-skills-legendary.png' %}" alt="{{data.difficulty}} Skills Graph" height=100% width=100%>
+      {% endif %}
+    </div>
+  </div>
+  <div class="row" style="padding:0;margin:0">
+    <div class="col" style="padding:0;margin:0">
       <table border="1">
-        {% for skill, stats in data.skills.items %}
+        {% for skill, skillData in data.skills.combat.items %}
           <tr><td>
-            <div class="row">
-              <div class="col-5">{{ skill }}: {{ stats.level }}</div>
-              <div class="col-5">Legendary: {{ stats.legendary }}</div>
-              <div class="col-2">
-                {% if stats.level < 100 %}
+            <div class="row" style="padding:0;margin:0">
+              <div class="col-5" style="padding:0;margin:0">{{ skill }}: {{ skillData.level }}</div>
+              <div class="col-5" style="padding:0;margin:0">Legendary: {{ skillData.legendary }}</div>
+              <div class="col-2" style="padding:0;margin:0">
+                {% if skillData.level < 100 %}
                   <input type="button" onclick="window.location.href='levelSkill={{ skill }}&difficulty={{ data.id }}&levelType=level'" value="Level up">
                 {% else %}
                   <input type="button" onclick="window.location.href='levelSkill={{ skill }}&difficulty={{ data.id }}&levelType=legendary'" value="Legendary">
@@ -52,7 +82,45 @@
         {% endfor %}
       </table>
     </div>
-    <div>
+    <div class="col" style="padding:0;margin:0">
+      <table border="1">
+        {% for skill, skillData in data.skills.magic.items %}
+          <tr><td>
+            <div class="row" style="padding:0;margin:0">
+              <div class="col-5" style="padding:0;margin:0">{{ skill }}: {{ skillData.level }}</div>
+              <div class="col-5" style="padding:0;margin:0">Legendary: {{ skillData.legendary }}</div>
+              <div class="col-2" style="padding:0;margin:0">
+                {% if skillData.level < 100 %}
+                  <input type="button" onclick="window.location.href='levelSkill={{ skill }}&difficulty={{ data.id }}&levelType=level'" value="Level up">
+                {% else %}
+                  <input type="button" onclick="window.location.href='levelSkill={{ skill }}&difficulty={{ data.id }}&levelType=legendary'" value="Legendary">
+                {% endif %}
+              </div>
+            </div>
+          </td></tr>
+        {% endfor %}
+      </table>
+    </div>
+    <div class="col" style="padding:0;margin:0">
+      <table border="1">
+        {% for skill, skillData in data.skills.stealth.items %}
+          <tr><td>
+            <div class="row" style="padding:0;margin:0">
+              <div class="col-5" style="padding:0;margin:0">{{ skill }}: {{ skillData.level }}</div>
+              <div class="col-5" style="padding:0;margin:0">Legendary: {{ skillData.legendary }}</div>
+              <div class="col-2" style="padding:0;margin:0">
+                {% if skillData.level < 100 %}
+                  <input type="button" onclick="window.location.href='levelSkill={{ skill }}&difficulty={{ data.id }}&levelType=level'" value="Level up">
+                {% else %}
+                  <input type="button" onclick="window.location.href='levelSkill={{ skill }}&difficulty={{ data.id }}&levelType=legendary'" value="Legendary">
+                {% endif %}
+              </div>
+            </div>
+          </td></tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
       <h2>Stats</h2>
       <div class="row">
         {% for stat, statData in data.stats.items %}

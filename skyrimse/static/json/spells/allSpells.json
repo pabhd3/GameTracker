@@ -1,0 +1,1096 @@
+######################
+##### Alteration #####
+######################
+SR-icon-spell-Light.png	Candlelight
+Spell ID: 00043324
+Tome ID: 0009e2a7
+0
+Novice	44	21	2.5	Creates a hovering light that lasts for 60 seconds:
+Candlelight, 5 pts for 60 secs
+Can be purchased from: Calcelmo, Falion, Farengar Secret-Fire, Madena, Nelacar, Sybille Stentor, Tolfdir, Wuunferth the Unliving, Wylandriah
+Can be found in Fort Snowhawk
+SR-icon-spell-Alteration.png	Oakflesh
+Spell ID: 0005ad5c
+Tome ID: 0009e2a8
+0
+Novice	44	103	103	Improves the caster's armor rating by 40 points for 60 seconds:
+Armor - Oak, 40 pts for 60 secs
+The Mage Armor perk increases the magnitude to 80 pts (rank 1), 100 pts (rank 2), or 120 pts (rank 3)
+Can be purchased from: Calcelmo, Falion, Farengar Secret-Fire, Madena, Nelacar, Riverwood Trader, Sybille Stentor, Tolfdir, Wuunferth the Unliving, Wylandriah
+Can be found in Shroud Hearth Barrow
+SR-icon-spell-Light.png	Magelight
+Spell ID: 00043323
+Tome ID: 000a26e2
+25
+Apprentice	87	84	12	Ball of light that lasts 60 seconds and sticks where it strikes:
+Magelight, 5 pts for 60 secs
+Can be purchased from: Calcelmo, Falion, Farengar Secret-Fire, Madena, Sybille Stentor, Tolfdir, Wuunferth the Unliving, Wylandriah
+SR-icon-spell-Alteration.png	Stoneflesh
+Spell ID: 0005ad5d
+Tome ID: 000a26e3
+25
+Apprentice	95	194	194	Improves the caster's armor rating by 60 points for 60 seconds:
+Armor - Stone, 60 pts for 60 secs
+The Mage Armor perk increases the magnitude to 120 pts (rank 1), 150 pts (rank 2), or 180 pts (rank 3)
+Can be purchased from: Calcelmo, Falion, Farengar Secret-Fire, Madena, Sybille Stentor, Tolfdir, Wuunferth the Unliving, Wylandriah
+DB-icon-spell-Ash.png	Ash ShellDB
+Spell ID: xx017731
+Tome ID: xx0177ac
+50
+Adept	425	251	251	Targets that fail to resist are immobilized in hardened ash for 30 seconds:
+Ash Shell, for 30 secs
+Can be purchased from Talvas FathryonDB after completing the quest From the Ashes.
+Only available with the Dragonborn add-on
+SR-icon-spell-Detect Life.png	Detect Life
+Spell ID: 000211ee
+Tome ID: 000a26e7
+50
+Adept	332	100/s	6.5/s per target	Nearby living creatures, but not undead, machines or daedra, can be seen through walls:
+Detect Life Enemy Exterior, in 200 ft
+Detect Life Enemy Interior, in 100 ft
+Detect Life Friend Exterior, in 200 ft
+Detect Life Friend Interior, in 100 ft
+Can be purchased from: Tolfdir, Wylandriah
+Reward for quest Infiltration
+SR-icon-spell-Alteration.png	Ironflesh
+Spell ID: 00051b16
+Tome ID: 000a26e4
+50
+Adept	341	266	266	Improves the caster's armor rating by 80 points for 60 seconds:
+Armor - Iron, 80 pts for 60 secs
+The Mage Armor perk increases the magnitude to 160 pts (rank 1), 200 pts (rank 2), or 240 pts (rank 3)
+Can be purchased from: Tolfdir, Wylandriah
+SR-icon-spell-Telekinesis.png	Telekinesis
+Spell ID: 0001a4cc
+Tome ID: 000a26e5
+50
+Adept	326	170/s	170/s	Can pull an object to you from a distance. Add it to your inventory or throw it:
+Telekinesis Effect, 1 pt
+Can be purchased from: Tolfdir, Wylandriah
+Can be found in the Redwater DenDG, Benkongerike Great Hall, among a pile of Lusty Argonian Maid booksDB
+SR-icon-spell-Alteration.png	Transmute
+Spell ID: 00109111
+Tome ID: 00109112
+50
+Adept	200	100	15 (scripted)	Transmutes one piece of unrefined Iron ore to Silver, or Silver ore to Gold if the caster is carrying any:
+Transmute Mineral Ore, 5 pts for 1 sec
+Prioritizes turning silver into gold
+Not available for purchase
+Can be found in Ansilvund Burial Chambers, Halted Stream Camp
+SR-icon-spell-Alteration.png	Waterbreathing
+Spell ID: 0005d175
+Tome ID: 000a26e6
+50
+Adept	340	222	222	Can breathe water for 60 seconds:
+Waterbreathing, for 60 secs
+Can be purchased from: Tolfdir, Wylandriah
+DB-icon-spell-Ash.png	Ash RuneDB
+Spell ID: xx0177af
+Tome ID: xx0177b5
+75
+Expert	635	418	418	Cast on a nearby surface, it explodes when enemies are nearby, immobilizing them in hardened ash for 30 seconds:
+Cast on ground
+Ash Rune, 50 pts for 1 sec
+Can be purchased from Talvas FathryonDB after completing the quest From the Ashes.
+Only available with the Dragonborn add-on
+SR-icon-spell-Detect Life.png	Detect Dead
+Spell ID: 000211ef
+Tome ID: 000a26ea
+75
+Expert	600	148/s	9.25/s per target	Nearby dead can be seen through walls:
+Detect Undead Enemy Exterior, in 200 ft
+Detect Undead Enemy Interior, in 100 ft
+Detect Undead Friend Exterior, in 200 ft
+Detect Undead Friend Interior, in 100 ft
+Can be purchased from: Tolfdir
+Can be found in The Sallow Regent part of ApocryphaDB
+SR-icon-spell-Alteration.png	Ebonyflesh
+Spell ID: 0005ad5e
+Tome ID: 000a26e9
+75
+Expert	650	341	341	Improves the caster's armor rating by 100 points for 60 seconds:
+Armor - Ebony, 100 pts for 60 secs
+The Mage Armor perk increases the magnitude to 200 pts (rank 1), 250 pts (rank 2), or 300 pts (rank 3)
+Can be purchased from: Tolfdir
+SR-icon-spell-Paralyze.png	Paralyze
+Spell ID: 0005ad5f
+Tome ID: 000a26e8
+75
+Expert	685	450	450	Targets that fail to resist are paralyzed for 10 seconds:
+Paralyze, for 10 secs
+Stagger Push, 100 pts
+Can be purchased from: Tolfdir
+SR-icon-spell-Alteration.png	Dragonhide
+Spell ID: 000cdb70
+Tome ID: 000d2b4e
+100
+Master	1389	837	837	Caster ignores 80% of all physical damage for 30 seconds:
+Armor - Dragonhide, for 30 secs
+Reward for quest Alteration Ritual Spell
+SR-icon-spell-Paralyze.png	Mass Paralysis
+Spell ID: 000b62e6
+Tome ID: 000dd646
+100
+Master	1280	937	937	All targets in the area that fail to resist are paralyzed for 15 seconds:
+Paralyze, for 15 secs in 40 ft
+Stagger Area Attack, 0.05 pts in 40 ft
+Can be purchased from: Tolfdir (only after Alteration Ritual Spell has been completed)
+SR-icon-spell-Illusion Dark.png	Equilibrium
+Spell ID: 000da746
+Tome ID: 000f4997
+N/A	250	-25/s + 25 health/s	0.01/s	Convert 25 points of health into magicka per second. Caster can be killed by this effect:
+Damage Health, 25 pts
+Restore Magicka, 25 pts
+Not available for purchase
+Can be found in Labyrinthian Chasm
+Affected by difficulty, which means you will drain more than 25 health if you play on expert or master and less if you play on apprentice or novice, but always will get 25 magicka per second.
+
+#######################
+##### Conjuration #####
+#######################
+SR-icon-spell-Bound.png	Bound DaggerDB
+Spell ID: xx01ce06
+Tome ID: xx01ce07
+0
+Novice	38	53	269	Creates a magic dagger for 120 seconds. Sheathe it to dispel:
+Bound Dagger, for 120 secs
+With the Mystic Binding perk, changes to Mystic Dagger, for 120 secs
+Can be purchased from Talvas FathryonDB after completing the quest From the Ashes
+Only available with the Dragonborn add-on
+SR-icon-spell-Bound.png	Bound Sword
+Spell ID: 000211eb
+Tome ID: 0009e2a9
+0
+Novice	49	93	469	Creates a magic sword for 120 seconds. Sheathe it to dispel:
+Bound Sword, for 120 secs
+With the Mystic Binding perk, changes to Mystic Sword, for 120 secs
+Can be purchased from: Calcelmo, Falion, Farengar Secret-Fire, Madena, Nelacar, Phinis Gestor, Sybille Stentor, Wuunferth the Unliving, Wylandriah, Talvas FathryonDB
+SR-icon-spell-Summon.png	Conjure Familiar
+Spell ID: 000640b6
+Tome ID: 0009e2ab
+0
+Novice	49	107	64	Summons a Familiar for 60 seconds wherever the caster is pointing:
+Conjure Familiar, for 60 secs
+Bretons start with this spell
+Can be purchased from: Calcelmo, Falion, Farengar Secret-Fire, Madena, Nelacar, Phinis Gestor, Sybille Stentor, Wuunferth the Unliving, Wylandriah, Talvas FathryonDB
+SR-icon-spell-Reanimate.png	Raise Zombie
+Spell ID: 0007e8e1
+Tome ID: 0009e2aa
+0
+Novice	49	103	515	Reanimate a weak dead body to fight for you for 60 seconds:
+Reanimate, 6 pts for 60 secs
+Reanimate Secondary Effects, for 61 secs
+Can be purchased from: Calcelmo, Falion, Farengar Secret-Fire, Madena, Nelacar, Phinis Gestor, Riverwood Trader, Sybille Stentor, Wuunferth the Unliving, Wylandriah, Talvas FathryonDB
+Can be found in Fellglow Keep Dungeons, Fort Snowhawk, and Halldir's Cairn
+SR-icon-spell-Bound.png	Bound Battleaxe
+Spell ID: 000211ec
+Tome ID: 000a26ed
+25
+Apprentice	99	169	84	Creates a magic battle axe for 120 seconds. Sheathe it to dispel:
+Bound Axe, for 120 secs
+With the Mystic Binding perk, changes to Mystic Axe, for 120 secs
+Can be purchased from: Calcelmo, Falion, Farengar Secret-Fire, Madena, Nelacar, Phinis Gestor, Sybille Stentor, Wuunferth the Unliving, Wylandriah, Talvas FathryonDB
+SR-icon-spell-Summon.png	Conjure BonemanDG
+Spell ID: xx0045ba
+Tome ID: xx0045b0
+25
+Apprentice	75	129	64	Summons a Boneman Archer from the Soul Cairn for 60 seconds wherever the caster is pointing:
+Conjure Boneman, for 60 secs
+Found in the Soul Cairn in the center of the encircling pathways southwest of Jiub's Opus, Page 9
+Only available with the Dawnguard add-on
+SR-icon-spell-Summon.png	Conjure Flame Atronach
+Spell ID: 000204c3
+Tome ID: 000a26ec
+25
+Apprentice	99	150	37	Summons a Flame Atronach for 60 seconds wherever the caster is pointing:
+Conjure Flame Atronach, for 60 secs
+Can be purchased from: Calcelmo, Falion, Farengar Secret-Fire, Madena, Nelacar, Phinis Gestor, Sybille Stentor, Wuunferth the Unliving, Wylandriah, Talvas FathryonDB
+Can be found in Korvanjund Crypt
+Can be created at the Atronach Forge
+SR-icon-spell-Summon.png	Flaming Familiar
+Spell ID: 0009ce26
+Tome ID: 000b45f7
+25
+Apprentice	250	57	57	Summons a flaming familiar which will charge into battle and explode:
+Conjure Flaming Familiar, for 6 secs
+Not available for purchase
+Reward for quest A Scroll For Anska
+SR-icon-spell-Reanimate.png	Reanimate Corpse
+Spell ID: 00065bd7
+Tome ID: 000a26eb
+25
+Apprentice	99	144	434	Reanimate a more powerful dead body to fight for you for 60 seconds:
+Reanimate, 13 pts for 60 secs
+Dark Souls Reanimate Corpse with the Dark Souls perk
+Reanimate Secondary Effects, for 60 secs
+Can be purchased from: Calcelmo, Falion, Farengar Secret-Fire, Madena, Nelacar, Phinis Gestor, Sybille Stentor, Wuunferth the Unliving, Wylandriah, Talvas FathryonDB
+Can be found on Warlord Gathrik during Coming of Age
+SR-icon-spell-Banish.png	Soul Trap
+Spell ID: 0004dba4
+Tome ID: 0009cd54
+25
+Apprentice	100	107	215	If target dies within 60 seconds, fills a soul gem:
+Soul Trap, for 60 secs
+Can be purchased from: Calcelmo, Falion, Farengar Secret-Fire, Madena, Nelacar, Phinis Gestor, Sybille Stentor, Wuunferth the Unliving, Wylandriah, Talvas FathryonDB
+Can be created at the Atronach Forge
+SR-icon-spell-Summon.png	Summon ArvakDG
+Spell ID: xx00c600
+Tome ID: None
+25
+Apprentice	N/A	136	0	Summons Arvak in the Soul Cairn or Tamriel wilderness to act as your steed:
+Summon Arvak, for 60 secs
+Reward for quest Soul Cairn Horse Quest
+If you are still mounted after 60 secs he will remain with you until you dismount
+Only available with the Dawnguard add-on
+SR-icon-spell-Banish.png	Banish Daedra
+Spell ID: 0006d22c
+Tome ID: 000a26ee
+50
+Adept	346	196	196	Weaker summoned daedra are sent back to Oblivion:
+Banish, 15 pts
+Banish/Command Daedra Push, 100 pts
+Banish - Damage Health, 20 pts for 1 sec
+Can be purchased from: Calcelmo, Falion, Phinis Gestor
+Can be found in: Broken Oar Grotto (inside Hargar's Chest; Hargar's Chest Key required)
+SR-icon-spell-Bound.png	Bound Bow
+Spell ID: 000211ed
+Tome ID: 000a26f1
+50
+Adept	335	207	103	Creates a magic bow and 100 magic arrows for 120 seconds. Sheathe it to dispel:
+Bound Bow, for 120 secs
+With the Mystic Binding perk, changes to Mystic Bow, for 120 secs
+If you use all 100 arrows it will automatically equip the weakest arrows you are carrying.
+Can be purchased from: Calcelmo, Falion, Phinis Gestor
+Can be found in Fort Amol Prison
+DB-icon-spell-Ash.png	Conjure Ash SpawnDB
+Spell ID: xx01cdf6
+Tome ID: xx01e2b1
+50
+Adept	338	186	139	Summons an Ash Spawn for 60 seconds wherever the caster is pointing:
+Conjure Ash Spawn, for 60 secs
+Can be purchased from Talvas FathryonDB after completing the quest Telvanni Research
+Not affected by the Twin Souls perk
+Only available with the Dragonborn add-on
+SR-icon-spell-Summon.png	Conjure Frost Atronach
+Spell ID: 000204c4
+Tome ID: 000a26ef
+50
+Adept	347	215	80	Summons a Frost Atronach for 60 seconds wherever the caster is pointing:
+Conjure Frost Atronach, for 60 secs
+Can be purchased from: Calcelmo, Falion, Phinis Gestor
+Can be created at the Atronach Forge
+SR-icon-spell-Summon.png	Conjure MistmanDG
+Spell ID: xx0045b8
+Tome ID: xx0045b1
+50
+Adept	75	193	96	Summons a Mistman from the Soul Cairn for 60 seconds wherever the caster is pointing:
+Conjure Mistman, for 60 secs
+Found in the Soul Cairn next to Jiub's Opus, Page 7
+Only available with the Dawnguard add-on
+SR-icon-spell-Summon.png	Conjure SeekerDB
+Spell ID: xx033c66
+Tome ID: xx033c67
+50
+Adept	307	157	118	Summons a Seeker for 60 seconds wherever the caster is pointing:
+Conjure Seeker, for 60 secs
+If your Conjuration skill is 40 or higher, the spell tome may be found in Apocrypha when reading any of the Black Books
+Not affected by the Twin Souls perk
+Only available with the Dragonborn add-on
+SR-icon-spell-Reanimate.png	Revenant
+Spell ID: 00096d94
+Tome ID: 000a26f2
+50
+Adept	340	183	183	Reanimate a powerful dead body to fight for you for 60 seconds:
+Reanimate, 21 pts for 60 secs
+Reanimate Secondary Effects, for 60 secs
+Can be purchased from: Calcelmo, Falion, Phinis Gestor
+DB-icon-spell-Ash.png	Conjure Ash GuardianDB
+Spell ID: xx017782
+Tome ID: xx01aaba
+75
+Expert	720	340	221	Creates an Ash Guardian that guards that location until destroyed. Consumes a Heart stone from your inventory, without which it will be hostile.
+Conjure Ash Guardian
+Can be purchased from: Talvas FathryonDB after completing the quest From the Ashes
+Reward for quest From the Ashes
+Not affected by the Twin Souls perk
+Only available with the Dragonborn add-on
+SR-icon-spell-Banish.png	Command Daedra
+Spell ID: 0006f953
+Tome ID: 000a26f6
+75
+Expert	660	243	242	Powerful summoned and raised creatures are put under your control:
+Command, 20 pts
+Banish/Command Daedra Push, 100 pts
+Can be purchased from: Phinis Gestor
+SR-icon-spell-Summon.png	Conjure Dragon Priest
+Spell ID: 0010fc16
+Tome ID: None
+75
+Expert	N/A	358	717	Summons a Dragon Priest for 60 seconds.
+Conjure Dragon Priest, for 60 secs
+Only available as an effect of Konahrik
+SR-icon-spell-Summon.png	Conjure Dremora Lord
+Spell ID: 0010ddec
+Tome ID: 0010fd60
+75
+Expert	730	358	717	Summons a Dremora Lord for 60 seconds:
+Conjure Dremora Lord, for 60 secs
+Can be purchased from: Phinis Gestor
+SR-icon-spell-Summon.png	Conjure Storm Atronach
+Spell ID: 000204c5
+Tome ID: 000a26f0
+75
+Expert	690	322	161	Summons a Storm Atronach for 60 seconds wherever the caster is pointing:
+Conjure Storm Atronach, for 60 secs
+Can be purchased from: Phinis Gestor
+Can be created at the Atronach Forge
+SR-icon-spell-Summon.png	Conjure WrathmanDG
+Spell ID: xx0045b3
+Tome ID: xx0045b2
+75
+Expert	75	301	150	Summons a Wrathman from the Soul Cairn for 60 seconds wherever the caster is pointing:
+Conjure Wrathman, for 60 secs
+Found in the Soul Cairn in a building due south of Jiub's Opus, Page 5
+Only available with the Dawnguard add-on
+SR-icon-spell-Reanimate.png	Dread Zombie
+Spell ID: 00096d95
+Tome ID: 000a26f7
+75
+Expert	630	302	302	Reanimate a very powerful dead body to fight for you for 60 seconds:
+Reanimate, 30 pts for 60 secs
+Fortified Healing, 3 pts for 60 secs
+Reanimate Secondary Effects, for 60 secs
+Can be purchased from: Phinis Gestor
+SR-icon-spell-Banish.png	Expel Daedra
+Spell ID: 0006f952
+Tome ID: 000a26f8
+75
+Expert	620	215	215	Powerful summoned daedra creatures are are [sic] sent back to Oblivion:
+Banish, 20 pts
+Banish/Command Daedra Push, 100 pts
+Banish - Damage Health, 40 pts for 1 sec
+Can be purchased from: Phinis Gestor
+SR-icon-spell-Summon.png	Flame Thrall
+Spell ID: 0007e5d5
+Tome ID: 000a26fa
+100
+Master	1260	900	0	Summons a Flame Atronach permanently:
+Conjure Flame Thrall, for 86313600 secs (999 days)
+Reward for quest Conjuration Ritual Spell
+Found in Apocrypha - The Sallow RegentDB
+SR-icon-spell-Reanimate.png	Dead Thrall
+Spell ID: 0007e8df
+Tome ID: 000a26f9
+100
+Master	1270	1000	1000	Reanimate a dead body permanently to fight for you. Only works on people:
+Reanimate Thrall, 40 pts for 86313600 secs (999 days)
+Fortified Healing, 1 pt for 86313600 secs (999 days)
+Can be purchased from: Phinis Gestor (only after Conjuration Ritual Spell has been completed)
+SR-icon-spell-Summon.png	Frost Thrall
+Spell ID: 0007e5d6
+Tome ID: 000a26fb
+100
+Master	1300	1100	3850	Summons a Frost Atronach permanently:
+Conjure Frost Thrall, for 86313600 secs (999 days)
+Can be purchased from: Phinis Gestor (only after Conjuration Ritual Spell has been completed)
+SR-icon-spell-Summon.png	Storm Thrall
+Spell ID: 0007e5d7
+Tome ID: 000a26fc
+100
+Master	1350	1200	4800	Summons a Storm Atronach permanently:
+Conjure Storm Thrall, for 86313600 secs (999 days)
+Can be purchased from: Phinis Gestor (only after Conjuration Ritual Spell has been completed)
+SR-icon-spell-Summon.png	Spectral Arrow
+Spell ID: 000ab23d
+Tome ID: 000b3165
+N/A	250	50	50	Fires a Spectral Arrow at the target doing 30 points of damage and staggering the target:
+Spectral Arrow, 30 pts
+Stagger Push, 25 pts
+Not available in game
+Was apparently intended to be the reward for completing the quest Infiltration, but was replaced by Detect Life
+SR-icon-spell-Summon.png	Summon Arniel's Shade
+Spell ID: 0006a153
+Tome ID: None
+N/A	N/A	0	0	Summons the Shade of Arniel Gane for 60 seconds wherever the caster is pointing.
+Summon Arniel's Shade, for 60 secs
+Not available for purchase
+Reward for quest Arniel's Endeavor
+SR-icon-spell-Summon.png	Summon Unbound Dremora
+Spell ID: 00099f39
+Tome ID: None
+N/A	N/A	100	0 (scripted)	Summons an unbound Dremora for 999 seconds
+Summon Unbound Dremora Unbound Dremora, for 999 secs
+Only works at a specific location, as part of the related quest
+Not available for purchase
+Given to you by Phinis Gestor as part of the quest Conjuration Ritual Spell
+
+#######################
+##### Destruction #####
+#######################
+SR-icon-spell-Fire.png	Flames
+Spell ID: 00012fcd
+Tome ID: 0009cd51
+0
+Novice	50	14/s	20/s
+14/sDB	A gout of fire that does 8 points per second. Targets on fire take extra damage:
+Concentration spell
+Range: 36 feet
+Speed: 47 fps
+Flames, 8 pts for 1 sec
+Sets targets on fire, dealing 1% of the immediate spell damage over 0.1s
+Intense Flames Fear, 99 pts for 15 secs; if the Intense Flames perk has been unlocked
+All players start with this spell
+Can be purchased from: Calcelmo, Enthir, Falion, Faralda, Farengar Secret-Fire, Madena, Nelacar, Sybille Stentor, Wuunferth the Unliving, Wylandriah, Talvas FathryonDB
+Can be found in Labyrinthian Chasm, Forelhost Refectory, Hag's End, Mzulft Aedrome
+SR-icon-spell-Ice.png	Frostbite
+Spell ID: 0002b96b
+Tome ID: 0009cd52
+0
+Novice	47	16/s	23/s	A blast of cold that does 8 points of damage per second to Health and Stamina:
+Concentration spell
+Range: 36 feet
+Speed: 47 fps
+Frostbite, 8 pts for 1 sec
+Slow, 50 pts for 4 secs
+Deep Freeze Paralyze, for 3 secs; if the Deep Freeze perk has been unlocked
+Can be purchased from: Calcelmo, Enthir, Falion, Faralda, Farengar Secret-Fire, Madena, Nelacar, Riverwood Trader, Sybille Stentor, Wuunferth the Unliving, Wylandriah, Talvas FathryonDB
+Can be found in Labyrinthian Thoroughfare, Mzulft Aedrome, Serpent's Bluff Ruins
+SR-icon-spell-Shock.png	Sparks
+Spell ID: 0002dd2a
+Tome ID: 0009cd53
+0
+Novice	46	19/s	26/s	Lightning that does 8 points of shock damage to Health and Magicka per second:
+Concentration spell
+Range: 48 feet
+Speed: instant
+Sparks, 8 pts for 1 sec
+Disintegrate, 200 pts for 1 sec; if the Disintegrate perk has been unlocked
+Dunmer start with this spell
+Can be purchased from: Calcelmo, Enthir, Falion, Faralda, Farengar Secret-Fire, Madena, Nelacar, Sybille Stentor, Wuunferth the Unliving, Wylandriah, Talvas FathryonDB
+Can be found in Fellglow Keep, Helgen Keep (during Unbound)
+SR-icon-spell-Fire.png	Fire Rune
+Spell ID: 0005db90
+Tome ID: 000a2700
+25
+Apprentice	90	234	234	Cast on a nearby surface, it explodes for 50 points of fire damage when enemies come near:
+Cast on ground
+Fire Rune, 50 pts for 1 sec
+Sets targets on fire, dealing 10% of the immediate spell damage over 1s
+Can be purchased from: Calcelmo, Enthir, Falion, Faralda, Farengar Secret-Fire, Madena, Sybille Stentor, Wuunferth the Unliving, Wylandriah, Talvas FathryonDB
+SR-icon-spell-Fire.png	Firebolt
+Spell ID: 00012fd0
+Tome ID: 000a26fd
+25
+Apprentice	96	41	41	A blast of fire that does 25 points of damage. Targets on fire take extra damage:
+Missile
+Range: 469 feet
+Speed: 117 fps
+Firebolt, 25 pts
+Sets targets on fire, dealing 10% of the immediate spell damage over 1s
+Perk Impact Stagger, 0.25 pts; if the Impact perk has been unlocked
+Intense Flames Fear, 99 pts for 15 secs; if the Intense Flames perk has been unlocked
+Can be purchased from: Calcelmo, Enthir, Falion, Faralda, Farengar Secret-Fire, Madena, Sybille Stentor, Wuunferth the Unliving, Wylandriah, Talvas FathryonDB
+SR-icon-spell-Ice.png	FreezeDB
+Spell ID: xx02732d
+Tome ID: None
+25
+Apprentice	N/A	30	0	A spike of ice that does 20 points of frost damage to Health and Stamina and slows the target for 15 seconds:
+Missile
+Range: 469 feet
+Speed: 117 fps
+Freeze, 20 pts
+Perk Impact Stagger, 0.25 pts; if the Impact perk has been unlocked
+Slow, 50 pts for 15 secs
+Deep Freeze Paralyze, for 3 secs; if the Deep Freeze perk has been unlocked
+Only available with Ahzidal's Ring of Arcana equipped.
+Only available with the Dragonborn add-on
+SR-icon-spell-Ice.png	Frost Rune
+Spell ID: 0006796f
+Tome ID: 000a2701
+25
+Apprentice	92	293	293	Cast on a nearby surface, it explodes for 50 points of frost damage when enemies come near:
+Cast on ground
+Frost Rune, 50 pts for 1 sec
+Can be purchased from: Calcelmo, Enthir, Falion, Faralda, Farengar Secret-Fire, Madena, Sybille Stentor, Wuunferth the Unliving, Wylandriah, Talvas FathryonDB
+SR-icon-spell-Ice.png	Ice Spike
+Spell ID: 0002b96c
+Tome ID: 000a26fe
+25
+Apprentice	96	48	48	A spike of ice that does 25 points of frost damage to Health and Stamina:
+Missile
+Range: 469 feet
+Speed: 117 fps
+Ice Spike, 25 pts
+Perk Impact Stagger, 0.25 pts; if the Impact perk has been unlocked
+Slow, 50 pts for 3 secs
+Deep Freeze Paralyze, for 3 secs; if the Deep Freeze perk has been unlocked
+Can be purchased from: Calcelmo, Enthir, Falion, Faralda, Farengar Secret-Fire, Madena, Sybille Stentor, Wuunferth the Unliving, Wylandriah, Talvas FathryonDB
+Can be found in Raven Rock MineDB
+SR-icon-spell-Fire.png	IgniteDB
+Spell ID: xx02732b
+Tome ID: None
+25
+Apprentice	N/A	30	7	A blast of flame that sets targets on fire, doing 4 damage per second for 15 seconds:
+Missile
+Range: 469 feet
+Speed: 117 fps
+Ignite, 4 pts for 15 secs
+Perk Impact Stagger, 0.25 pts; if the Impact perk has been unlocked
+Intense Flames Fear, 0.25 pts; if the Intense Flames perk has been unlocked
+Only available with Ahzidal's Ring of Arcana equipped.
+Only available with the Dragonborn add-on
+SR-icon-spell-Shock.png	Lightning Bolt
+Spell ID: 0002dd29
+Tome ID: 000a26ff
+25
+Apprentice	95	51	51	A bolt of lightning that does 25 points of shock damage to Health and half that to Magicka:
+Missile
+Range: 141 feet
+Speed: instant
+Lightning Bolt, 25 pts
+Perk Impact Stagger, 0.25 pts; if the Impact perk has been unlocked
+Disintegrate, 200 pts for 1 sec; if the Disintegrate perk has been unlocked
+Can be purchased from: Calcelmo, Enthir, Falion, Faralda, Farengar Secret-Fire, Madena, Sybille Stentor, Wuunferth the Unliving, Wylandriah, Talvas FathryonDB
+SR-icon-spell-Shock.png	Lightning Rune
+Spell ID: 00067970
+Tome ID: 000a2702
+25
+Apprentice	93	323	323	Cast on a nearby surface, it explodes for 50 points of shock damage when enemies come near:
+Cast on ground
+Shock Rune, 50 pts for 1 sec
+Can be purchased from: Calcelmo, Enthir, Falion, Faralda, Farengar Secret-Fire, Madena, Sybille Stentor, Wuunferth the Unliving, Wylandriah, Talvas FathryonDB
+SR-icon-spell-Shock.png	Chain Lightning
+Spell ID: 00045f9d
+Tome ID: 000a2708
+50
+Adept	390	156	78	Lightning bolt that does 40 points of shock damage to Health and half to Magicka, then leaps to a new target:
+Missile (instant impact)
+Range: 141 feet
+Speed: instant
+Chain Lightning, 40 pts in 20 ft
+Perk Impact Stagger, 0.25 pts; if the Impact perk has been unlocked
+Disintegrate, 200 pts for 1 sec in 20 ft; if the Disintegrate perk has been unlocked
+Can be purchased from: Enthir, Faralda, Farengar Secret-Fire, Madena, Wuunferth the Unliving, Talvas FathryonDB
+SR-icon-spell-Fire.png	Fireball
+Spell ID: 0001c789
+Tome ID: 000a2706
+50
+Adept	345	133	66	A fiery explosion for 40 points of damage in a 15 foot radius. Targets on fire take extra damage:
+Missile, explosive
+Range: 469 feet
+Speed: 117 fps
+Explosion radius: 15 feet
+Fireball, 40 pts in 15 ft
+Sets targets on fire, dealing 20% of the immediate spell damage over 2s
+Perk Impact Stagger, 0.25 pts; if the Impact perk has been unlocked
+Intense Flames Rout, 99 pts for 15 secs in 15 ft; if the Intense Flames perk has been unlocked
+Can be purchased from: Enthir, Faralda, Farengar Secret-Fire, Madena, Wuunferth the Unliving, Talvas FathryonDB
+SR-icon-spell-Fire.png	Flame Cloak
+Spell ID: 0003ae9f
+Tome ID: 000a2703
+50
+Adept	325	289	0	For 60 seconds, opponents in melee range take 8 points fire damage per second. Targets on fire take extra damage:
+Flame Cloak, 8 pts in 10 ft for 60 secs
+Sets targets on fire, dealing 20% of the immediate spell damage over 2s
+Can be purchased from: Enthir, Faralda, Farengar Secret-Fire, Madena, Wuunferth the Unliving, Talvas FathryonDB
+Can be found on the shoreline east of Dawnstar, next to Yisra's corpse
+SR-icon-spell-Ice.png	Frost Cloak
+Spell ID: 0003aea2
+Tome ID: 000a2704
+50
+Adept	340	316	0	For 60 seconds, opponents in melee range take 8 points frost damage and Stamina damage per second:
+Cast on self
+Frost Cloak, 8 pts in 10 ft for 60 secs
+Can be purchased from: Enthir, Faralda, Farengar Secret-Fire, Madena, Wuunferth the Unliving, Talvas FathryonDB
+SR-icon-spell-Ice.png	Ice Storm
+Spell ID: 00045f9c
+Tome ID: 000a2707
+50
+Adept	360	144	72	A freezing whirlwind that does 40 points of frost damage per second to Health and Stamina:
+Missile (area of effect while traveling)
+Range: 96 feet
+Speed: 24 fps
+Ice Storm, 40 pts in 15 ft
+Slow, 50 pts for 5 secs
+Deep Freeze Paralyze, for 3 secs in 15 ft; if the Deep Freeze perk has been unlocked
+Perk Impact Stagger, 0.25 pts; if the Impact perk has been unlocked
+Can be purchased from: Enthir, Faralda, Farengar Secret-Fire, Madena, Wuunferth the Unliving, Talvas FathryonDB
+SR-icon-spell-Shock.png	Lightning Cloak
+Spell ID: 0003aea3
+Tome ID: 000a2705
+50
+Adept	355	370	0	For 60 seconds nearby opponents take 8 points of shock damage and half magicka damage:
+Cast on self
+Shock Cloak, 8 pts in 10 ft for 60 secs
+Can be purchased from: Enthir, Faralda, Farengar Secret-Fire, Madena, Wuunferth the Unliving, Talvas FathryonDB
+DB-icon-spell-Whirlwind.png	Whirlwind CloakDB
+Spell ID: xx01772d
+Tome ID: xx0177ad
+50
+Adept	395	338	0	For 60 seconds, opponents in melee range have a chance of being flung away:
+Cast on self
+Whirlwind Cloak, 10 pts for 60 secs
+Can be purchased from Talvas Fathryon after completing the quest Wind and Sand.
+Only available with the Dragonborn add-on
+SR-icon-spell-Ice.png	Icy Spear
+Spell ID: 0010f7ec
+Tome ID: 0010f7f3
+75
+Expert	725	320	320	A spear of ice that does 60 points of frost damage to Health and Stamina:
+Missile
+Range: 469 feet
+Speed: 117 fps
+Icy Spear, 60 pts
+Perk Impact Stagger, 0.25 pts; if the Impact perk has been unlocked
+Slow, 50 pts for 3 secs
+Deep Freeze Paralyze, for 3 secs; if the Deep Freeze perk has been unlocked
+Can be purchased from: Enthir, Faralda, Talvas FathryonDB
+SR-icon-spell-Fire.png	Incinerate
+Spell ID: 0010f7ed
+Tome ID: 0010f7f4
+75
+Expert	710	298	298	A blast of fire that does 60 points of damage. Targets on fire take extra damage:
+Missile
+Range: 469 feet
+Incinerate, 60 pts
+Sets targets on fire, dealing 10% of the immediate spell damage over 1s
+Perk Impact Stagger, 0.25 pts; if the Impact perk has been unlocked
+Intense Flames Fear, 99 pts for 15 secs; if the Intense Flames perk has been unlocked
+Can be purchased from: Enthir, Faralda, Talvas FathryonDB
+SR-icon-spell-Shock.png	Thunderbolt
+Spell ID: 0010f7ee
+Tome ID: 0010f7f5
+75
+Expert	750	343	343	A Thunderbolt that does 60 points of shock damage to Health and half that to Magicka:
+Missile
+Range: 188 feet
+Speed: instant
+Thunderbolt, 60 pts
+Perk Impact Stagger, 0.25 pts; if the Impact perk has been unlocked
+Disintegrate, 200 pts for 1 sec; if the Disintegrate perk has been unlocked
+Can be purchased from: Enthir, Faralda, Talvas FathryonDB
+SR-icon-spell-Fire.png	Wall of Flames
+Spell ID: 00035d7f
+Tome ID: 000a2709
+75
+Expert	680	118/s	118/s	Sprayed on the ground, it creates a wall of fire that does 50 points of fire damage per second:
+Constant cast on ground (each impact lasts for several seconds)
+Fire Barrier, 8 pts for 1 sec on targets hit directly
+Sets targets on fire, dealing 33% of the immediate spell damage over 2s
+Intense Flames Fear, 99 pts for 15 secs; if the Intense Flames perk has been unlocked
+Fire (HazardWallofFireSpell), 20 damage every 1 second and tapers for another. The hazard effect lasts for 30 seconds on the ground
+Can be purchased from: Enthir, Faralda, Talvas FathryonDB
+SR-icon-spell-Ice.png	Wall of Frost
+Spell ID: 00035d80
+Tome ID: 000a270a
+75
+Expert	700	137/s	137/s	Sprayed on the ground, it creates a wall of frost that does 50 points of frost damage per second:
+Constant cast on ground (each impact lasts for several seconds)
+Frost Barrier, 8 points for 1 second on targets hit directly.
+Slow, 50 points for 5 seconds.
+Deep Freeze Paralyze, for 3 secs, if the Deep Freeze perk has been unlocked.
+Frost (HazardWallofFrostSpell), 20 damage every 1 second, Slows enemy for 5 seconds. The hazard effect lasts for 30 seconds on the ground.
+Can be purchased from: Enthir, Faralda, Talvas FathryonDB
+SR-icon-spell-Shock.png	Wall of Storms
+Spell ID: 00035d81
+Tome ID: 000a270b
+75
+Expert	725	145/s	145/s	Sprayed on the ground, it creates a wall of lightning that does 50 points of shock damage per second:
+Constant cast on ground (each impact lasts for several seconds)
+Wall of Storms, 8 pts for 1 sec on targets hit directly
+Disintegrate, 200 pts for 1 sec; if the Disintegrate perk has been unlocked
+Shock (HazardWallofShockSpell), 20 shock damage every 1 second. The hazard effect lasts for 30 seconds on the ground
+Can be purchased from: Enthir, Faralda, Talvas FathryonDB
+SR-icon-spell-Ice.png	Blizzard
+Spell ID: 0007e8e4
+Tome ID: 000a270d
+100
+Master	1350	1106	1106	Targets take 20 points of frost damage for 10 seconds, plus Stamina damage:
+Cast on self
+Blizzard, 20 pts for 10 secs in 40 ft
+On Ice Paralyze, for 3 secs in 40 ft; if the Deep Freeze perk has been unlocked
+Can be purchased from: Faralda (only after Destruction Ritual Spell has been completed)
+SR-icon-spell-Fire.png	Fire Storm
+Spell ID: 0007a82b
+Tome ID: 000a270c
+100
+Master	1290	1426	1426	A 100 point fiery explosion centered on the caster. Does more damage to closer targets:
+Cast on self; large area of effect
+Fire Storm 100, 100 pts in 100 ft
+Sets targets on fire, dealing 40% of the immediate spell damage over 4s.
+Fire Storm 65, 75 pts in 65 ft
+Fire Storm 25, 50 pts in 25 ft
+It Burns Hysteria, 99 pts for 7 secs in 100 ft; if the Intense Flames perk has been unlocked
+Reward for quest Destruction Ritual Spell
+SR-icon-spell-Shock.png	Lightning Storm
+Spell ID: 0007e8e5
+Tome ID: 000a270e
+100
+Master	1400	138/s	0	Target takes 75 points of shock damage per second to Health, and half that to Magicka:
+Cast then constant; no impact
+Lightning Storm, 75 pts for 1 sec
+Disintegrate, 200 pts for 1 sec; regardless of whether or not the Disintegrate perk has been unlocked
+Can be purchased from: Faralda (only after Destruction Ritual Spell has been completed)
+SR-icon-spell-Fire.png	Arniel's Convection
+Spell ID: 0006a104
+Tome ID: None
+N/A	N/A	1/s	1/s	Burns the target 1 points per second. Targets on fire take extra damage.
+Flames, 1 pt for 1 sec
+Specifically intended to be used for heating Dwarven Convectors in the related quest
+Not available for purchase
+Given to you by Arniel Gane during the quest Arniel's Endeavor
+SR-icon-spell-Absorb.png	Vampiric Drain
+Spell IDs: 0008d5bf
+0008d5c0
+0008d5c1
+0008d5c2
+Tome IDs: None
+N/A	N/A	6/s
+10/s
+13/s
+17/s	6/s
+10/s
+13/s
+17/s	Absorb <mag> points of health per second from the target
+Drain Health, <mag> pts for 1 sec
+<mag> is 2, 3, 4, or 5, depending upon your level of vampirism
+Not available for purchase
+Spell is automatically added when you become a vampire
+
+####################
+##### Illusion #####
+####################
+SR-icon-spell-Magic Hat.png	Clairvoyance
+Spell ID: 00021143
+Tome ID: 000ff7d1
+0
+Novice	50	25/s	0.25/s	Shows the path to the current goal:
+Clairvoyance, for 1 sec
+Can be purchased from: Calcelmo, Drevis Neloren, Falion, Farengar Secret-Fire, Madena, Nelacar, Riverwood Trader, Sybille Stentor, Wuunferth the Unliving, Wylandriah
+Can be found in Embershard Mine
+SR-icon-spell-Illusion Light.png	Courage
+Spell ID: 0004dee8
+Tome ID: 0009e2ad
+0
+Novice	46	39	39	Target won't flee for 60 seconds and gets some extra health and stamina:
+Courage, 100 pts for 60 secs
+Fortify Health, 25 pts for 60 secs
+Fortify Stamina, 25 pts for 60 secs
+Can be purchased from: Calcelmo, Drevis Neloren, Falion, Farengar Secret-Fire, Madena, Nelacar, Sybille Stentor, Wuunferth the Unliving, Wylandriah
+Can be found in Treva's Watch
+SR-icon-spell-Illusion Dark.png	Fury
+Spell ID: 0004deeb
+Tome ID: 0009e2ac
+0
+Novice	43	67	20	Creatures and people up to level 6 will attack anything nearby for 30 seconds:
+Fury, 6 pts for 30 secs
+Courage Secondary, 6 pts for 30 secs
+Altmer start with this spell
+Can be purchased from: Calcelmo, Drevis Neloren, Falion, Farengar Secret-Fire, Madena, Nelacar, Riverwood Trader, Sybille Stentor, Wuunferth the Unliving, Wylandriah
+SR-icon-spell-Illusion Light.png	Calm
+Spell ID: 0004dee9
+Tome ID: 000a2711
+25
+Apprentice	91	146	36	Creatures and people up to level 9 won't fight for 30 seconds:
+Calm, 9 pts for 30 secs
+Can be purchased from: Calcelmo, Drevis Neloren, Falion, Farengar Secret-Fire, Madena, Sybille Stentor, Wuunferth the Unliving, Wylandriah
+SR-icon-spell-Illusion Dark.png	Fear
+Spell ID: 0004deea
+Tome ID: 000a2712
+25
+Apprentice	80	153	38	Creatures and people up to level 9 flee from combat for 30 seconds:
+Fear, 9 pts for 30 secs
+Can be purchased from: Calcelmo, Drevis Neloren, Falion, Farengar Secret-Fire, Madena, Sybille Stentor, Wuunferth the Unliving, Wylandriah
+SR-icon-spell-Magic Hat.png	Muffle
+Spell ID: 0008f3eb
+Tome ID: 000a270f
+25
+Apprentice	88	144	144	You move more quietly for 180 seconds:
+Muffle, 1 pt for 180 secs
+Can be purchased from: Calcelmo, Drevis Neloren, Falion, Farengar Secret-Fire, Madena, Sybille Stentor, Wuunferth the Unliving, Wylandriah
+SR-icon-spell-Illusion Dark.png	Frenzy
+Spell ID: 0004deee
+Tome ID: 000a2714
+50
+Adept	330	209	104/target	Creatures and people up to level 14 will attack anyone nearby for 60 seconds:
+Frenzy, 14 pts for 60 secs in 15 ft
+Rally Secondary, 14 pts for 60 secs in 15 ft
+Can be purchased from: Drevis Neloren, Sybille Stentor
+SR-icon-spell-Illusion Dark.png	Frenzy RuneDB
+Spell ID: xx0177b7
+Tome ID: xx0177bd
+50
+Adept	310	278	278	Targets up to level 20 that fail to resist are frenzied for 30 seconds:
+Cast on ground
+Frenzy Rune, 20 pts for 30 secs
+Can be purchased from Talvas Fathryon after completing the quest From the Ashes.
+Only available with the Dragonborn add-on
+SR-icon-spell-Illusion Light.png	Rally
+Spell ID: 0004deec
+Tome ID: 000a2713
+50
+Adept	300	113	34/target	Targets won't flee for 60 seconds and get extra health and stamina:
+Rally, 100 pts for 60 secs in 15 ft
+Fortify Health, 25 pts for 60 secs in 15 ft
+Fortify Stamina, 25 pts for 60 secs in 15 ft
+Can be purchased from: Drevis Neloren, Sybille Stentor
+SR-icon-spell-Invisibility.png	Invisibility
+Spell ID: 00027eb6
+Tome ID: 000a2715
+75
+Expert	625	334	83	Caster is invisible for 30 seconds. Activating an object or attacking will break the spell:
+Invisibility, for 30 secs
+Can be purchased from: Drevis Neloren
+SR-icon-spell-Illusion Light.png	Pacify
+Spell ID: 0004deed
+Tome ID: 000a2717
+75
+Expert	610	290	72/target	Creatures and people up to level 20 won't fight for 60 seconds:
+Pacify, 20 pts for 60 secs in 15 ft
+Can be purchased from: Drevis Neloren
+SR-icon-spell-Illusion Dark.png	Rout
+Spell ID: 0004deef
+Tome ID: 000a2718
+75
+Expert	653	316	79/target	Creatures and people up to level 20 flee from combat for 30 seconds:
+Rout, 20 pts for 30 secs in 15 ft
+Can be purchased from: Drevis Neloren
+SR-icon-spell-Illusion Light.png	Call to Arms
+Spell ID: 0007e8dd
+Tome ID: 000a271b
+100
+Master	1150	655	65/target	Targets have improved combat skills, health and stamina for 10 minutes:
+Fortify Marksman, 25 pts for 600 secs in 100 ft
+Fortify One-handed, 25 pts for 600 secs in 100 ft
+Fortify Two-handed, 25 pts for 600 secs in 100 ft
+Fortify Health, 25 pts for 600 secs in 100 ft
+Fortify Stamina, 25 pts for 600 secs in 100 ft
+Can be purchased from: Drevis Neloren (only after Illusion Ritual Spell has been completed)
+SR-icon-spell-Illusion Light.png	Harmony
+Spell ID: 0007e8db
+Tome ID: 000a271a
+100
+Master	1220	1052	841/target	Creatures and people up to level 25 nearby won't fight for 60 seconds:
+Harmony, 25 pts for 60 secs in 250 ft
+Can be purchased from: Drevis Neloren (only after Illusion Ritual Spell has been completed)
+SR-icon-spell-Illusion Dark.png	Hysteria
+Spell ID: 0007e8de
+Tome ID: 000a271c
+100
+Master	1240	866	216/target	Creatures and people up to level 25 flee from combat for 60 seconds:
+Hysteria, 25 pts for 60 secs in 250 ft
+Reward for quest Illusion Ritual Spell
+SR-icon-spell-Illusion Dark.png	Mayhem
+Spell ID: 0007e8da
+Tome ID: 000a2719
+100
+Master	1250	990	396/target	Creatures and people up to level 25 will attack anyone nearby for 60 seconds:
+Mayhem, 25 pts for 60 secs in 250 ft
+Rally Secondary, 25 pts for 60 secs in 250 ft
+Can be purchased from: Drevis Neloren (only after Illusion Ritual Spell has been completed)
+SR-icon-spell-Illusion Light.png	Vision of the Tenth Eye
+Spell ID: 000b323e
+Tome ID: None
+N/A	N/A	0	0	See what others cannot.
+Vision of the Tenth Eye, for 30 secs
+Not available for purchase
+Given by Drevis Neloren as part of the quest Illusion Ritual Spell
+
+#######################
+##### Restoration #####
+#######################
+SR-icon-spell-Heal.png	Healing
+Spell ID: 00012fcc
+Tome ID: 0009e2af
+0
+Novice	50	12/s	12/s	Heals the caster 10 points per second:
+Restore Health, 10 pts for 1 sec
+Restore Stamina, 10 pts for 1 sec
+All players start with this spell
+Can be purchased from: Calcelmo, Colette Marence, Falion, Farengar Secret-Fire, Madena, Nelacar, Sybille Stentor, Wuunferth the Unliving, Wylandriah
+SR-icon-spell-Ward.png	Lesser Ward
+Spell ID: 00013018
+Tome ID: 0009e2ae
+0
+Novice	45	34/s	34/s	Increases armor rating by 40 points and negates up to 40 points of spell damage or effects:
+Ward - Lesser, 40 pts
+Shield - Lesser, 40 pts
+Can be purchased from: Calcelmo, Colette Marence, Falion, Farengar Secret-Fire, Madena, Nelacar, Riverwood Trader, Sybille Stentor, Wuunferth the Unliving, Wylandriah
+Can be found in Alftand Ruined Tower. Is given in the First Lessons quest during Tolfdir's lecture.
+SR-icon-spell-Heal.png	Fast Healing
+Spell ID: 0002f3b8
+Tome ID: 000a271d
+25
+Apprentice	94	73	73	Heals the caster 50 points:
+Restore Health, 50 pts
+Restore Stamina, 50 pts
+Can be purchased from: Calcelmo, Colette Marence, Falion, Farengar Secret-Fire, Madena, Nelacar, Sybille Stentor, Wuunferth the Unliving, Wylandriah
+SR-icon-spell-Heal.png	Healing Hands
+Spell ID: 0004d3f2
+Tome ID: 000a271e
+25
+Apprentice	89	25/s	25/s	Heals the target 10 points per second, but not undead, atronachs or machines:
+Restore Health, 10 pts/sec for 1 sec
+This spell then tapers; it will continue to deal the original magnitude of the effect to the target for another 0.3 seconds after expiring.
+Restore Stamina, 10 pts for 1 sec
+Can be purchased from: Calcelmo, Colette Marence, Falion, Farengar Secret-Fire, Madena, Nelacar, Sybille Stentor, Wuunferth the Unliving, Wylandriah
+SR-icon-spell-Heal.png	Necromantic HealingDG
+Spell ID: xx00e8d2
+Tome ID: xx00e8d5
+25
+Apprentice	115	37/s	37/s	Heals the undead target 10 points per second, but not the living, atronachs or machines:
+Restore Health to Undead, 10 pts for 1 sec
+Restore Stamina, 10 pts for 1 sec
+Can be purchased from: Ronthil
+Can be found in Dimhollow Crypt
+Only available with the Dawnguard add-on
+SR-icon-spell-Ward.png	Steadfast Ward
+Spell ID: 000211f1
+Tome ID: 000a2720
+25
+Apprentice	92	58/s	58/s	Increases armor rating by 60 points and negates up to 60 points of spell damage or effects:
+Ward - Steadfast, 60 pts
+Shield - Lesser, 60 pts
+Can be purchased from: Calcelmo, Colette Marence, Falion, Farengar Secret-Fire, Madena, Nelacar, Sybille Stentor, Wuunferth the Unliving, Wylandriah
+Can be found in Labyrinthian
+SR-icon-spell-Vampire Bane.png	Sun FireDG
+Spell ID: xx003f52
+Tome ID: xx003f51
+25
+Apprentice	80	24	12	Ball of sunlight that does 25 points of damage to undead:
+Sun Bane, 25 pts
+Can be purchased from: Sorine Jurard
+Only available with the Dawnguard add-on
+SR-icon-spell-Turn Undead.png	Turn Lesser Undead
+Spell ID: 0004b146
+Tome ID: 000a271f
+25
+Apprentice	89	84	84	Undead up to level 6 flee for 30 seconds:
+Turn Lesser Undead, 6 pts for 30 secs
+Turn Undead Push, 50 pts
+Can be purchased from: Calcelmo, Colette Marence, Falion, Farengar Secret-Fire, Madena, Nelacar, Sybille Stentor, Wuunferth the Unliving, Wylandriah
+SR-icon-spell-Heal.png	Close Wounds
+Spell ID: 000b62ef
+Tome ID: 0010f64d
+50
+Adept	360	126	126	Heals the caster 100 points:
+Restore Health, 100 pts
+Restore Stamina, 100 pts
+Can be purchased from: Colette Marence
+SR-icon-spell-Ward.png	Greater Ward
+Spell ID: 000211f0
+Tome ID: 000a2722
+50
+Adept	341	86/s	86/s	Increases armor rating by 80 points and negates up to 80 points of spell damage or effects:
+Ward - Greater, 80 pts
+Shield - Lesser, 80 pts
+Can be purchased from: Colette Marence
+SR-icon-spell-Heal.png	Heal Other
+Spell ID: 00012fd2
+Tome ID: 000a2727
+50
+Adept	300	80	80	Heals the target 75 points, but not undead, atronachs or machines:
+Restore Health, 75 pts
+Restore Stamina, 75 pts
+Can be purchased from: Colette Marence
+Can be found in Shalidor's Maze
+SR-icon-spell-Heal.png	Heal UndeadDG
+Spell ID: xx00e8d4
+Tome ID: xx00e8d6
+50
+Adept	370	115	115	Heals the undead target 75 points, but not the living, atronachs or machines:
+Restore Health to Undead, 75 pts
+Restore Stamina, 75 pts
+Can be purchased from: Ronthil
+Only available with the Dawnguard add-on
+SR-icon-spell-Paralyze.png	Poison RuneDB
+Spell ID: xx01d74b
+Tome ID: xx020685
+50
+Adept	290	246	246	Targets that fail to resist take 3 points of poison damage per second for 30 seconds:
+Poison Rune, 3 pts for 30 secs
+Can be purchased from: Talvas Fathryon (after From the Ashes)
+Only available with the Dragonborn add-on
+SR-icon-spell-Turn Undead.png	Repel Lesser Undead
+Spell ID: 0004d3f8
+Tome ID: 000a2725
+50
+Adept	333	115	115	All affected undead up to level 8 flee for 30 seconds:
+Repel Lesser Undead, 8 pts for 30 secs
+Turn Undead Push, 100 pts
+Can be purchased from: Colette Marence
+SR-icon-spell-Vampire Bane.png	Stendarr's AuraDG
+Spell ID: xx0038b5
+Tome ID: xx003f4e
+50
+Adept	335	248	0	For 60 seconds, undead in melee range take 10 points sun damage per second:
+Stendarr's Aura, 10 pts for 60 secs
+Stendarr's Aura Light, for 60 secs
+Can be purchased from: Florentius Baenius
+Only available with the Dawnguard add-on
+SR-icon-spell-Turn Undead.png	Turn Undead
+Spell ID: 0005dd5d
+Tome ID: 000a2721
+50
+Adept	323	168	168	Undead up to level 13 flee for 30 seconds:
+Turn Undead, 13 pts for 30 secs
+Turn Undead Push
+Can be purchased from: Colette Marence
+Is given in The Wolf Queen Awakened quest when you speak to Styrr.
+SR-icon-spell-Vampire Bane.png	Vampire's BaneDG
+Spell ID: xx0038b6
+Tome ID: xx003f4d
+50
+Adept	340	72	36	Sunlight explosion that does 40 points of damage in a 15 foot radius to undead:
+Sun Bane, 40 pts in 15 ft
+Can be purchased from: Florentius Baenius
+Only available with the Dawnguard add-on
+SR-icon-spell-Turn Undead.png	Circle of Protection
+Spell ID: 0005312d
+Tome ID: 000a2728
+75
+Expert	650	171	171	Undead up to level 20 entering the circle will flee:
+Circle of Protection, 20 pts for 30 secs
+Can be purchased from: Colette Marence
+SR-icon-spell-Heal.png	Grand Healing
+Spell ID: 000b62ee
+Tome ID: 000dd643
+75
+Expert	680	254	382+	Heals everyone close to the caster 200 points:
+Restore Health Area, 200 pts in 15 ft
+Restore Stamina Area, 200 pts in 15 ft
+Restore Health, 200 pts
+Restore Stamina, 200 pts
+Can be purchased from: Colette Marence
+SR-icon-spell-Turn Undead.png	Repel Undead
+Spell ID: 0005dd60
+Tome ID: 000a2726
+75
+Expert	655	353	353	All affected undead up to level 16 flee for 30 seconds:
+Repel Undead, 16 pts for 30 secs
+Turn Undead Push, 100 pts
+Can be purchased from: Colette Marence
+SR-icon-spell-Turn Undead.png	Turn Greater Undead
+Spell ID: 0005dd5e
+Tome ID: 000a2729
+75
+Expert	664	267	266	Undead up to level 21 flee for 30 seconds:
+Turn Greater Undead, 21 pts for 30 secs
+Turn Undead Push, 100 pts
+Can be purchased from: Colette Marence
+SR-icon-spell-Turn Undead.png	Bane of the Undead
+Spell ID: 0008c1ab
+Tome ID: 000dd647
+100
+Master	1200	988	988	Sets undead up to level 30 on fire and makes them flee for 30 seconds:
+Stagger Area Attack, 0.05 pts in 80 ft
+Turn Greater Undead, 30 pts for 30 secs in 80 ft
+Bane of the Undead, 50 pts in 80 ft
+Reward for quest Restoration Ritual Spell
+SR-icon-spell-Heal.png	Guardian Circle
+Spell ID: 000e0ccf
+Tome ID: 000fde7b
+100
+Master	1220	716	716	Undead up to level 35 entering the circle will flee. Caster heals 20 health per second inside it:
+Guardian Circle, 35 pts for 60 secs
+Can be purchased from: Colette Marence (only after Restoration Ritual Spell has been completed)

@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from skyrimse.models import *
 from mongoengine.context_managers import switch_db
 from datetime import datetime
-from .customScripts import plotRader
+from .customScripts import plotRadars
 from json import load, loads, dumps
 import os
 
@@ -68,7 +68,11 @@ def addDifficulty(request):
         modLocations=modLocationCount, total=totalCount, modTotal=modTotalCount)
     progress.save()
     # Generate a Radar Graph for the progress
-    plotRader(values=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], difficulty=progress.difficulty)
+    skillLevels = {"Alchemy": 0, "Alteration": 0, "Archery": 0, "Block": 0, "Conjuration": 0, 
+        "Destruction": 0, "Enchanting": 0, "Heavy Armor": 0, "Illusion": 0, "Light Armor": 0, 
+        "Lockpicking": 0, "One-Handed": 0, "Pickpocket": 0, "Restoration": 0, "Smithing": 0, 
+        "Sneak": 0, "Speech": 0, "Two-Handed": 0}
+    plotRadars(values=skillLevels, difficulty=progress.difficulty)
     return redirect("/skyrimse/progress")
 
 def deleteDifficulty(request):
@@ -76,9 +80,10 @@ def deleteDifficulty(request):
     deleteID = request.path.split("=")[1]
     progress = Progress.objects(id=deleteID).first()
     # Delete the Radar Graph graph
-    strFile = "skyrimse/static/images/progress/skills-{difficulty}.png".format(difficulty=progress.difficulty)
-    if(os.path.isfile(strFile)):
-        os.remove(strFile)
+    for area in ["combat", "magic", "stealth"]:
+        strFile = "skyrimse/static/images/progress/{area}-skills-{difficulty}.png".format(area=area, difficulty=progress.difficulty)
+        if(os.path.isfile(strFile)):
+            os.remove(strFile)
     progress.delete()
     # Delete Quest Data
     for quest in Quest.objects.all():
@@ -105,14 +110,16 @@ def levelSkill(request):
         progress["skills"][skill]["legendary"] += 1
     progress.save()
     # Pull levels for new Radar Graph
-    newLevels = [progress.skills.alchemy.level, progress.skills.alteration.level, 
-        progress.skills.archery.level, progress.skills.block.level, progress.skills.conjuration.level, 
-        progress.skills.destruction.level, progress.skills.enchanting.level, progress.skills.heavyArmor.level, 
-        progress.skills.illusion.level, progress.skills.lightArmor.level, progress.skills.lockpicking.level, 
-        progress.skills.oneHanded.level, progress.skills.pickPocket.level, progress.skills.restoration.level, 
-        progress.skills.smithing.level, progress.skills.sneak.level, progress.skills.speech.level, 
-        progress.skills.twoHanded.level]
-    plotRader(values=newLevels, difficulty=progress.difficulty)
+    skillLevels = {"Alchemy": progress.skills.alchemy.level, "Alteration": progress.skills.alteration.level, 
+        "Archery": progress.skills.archery.level, "Block": progress.skills.block.level, 
+        "Conjuration": progress.skills.conjuration.level, "Destruction": progress.skills.destruction.level, 
+        "Enchanting": progress.skills.enchanting.level, "Heavy Armor": progress.skills.heavyArmor.level, 
+        "Illusion": progress.skills.illusion.level, "Light Armor": progress.skills.lightArmor.level, 
+        "Lockpicking": progress.skills.lockpicking.level, "One-Handed": progress.skills.oneHanded.level, 
+        "Pickpocket": progress.skills.pickPocket.level, "Restoration": progress.skills.restoration.level, 
+        "Smithing": progress.skills.smithing.level, "Sneak": progress.skills.sneak.level, 
+        "Speech": progress.skills.speech.level, "Two-Handed": progress.skills.twoHanded.level}
+    plotRadars(values=skillLevels, difficulty=progress.difficulty)
     return redirect("/skyrimse/progress/{difficulty}".format(difficulty=progress.difficulty))
 
 def progressDetail(request):
@@ -120,10 +127,16 @@ def progressDetail(request):
     progressID = request.path.split("/skyrimse/progress/")[1]
     progress = Progress.objects(difficulty=progressID).first()
     data = {"id": progress.id, "difficulty": progress.difficulty, "created": progress.created, 
-        "skills": {}, "stats": {}}
+        "skills": {"combat": {}, "magic": {}, "stealth": {}}, "stats": {}}
     for skill in progress.skills:
-        data["skills"][skill] = {"level": progress["skills"][skill]["level"],
-                                    "legendary": progress["skills"][skill]["legendary"]}
+        if(skill in ["archery", "block", "heavyArmor", "oneHanded", "smithing", "twoHanded"]):
+            area = "combat"
+        elif(skill in ["alteration", "conjuration", "destruction", "enchanting", "illusion", "restoration"]):
+            area = "magic"
+        else:
+            area = "stealth"
+        data["skills"][area][skill] = {"level": progress["skills"][skill]["level"],
+            "legendary": progress["skills"][skill]["legendary"]}
     for stat in progress.collected:
         data["stats"][stat] = {"collected": progress["collected"][stat], 
             "total": progress["collectedTotal"][stat]}
