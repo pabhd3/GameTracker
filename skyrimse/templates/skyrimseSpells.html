@@ -1,0 +1,44 @@
+<!-- Extending from base.html -->
+{% extends 'base.html' %}
+<!-- Used to load in static files -->
+{% load static %}
+
+{% block content %}
+<!-- Page Title Descriptor -->
+  <h1>Shouts</h1>
+  <!-- Link back to previous page -->
+  <a href="/skyrimse/">The Elder Scrolls V: Skyrim Special Edition (Home Page)</a>
+  <!-- Load Shouts into MongoDB -->
+  <div class="row">
+    {% for key, value in data.counts.items %}
+      {% if value == 0 %}
+        <div class="col-sm-2"><input type="button" onclick="window.location.href='spellsLoad={{key}}'" value="Load {{key}}"></div>
+      {% endif %}
+    {% endfor %}
+  </div>
+  {% for school, sources in data.schools.items %}
+    <h4>{{ school }}</h4>
+    <div class="row">
+      {% for source, sourceData in sources.items %}
+        <div class="col-4">
+          <a href="{{ source }}-{{ school }}"><h6>{{ source }}</h6></a>
+          <table border="1">
+            <tr><td>
+              <div class="row>">
+                {% for difficulty, difficultyStats in sourceData.items %}
+                  <div class="row">
+                    <div class="col">{{ difficulty }}</div>
+                    <div class="col"><progress value={{ difficultyStats.learned }} max={{ difficultyStats.total }}></progress></div>
+                    <div class="col">{{ difficultyStats.learned }} / {{ difficultyStats.total }}</div>
+                  </div>
+                {% endfor %}
+              </div>
+            </td></tr>
+          </table>
+          <br>
+        </div>
+      {% endfor %}
+    </div>
+    <br><br>
+  {% endfor %}
+{% endblock %}

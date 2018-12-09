@@ -1,0 +1,20 @@
+[
+    {"name": "Conjure Boneman", "school": "conjuration", "level": "apprentice", "source": "dawnguard", 
+        "description": "Summons a Boneman Archer from the Soul Cairn for 60 seconds wherever the caster is pointing."}, 
+    {"name": "Conjure Mistman", "school": "conjuration", "level": "adept", "source": "dawnguard", 
+        "description": "Summons a Mistman from the Soul Cairn for 60 seconds wherever the caster is pointing."}, 
+    {"name": "Conjure Wrathman", "school": "conjuration", "level": "expert", "source": "dawnguard", 
+        "description": "Summons a Wrathman from the Soul Cairn for 60 seconds wherever the caster is pointing."}, 
+    {"name": "Summon Arvak", "school": "conjuration", "level": "apprentice", "source": "dawnguard", 
+        "description": "Summons Arvak in the Soul Cairn or Tamriel wilderness to act as your steed."}, 
+    {"name": "Heal Undead", "school": "restoration", "level": "adept", "source": "dawnguard", 
+        "description": "Heals the undead target 75 points, but not the living, atronachs or machines."}, 
+    {"name": "Necromantic Healing", "school": "restoration", "level": "apprentice", "source": "dawnguard", 
+        "description": "Heals the undead target for 10 points per second."}, 
+    {"name": "Stendarr's Aura", "school": "restoration", "level": "adept", "source": "dawnguard", 
+        "description": "For 60 seconds, undead in melee range take 10 points of Sun damage per second."}, 
+    {"name": "Sun Fire", "school": "restoration", "level": "apprentice", "source": "dawnguard", 
+        "description": "Ball of sunlight that does 25 points of damage to undead."}, 
+    {"name": "Vampire's Bane", "school": "restoration", "level": "adept", "source": "dawnguard", 
+        "description": "Sunlight explosion that does 40 points of damage in a 15 foot radius to undead."}
+]

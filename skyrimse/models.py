@@ -43,6 +43,8 @@ class Collected(EmbeddedDocument):
     modWords = fields.IntField(min_value=0)
     locations = fields.IntField(min_value=0)
     modLocations = fields.IntField(min_value=0)
+    spells = fields.IntField(min_value=0)
+    modSpells = fields.IntField(min_value=0)
     total = fields.IntField(min_value=0)
     modTotal = fields.IntField(min_value=0)
 
@@ -115,4 +117,15 @@ class Location(Document):
     name = fields.StringField()
     source = fields.StringField()
     locationType = fields.StringField()
+    completion = fields.EmbeddedDocumentField(Tracker)
+
+#########################
+##### Spell Related #####
+#########################
+class Spell(Document):
+    name = fields.StringField()
+    source = fields.StringField()
+    school = fields.StringField()
+    level = fields.StringField()
+    description = fields.StringField()
     completion = fields.EmbeddedDocumentField(Tracker)

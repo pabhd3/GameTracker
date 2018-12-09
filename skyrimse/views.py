@@ -59,13 +59,16 @@ def addDifficulty(request):
     modWordCount = (len(Shout.objects.all()) * 3) - wordCount
     locationCount = sum([len(Location.objects(source=source)) for source in ["vanilla", "dawnguard", "dragonborn"]])
     modLocationCount = (len(Location.objects.all())) - locationCount
-    totalCount = sum([questCount, perkCount, wordCount, locationCount])
-    modTotalCount = sum([modQuestCount, modPerkCount, modWordCount, modLocationCount])
+    spellCount = sum([len(Spell.objects(source=source)) for source in ["vanilla", "dawnguard", "dragonborn"]])
+    modSpellCount = (len(Spell.objects.all())) - spellCount
+    totalCount = sum([questCount, perkCount, wordCount, locationCount, spellCount])
+    modTotalCount = sum([modQuestCount, modPerkCount, modWordCount, modLocationCount, modSpellCount])
     progress.collected = Collected(quests=0, modQuests=0, perks=0, modPerks=0, 
-        words=0, modWords=0, locations=0, modLocations=0, total=0, modTotal=0)
+        words=0, modWords=0, locations=0, modLocations=0, spells=0, modSpells=0, total=0, modTotal=0)
     progress.collectedTotal = Collected(quests=questCount, modQuests=modQuestCount, perks=perkCount, 
         words=wordCount, modWords=modWordCount, modPerks=modPerkCount, locations=locationCount, 
-        modLocations=modLocationCount, total=totalCount, modTotal=modTotalCount)
+        modLocations=modLocationCount, spells=spellCount, modSpells=modSpellCount,
+        total=totalCount, modTotal=modTotalCount)
     progress.save()
     # Generate a Radar Graph for the progress
     skillLevels = {"Alchemy": 0, "Alteration": 0, "Archery": 0, "Block": 0, "Conjuration": 0, 
@@ -544,3 +547,94 @@ def visitLocation(request):
     location.save()
     progress.save()
     return redirect("/skyrimse/locations/{source}".format(source=location.source))
+
+#########################
+##### Spell Related #####
+#########################
+def spells(request):
+    # Pull all the spells, spell's cources, and quest's questlines
+    allSpells = Spell.objects.all()
+    allSources = set([s.source for s in allSpells])
+    allSchools = set([s.school for s in allSpells])
+    # Dynamically load quest sources
+    spellFiles = list(filter(lambda x: "Spells" in x, [f for f in os.listdir('skyrimse/static/json/spells')]))
+    data = {"counts": {}, "schools": {}}
+    for s in spellFiles:
+        source = s.replace("Spells.json", "")
+        data["counts"][source] = len(Spell.objects(source=source))
+    # Start Spell Completion Data
+    for school in allSchools:
+        data["schools"][school] = {}
+        for spell in allSpells:
+            if(spell.school not in data["schools"][school] and spell.school == school):
+                data["schools"][school][spell.source] = {"novice": {"learned": 0, "total": 0}, 
+                    "apprentice": {"learned": 0, "total": 0}, "adept": {"learned": 0, "total": 0}, 
+                    "expert": {"learned": 0, "total": 0}, "master": {"learned": 0, "total": 0}, 
+                    "legendary": {"learned": 0, "total": 0}}
+    # Finish Spell Data
+    for spell in allSpells:
+        for difficulty in spell.completion:
+            if(spell["completion"][difficulty]):
+                data["schools"][spell.school][spell.source][difficulty]["learned"] += 1
+            data["schools"][spell.school][spell.source][difficulty]["total"] += 1
+
+    return render(request, 'skyrimseSpells.html', {'data': data})
+
+def spellsLoad(request):
+    # Pull data from JSON file
+    toLoad = "skyrimse/static/json/spells/{source}Spells.json".format(source=request.path.split("=")[1])
+    with open(file=toLoad, mode="r") as f:
+        jsonData = load(f)
+        f.close()
+    # Create and save a Quest object
+    for spellsData in jsonData:
+        spell = Spell(name=spellsData["name"], source=spellsData["source"], 
+            school=spellsData["school"], level=spellsData["level"], description=spellsData["description"], 
+            completion=Tracker(novice=0, apprentice=0, adept=0, expert=0, master=0, legendary=0))
+        spell.save()
+    return redirect("/skyrimse/spells")
+
+def spellSchool(request):
+    # Pull the school and source from HTTP request.path
+    source = request.path.split("/spells/")[1].split("-")[0]
+    school = request.path.split("/spells/")[1].split("-")[1]
+    # Pull all the spells
+    allSpells = Spell.objects(school=school, source=source)
+    docs = {"novice": None, "apprentice": None, "adept": None,
+        "expert": None, "master": None, "legendary": None}
+    for doc in Progress.objects.all():
+        docs[doc.difficulty] = doc["skills"][school]["level"]
+    # Start the data object
+    data = {"source": source, "school": school, "spells": {}}
+    # Load Spells into Data object
+    spellLevels = {"novice": 0, "apprentice": 25, "adept": 50, "expert": 75, "master": 100}
+    for spell in allSpells:
+        data["spells"][spell.name] = {"id": spell.id, "description": spell.description, "level": spellLevels[spell.level], 
+            "completion": {"novice": {"skillLevel": docs["novice"], "learned": spell.completion.novice},
+                "apprentice": {"skillLevel": docs["apprentice"], "learned": spell.completion.apprentice},
+                "adept": {"skillLevel": docs["adept"], "learned": spell.completion.adept},
+                "expert": {"skillLevel": docs["expert"], "learned": spell.completion.expert},
+                "master": {"skillLevel": docs["master"], "learned": spell.completion.master},
+                "legendary": {"skillLevel": docs["legendary"], "learned": spell.completion.legendary}}}
+    return render(request, 'skyrimseSpellSchool.html', {'data': data})
+
+def learnSpell(request):
+    # Pull shout.id, shout.word, and difficulty from HTTP request.path
+    spellID = request.path.split("/spells/")[1].split("&")[0].split("=")[1]
+    difficulty = request.path.split("/spells/")[1].split("&")[1].split("=")[1]
+    # Pull the Location and Progress objects
+    spell = Spell.objects(id=spellID).first()
+    progress = Progress.objects(difficulty=difficulty).first()
+    # Update the Location and Progress objects
+    spell["completion"][difficulty] += 1
+    if(spell.source in ("vanilla", "dawnguard", "dragonborn")):
+        progress["collected"]["spells"] += 1
+        progress["collected"]["total"] += 1
+        progress["completion"]["vanilla"] = progress.collected.total / progress.collectedTotal.total
+    else:
+        progress["collected"]["modSpells"] += 1
+        progress["collected"]["modTotal"] += 1
+        progress["completion"]["mod"] = progress.collected.modTotal / progress.collectedTotal.modTotal
+    spell.save()
+    progress.save()
+    return redirect("/skyrimse/spells/{source}-{school}".format(source=spell.source, school=spell.school))
