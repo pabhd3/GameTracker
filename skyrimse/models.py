@@ -45,6 +45,8 @@ class Collected(EmbeddedDocument):
     modLocations = fields.IntField(min_value=0)
     spells = fields.IntField(min_value=0)
     modSpells = fields.IntField(min_value=0)
+    enchantments = fields.IntField(min_value=0)
+    modEnchantments = fields.IntField(min_value=0)  
     total = fields.IntField(min_value=0)
     modTotal = fields.IntField(min_value=0)
 
@@ -61,7 +63,9 @@ class Progress(Document):
     collectedTotal = fields.EmbeddedDocumentField(Collected)
 
     def __str__(self):
-        data = {"created": self.created, "difficulty": self.difficulty}
+        data = {"created": self.created, "difficulty": self.difficulty,
+            "completion": {"vanilla": self.completion.vanilla, "mod": self.completion.mod},
+            "level": self.level, "health": self.health, "magicka": self.magicka, "stamina": self.stamina}
         return dumps(data, indent=4) 
 
 #########################
@@ -83,6 +87,12 @@ class Quest(Document):
     completion = fields.EmbeddedDocumentField(Tracker)
     radiant = fields.BooleanField()
 
+    def __str__(self):
+        data = {"name": self.name, "questLine": self.questLine, "source": self.source,
+            "section": self.section, "radiant": self.radiant}
+        return dumps(data, indent=4) 
+    
+
 ###############################
 ##### Perk Related Models #####
 ###############################
@@ -93,6 +103,12 @@ class Perk(Document):
     level = fields.IntField()
     source = fields.StringField()
     completion = fields.EmbeddedDocumentField(Tracker)
+
+    def __str__(self):
+        data = {"name": self.name, "skill": self.skill, "description": self.description,
+            "level": self.level, "source": self.source}
+        return dumps(data, indent=4) 
+    
 
 ################################
 ##### Shout Related Models #####
@@ -109,6 +125,12 @@ class Shout(Document):
     source = fields.StringField()
     description = fields.StringField()
     words = fields.EmbeddedDocumentListField(Word)
+
+    def __str__(self):
+        data = {"name": self.name, "source": self.source, 
+            "description": self.description, "words": self.words}
+        return dumps(data, indent=4) 
+    
 
 ############################
 ##### Location Related #####
@@ -127,5 +149,15 @@ class Spell(Document):
     source = fields.StringField()
     school = fields.StringField()
     level = fields.StringField()
+    description = fields.StringField()
+    completion = fields.EmbeddedDocumentField(Tracker)
+
+###############################
+##### Enchantment Related #####
+###############################
+class Enchantment(Document):
+    name = fields.StringField()
+    source = fields.StringField()
+    enchantmentType = fields.StringField()
     description = fields.StringField()
     completion = fields.EmbeddedDocumentField(Tracker)

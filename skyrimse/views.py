@@ -61,14 +61,19 @@ def addDifficulty(request):
     modLocationCount = (len(Location.objects.all())) - locationCount
     spellCount = sum([len(Spell.objects(source=source)) for source in ["vanilla", "dawnguard", "dragonborn"]])
     modSpellCount = (len(Spell.objects.all())) - spellCount
-    totalCount = sum([questCount, perkCount, wordCount, locationCount, spellCount])
-    modTotalCount = sum([modQuestCount, modPerkCount, modWordCount, modLocationCount, modSpellCount])
+    enchantmentCount = sum([len(Enchantment.objects(source=source)) for source in ["vanilla", "dawnguard", "dragonborn"]])
+    modEnchantmentCount = (len(Enchantment.objects.all())) - enchantmentCount
+    totalCount = sum([questCount, perkCount, wordCount, locationCount, spellCount, enchantmentCount])
+    modTotalCount = sum([modQuestCount, modPerkCount, modWordCount, modLocationCount, modSpellCount,
+        modEnchantmentCount])
     progress.collected = Collected(quests=0, modQuests=0, perks=0, modPerks=0, 
-        words=0, modWords=0, locations=0, modLocations=0, spells=0, modSpells=0, total=0, modTotal=0)
+        words=0, modWords=0, locations=0, modLocations=0, spells=0, modSpells=0, enchantments=0,
+        modEnchantments=0, total=0, modTotal=0)
     progress.collectedTotal = Collected(quests=questCount, modQuests=modQuestCount, perks=perkCount, 
         words=wordCount, modWords=modWordCount, modPerks=modPerkCount, locations=locationCount, 
-        modLocations=modLocationCount, spells=spellCount, modSpells=modSpellCount,
-        total=totalCount, modTotal=modTotalCount)
+        modLocations=modLocationCount, spells=spellCount, modSpells=modSpellCount, 
+        enchantments=enchantmentCount, modEnchantments=modEnchantmentCount, total=totalCount, 
+        modTotal=modTotalCount)
     progress.save()
     # Generate a Radar Graph for the progress
     skillLevels = {"Alchemy": 0, "Alteration": 0, "Archery": 0, "Block": 0, "Conjuration": 0, 
@@ -638,3 +643,93 @@ def learnSpell(request):
     spell.save()
     progress.save()
     return redirect("/skyrimse/spells/{source}-{school}".format(source=spell.source, school=spell.school))
+
+###############################
+##### Enchantment Related #####
+###############################
+def enchantments(request):
+    # Pull all the enchantments, enchantment's sources, and enchantment's types
+    allEnchantments = Enchantment.objects.all()
+    allSources = set([e.source for e in allEnchantments])
+    allTypes = set([e.enchantmentType for e in allEnchantments])
+    # Dynamically load quest sources
+    enchantmentFiles = [f for f in os.listdir('skyrimse/static/json/enchantments')]
+    data = {"counts": {}, "types": {}}
+    for e in enchantmentFiles:
+        source = e.replace("Enchantments.json", "")
+        data["counts"][source] = len(Enchantment.objects(source=source))
+    # Start the data
+    for enchantment in allEnchantments:
+        # Check if type exists
+        if(not data["types"].get(enchantment.enchantmentType)):
+            data["types"][enchantment.enchantmentType] = {}
+        # Check if source in type exists
+        if(not data["types"][enchantment.enchantmentType].get(enchantment.source)):
+            data["types"][enchantment.enchantmentType][enchantment.source] = {
+                "novice": {"learned": 0, "total": 0}, "apprentice": {"learned": 0, "total": 0}, 
+                "adept": {"learned": 0, "total": 0}, "expert": {"learned": 0, "total": 0}, 
+                "master": {"learned": 0, "total": 0}, "legendary": {"learned": 0, "total": 0}}
+        # Check if complete per difficulty
+        for difficulty in enchantment.completion:
+            if(enchantment["completion"][difficulty] > 0):
+                data["types"][enchantment.enchantmentType][enchantment.source][difficulty]["learned"] += 1
+            data["types"][enchantment.enchantmentType][enchantment.source][difficulty]["total"] += 1
+    return render(request, 'skyrimseEnchantments.html', {'data': data})
+
+def enchantmentsLoad(request):
+    # Pull data from JSON file
+    toLoad = "skyrimse/static/json/enchantments/{source}Enchantments.json".format(source=request.path.split("=")[1])
+    with open(file=toLoad, mode="r") as f:
+        jsonData = load(f)
+        f.close()
+    # Create and save a Quest object
+    for enchantmentData in jsonData:
+        enchantment = Enchantment(name=enchantmentData["name"], source=enchantmentData["source"], 
+            enchantmentType=enchantmentData["type"], description=enchantmentData["description"], 
+            completion=Tracker(novice=0, apprentice=0, adept=0, expert=0, master=0, legendary=0))
+        enchantment.save()
+    return redirect("/skyrimse/enchantments")
+
+def enchantmentType(request):
+    # Pull the school and source from HTTP request.path
+    source = request.path.split("/enchantments/")[1].split("-")[0]
+    enchantmentType = request.path.split("/enchantments/")[1].split("-")[1]
+    # Pull all the spells
+    allEnchantments = Enchantment.objects(enchantmentType=enchantmentType, source=source)
+    docs = {"novice": None, "apprentice": None, "adept": None,
+        "expert": None, "master": None, "legendary": None}
+    for doc in Progress.objects.all():
+        docs[doc.difficulty] = True
+    # Start the data object
+    data = {"source": source, "type": enchantmentType, "enchantments": {}}
+    # Load Spells into Data object
+    for enchantment in allEnchantments:
+        data["enchantments"][enchantment.name] = {"id": enchantment.id, "description": enchantment.description, 
+            "completion": {"novice": {"started": docs["novice"], "learned": enchantment.completion.novice},
+                "apprentice": {"started": docs["apprentice"], "learned": enchantment.completion.apprentice},
+                "adept": {"started": docs["adept"], "learned": enchantment.completion.adept},
+                "expert": {"started": docs["expert"], "learned": enchantment.completion.expert},
+                "master": {"started": docs["master"], "learned": enchantment.completion.master},
+                "legendary": {"started": docs["legendary"], "learned": enchantment.completion.legendary}}}
+    return render(request, 'skyrimseEnchantmentType.html', {'data': data})
+
+def learnEnchantment(request):
+    # Pull shout.id, shout.word, and difficulty from HTTP request.path
+    enchantmentID = request.path.split("/enchantments/")[1].split("&")[0].split("=")[1]
+    difficulty = request.path.split("/enchantments/")[1].split("&")[1].split("=")[1]
+    # Pull the Location and Progress objects
+    enchantment = Enchantment.objects(id=enchantmentID).first()
+    progress = Progress.objects(difficulty=difficulty).first()
+    # Update the Location and Progress objects
+    enchantment["completion"][difficulty] += 1
+    if(enchantment.source in ("vanilla", "dawnguard", "dragonborn")):
+        progress["collected"]["enchantments"] += 1
+        progress["collected"]["total"] += 1
+        progress["completion"]["vanilla"] = progress.collected.total / progress.collectedTotal.total
+    else:
+        progress["collected"]["modEnchantments"] += 1
+        progress["collected"]["modTotal"] += 1
+        progress["completion"]["mod"] = progress.collected.modTotal / progress.collectedTotal.modTotal
+    enchantment.save()
+    progress.save()
+    return redirect("/skyrimse/enchantments/{source}-{type}".format(source=enchantment.source, type=enchantment.enchantmentType))

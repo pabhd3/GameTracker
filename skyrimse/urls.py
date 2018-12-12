@@ -36,5 +36,10 @@ urlpatterns = [
     url(r"^spells/$", views.spells),
     url(r"^spells/spellsLoad=\w+", views.spellsLoad),
     url(r"^spells/learnSpell=\w+", views.learnSpell), 
-    url(r"^spells/\w+-\w+", views.spellSchool)
+    url(r"^spells/\w+-\w+", views.spellSchool),
+    # Enchantment Related
+    url(r"^enchantments/$", views.enchantments),
+    url(r"^enchantments/enchantmentsLoad=\w+", views.enchantmentsLoad),
+    url(r"^enchantments/\w+-\w+", views.enchantmentType),
+    url(r"^enchantments/learnEnchantment=\w+", views.learnEnchantment)
 ]

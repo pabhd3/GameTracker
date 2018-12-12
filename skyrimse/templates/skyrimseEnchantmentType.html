@@ -1,0 +1,46 @@
+<!-- Extending from base.html -->
+{% extends 'base.html' %}
+<!-- Used to load in static files -->
+{% load static %}
+
+{% block content %}
+<!-- Page Title Descriptor -->
+  <h1>{{ data.source }} Enchantments</h1>
+  <h5>Type: {{ data.type }}</h5>
+  <!-- Link back to previous page -->
+  <a href="/skyrimse/enchantments/">The Elder Scrolls V: Skyrim Special Edition (Enchantments Page)</a>
+  <!-- Load Spells from MongoDB -->
+  <div class="row">
+    {% for name, enchantment in data.enchantments.items %}
+      <div class="col-6">
+        <h6>{{ name }}</h6>
+        <table border="1" width=100%>
+          <tr>
+            <td width=30%;>
+              <b>Description: </b>
+              {{ enchantment.description }}
+            </td>
+            <td>
+              {% for difficulty, stats in enchantment.completion.items %}
+                <div class="row">
+                  <div class="col">{{ difficulty }}</div>
+                  <div class="col">
+                    {% if stats.started == None %}
+                      Difficulty not started
+                    {% else %}
+                      {% if stats.learned > 0 %}
+                        Learned
+                      {% else %}
+                        <input type="button" onclick="window.location.href='learnEnchantment={{ enchantment.id }}&difficulty={{ difficulty }}'" value="Learn">
+                      {% endif %}
+                    {% endif %}
+                  </div>
+                </div>
+              {% endfor %}
+            </td>
+          </tr>
+        </table>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
