@@ -40,6 +40,11 @@ urlpatterns = [
     # Enchantment Related
     url(r"^enchantments/$", views.enchantments),
     url(r"^enchantments/enchantmentsLoad=\w+", views.enchantmentsLoad),
+    url(r"^enchantments/learnEnchantment=\w+", views.learnEnchantment),
     url(r"^enchantments/\w+-\w+", views.enchantmentType),
-    url(r"^enchantments/learnEnchantment=\w+", views.learnEnchantment)
+    # Ingredients Related
+    url(r"^ingredients/$", views.ingredients),
+    url(r"^ingredients/ingredientsLoad=\w+", views.ingredientsLoad),
+    url(r"^ingredients/learnEffect=\w+", views.learnEffect),
+    url(r"^ingredients/\w+", views.ingredientsDetail)
 ]

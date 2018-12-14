@@ -47,6 +47,8 @@ class Collected(EmbeddedDocument):
     modSpells = fields.IntField(min_value=0)
     enchantments = fields.IntField(min_value=0)
     modEnchantments = fields.IntField(min_value=0)  
+    ingredients = fields.IntField(min_value=0)
+    modIngredients = fields.IntField(min_value=0) 
     total = fields.IntField(min_value=0)
     modTotal = fields.IntField(min_value=0)
 
@@ -161,3 +163,24 @@ class Enchantment(Document):
     enchantmentType = fields.StringField()
     description = fields.StringField()
     completion = fields.EmbeddedDocumentField(Tracker)
+
+##############################
+##### Ingredient Related #####
+##############################
+class Effect(EmbeddedDocument):
+    name = fields.StringField()
+    order = fields.StringField()
+    completion = fields.EmbeddedDocumentField(Tracker)
+
+    def __str__(self):
+        return dumps({"name": self.name, "order": self.order})
+
+class Ingredient(Document):
+    name = fields.StringField()
+    source = fields.StringField()
+    locations = fields.StringField()
+    effects = fields.EmbeddedDocumentListField(Effect)
+
+    def __str__(self):
+        return dumps({"name": self.name, "source": self.source,
+            "effects": len(self.effects)})

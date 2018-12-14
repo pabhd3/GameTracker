@@ -1,0 +1,11 @@
+[
+    {"name": "Hawk's Egg", "primary": "Resist Magic", "secondary": "Damage Magicka", 
+        "tertiary": "Regen Waterbreathing", "quatrary": "Lingering Damage Stamina",
+        "location": "Hawk's Nest", "source": "hearthfire"},
+    {"name": "Powdered Mammoth Tusk", "primary": "Restore Stamina", "secondary": "Fortify Sneak",
+        "tertiary": "Weakness to Fire", "quatrary": "Fear",
+        "location": "Giant Camps, Alchemy Laboratory of a Homestead", "source": "hearthfire"},
+    {"name": "Salmon Roe", "primary": "Restore Stamina", "secondary": "Waterbreathing",
+        "tertiary": "Fortify Magicka", "quatrary": "Regenerate Magicka",
+        "location": "Salmon jumping up falls, Kitchen of a Homestead", "source": "hearthfire"}
+]

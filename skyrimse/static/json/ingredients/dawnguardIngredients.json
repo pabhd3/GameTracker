@@ -1,0 +1,17 @@
+[
+    {"name": "Ancestor Moth Wing", "primary": "Damage Stamina", "secondary": "Fortify Conjuration", 
+        "tertiary": "Damage Magicka Regen", "quatrary": "Fortify Enchanting", 
+        "location": "Ancestor Glade", "source": "dawnguard"}, 
+    {"name": "Chaurus Hunter Antennae", "primary": "Damage Stamina", "secondary": "Fortify Conjuration", 
+        "tertiary": "Damage Magicka Regen", "quatrary": "Fortify Enchanting", 
+        "location": "Chaurus Hunter, Chaurus Hunter Fledgling", "source": "dawnguard"}, 
+    {"name": "Gleamblossom", "primary": "Resist Magic", "secondary": "Fear", 
+        "tertiary": "Regenerate Health", "quatrary": "Paralysis", 
+        "location": "Harvested in Darkfall Cave, Forgotten Vale", "source": "dawnguard"}, 
+    {"name": "Poison Bloom", "primary": "Damage Health", "secondary": "Slow", 
+        "tertiary": "Fortify Carry Weight", "quatrary": "Fear", 
+        "location": "Darkfall Cave", "source": "dawnguard"}, 
+    {"name": "Yellow Mountain Flower", "primary": "Resist Poison", "secondary": "Fortify Restoration", 
+        "tertiary": "Fortify Health", "quatrary": "Damage Stamina Regen", 
+        "location": "Darkfall Cave", "source": "dawnguard"}
+]

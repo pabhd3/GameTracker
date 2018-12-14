@@ -51,29 +51,32 @@ def addDifficulty(request):
             pickPocket=Skill(level=0, legendary=0), restoration=Skill(level=0, legendary=0), 
             smithing=Skill(level=0, legendary=0), sneak=Skill(level=0, legendary=0), 
             speech=Skill(level=0, legendary=0), twoHanded=Skill(level=0, legendary=0))
-    questCount = sum([len(Quest.objects(source=source)) for source in ["vanilla", "dawnguard", "dragonborn"]])
+    questCount = sum([len(Quest.objects(source=source)) for source in ["vanilla", "dawnguard", "dragonborn", "hearthfire"]])
     modQuestCount = len(Quest.objects.all()) - questCount
-    perkCount = len(Perk.objects(source="vanilla"))
+    perkCount = sum([len(Perk.objects(source=source)) for source in ["vanilla", "dawnguard", "dragonborn", "hearthfire"]])
     modPerkCount = len(Perk.objects.all()) - perkCount
-    wordCount = sum([len(Shout.objects(source=source)) for source in ["vanilla", "dawnguard", "dragonborn"]]) * 3
+    wordCount = sum([len(Shout.objects(source=source)) for source in ["vanilla", "dawnguard", "dragonborn", "hearthfire"]]) * 3
     modWordCount = (len(Shout.objects.all()) * 3) - wordCount
-    locationCount = sum([len(Location.objects(source=source)) for source in ["vanilla", "dawnguard", "dragonborn"]])
+    locationCount = sum([len(Location.objects(source=source)) for source in ["vanilla", "dawnguard", "dragonborn", "hearthfire"]])
     modLocationCount = (len(Location.objects.all())) - locationCount
-    spellCount = sum([len(Spell.objects(source=source)) for source in ["vanilla", "dawnguard", "dragonborn"]])
+    spellCount = sum([len(Spell.objects(source=source)) for source in ["vanilla", "dawnguard", "dragonborn", "hearthfire"]])
     modSpellCount = (len(Spell.objects.all())) - spellCount
-    enchantmentCount = sum([len(Enchantment.objects(source=source)) for source in ["vanilla", "dawnguard", "dragonborn"]])
+    enchantmentCount = sum([len(Enchantment.objects(source=source)) for source in ["vanilla", "dawnguard", "dragonborn", "hearthfire"]])
     modEnchantmentCount = (len(Enchantment.objects.all())) - enchantmentCount
-    totalCount = sum([questCount, perkCount, wordCount, locationCount, spellCount, enchantmentCount])
+    ingredientCount = sum([len(Ingredient.objects(source=source)) for source in ["vanilla", "dawnguard", "dragonborn", "hearthfire"]])
+    modIngredientCount = (len(Ingredient.objects.all())) - ingredientCount
+    totalCount = sum([questCount, perkCount, wordCount, locationCount, spellCount, enchantmentCount,
+        ingredientCount])
     modTotalCount = sum([modQuestCount, modPerkCount, modWordCount, modLocationCount, modSpellCount,
-        modEnchantmentCount])
+        modEnchantmentCount, modIngredientCount])
     progress.collected = Collected(quests=0, modQuests=0, perks=0, modPerks=0, 
         words=0, modWords=0, locations=0, modLocations=0, spells=0, modSpells=0, enchantments=0,
-        modEnchantments=0, total=0, modTotal=0)
+        modEnchantments=0, ingredients=0, modIngredients=0,total=0, modTotal=0)
     progress.collectedTotal = Collected(quests=questCount, modQuests=modQuestCount, perks=perkCount, 
         words=wordCount, modWords=modWordCount, modPerks=modPerkCount, locations=locationCount, 
         modLocations=modLocationCount, spells=spellCount, modSpells=modSpellCount, 
-        enchantments=enchantmentCount, modEnchantments=modEnchantmentCount, total=totalCount, 
-        modTotal=modTotalCount)
+        enchantments=enchantmentCount, modEnchantments=modEnchantmentCount, ingredients=ingredientCount, 
+        modIngredients=modIngredientCount, total=totalCount, modTotal=modTotalCount)
     progress.save()
     # Generate a Radar Graph for the progress
     skillLevels = {"Alchemy": 0, "Alteration": 0, "Archery": 0, "Block": 0, "Conjuration": 0, 
@@ -259,7 +262,7 @@ def completeQuest(request):
     progress = Progress.objects(difficulty=difficulty).first()
     # Update the Quest Object
     if(quest["completion"][difficulty] == 0):
-        if(quest.source in ("vanilla", "dawnguard", "dragonborn")):
+        if(quest.source in ("vanilla", "dawnguard", "dragonborn", "hearthfire")):
             progress["collected"]["quests"] += 1
             progress["collected"]["total"] += 1
             progress["completion"]["vanilla"] = progress.collected.total / progress.collectedTotal.total
@@ -355,7 +358,7 @@ def learnPerk(request):
     progress = Progress.objects(difficulty=difficulty).first()
     # Update the Quest Object
     if(perk["completion"][difficulty] == 0):
-        if(perk.source in ("vanilla", "dawnguard", "dragonborn")):
+        if(perk.source in ("vanilla", "dawnguard", "dragonborn", "hearthfire")):
             progress["collected"]["perks"] += 1
             progress["collected"]["total"] += 1
             progress["completion"]["vanilla"] = progress.collected.total / progress.collectedTotal.total
@@ -451,7 +454,7 @@ def learnWord(request):
     for word in shout.words:
         if(word.translation == wordName):
             word["completion"][difficulty] += 1
-            if(shout.source in ("vanilla", "dawnguard", "dragonborn")):
+            if(shout.source in ("vanilla", "dawnguard", "dragonborn", "hearthfire")):
                 progress["collected"]["words"] += 1
                 progress["collected"]["total"] += 1
                 progress["completion"]["vanilla"] = progress.collected.total / progress.collectedTotal.total
@@ -541,7 +544,7 @@ def visitLocation(request):
     progress = Progress.objects(difficulty=difficulty).first()
     # Update the Location and Progress objects
     location["completion"][difficulty] += 1
-    if(location.source in ("vanilla", "dawnguard", "dragonborn")):
+    if(location.source in ("vanilla", "dawnguard", "dragonborn", "hearthfire")):
         progress["collected"]["locations"] += 1
         progress["collected"]["total"] += 1
         progress["completion"]["vanilla"] = progress.collected.total / progress.collectedTotal.total
@@ -632,7 +635,7 @@ def learnSpell(request):
     progress = Progress.objects(difficulty=difficulty).first()
     # Update the Location and Progress objects
     spell["completion"][difficulty] += 1
-    if(spell.source in ("vanilla", "dawnguard", "dragonborn")):
+    if(spell.source in ("vanilla", "dawnguard", "dragonborn", "hearthfire")):
         progress["collected"]["spells"] += 1
         progress["collected"]["total"] += 1
         progress["completion"]["vanilla"] = progress.collected.total / progress.collectedTotal.total
@@ -722,7 +725,7 @@ def learnEnchantment(request):
     progress = Progress.objects(difficulty=difficulty).first()
     # Update the Location and Progress objects
     enchantment["completion"][difficulty] += 1
-    if(enchantment.source in ("vanilla", "dawnguard", "dragonborn")):
+    if(enchantment.source in ("vanilla", "dawnguard", "dragonborn", "hearthfire")):
         progress["collected"]["enchantments"] += 1
         progress["collected"]["total"] += 1
         progress["completion"]["vanilla"] = progress.collected.total / progress.collectedTotal.total
@@ -733,3 +736,111 @@ def learnEnchantment(request):
     enchantment.save()
     progress.save()
     return redirect("/skyrimse/enchantments/{source}-{type}".format(source=enchantment.source, type=enchantment.enchantmentType))
+
+###############################
+##### Ingredients Related #####
+###############################
+def ingredients(request):
+    # Pull all the ingredients, ingredient's sources, and ingredients's effects
+    allIngredients = Ingredient.objects.all()
+    allSources = set([i.source for i in allIngredients])
+    # Dynamically load quest sources
+    ingredientFiles = [f for f in os.listdir('skyrimse/static/json/ingredients')]
+    data = {"counts": {}, "sources": {}, "effects": {}}
+    for i in ingredientFiles:
+        source = i.replace("Ingredients.json", "")
+        data["counts"][source] = len(Ingredient.objects(source=source))
+    for ingredient in allIngredients:
+        if(not data["sources"].get(ingredient.source)):
+            data["sources"][ingredient.source] = {
+                "novice": {"learned": 0, "total": 0}, "apprentice": {"learned": 0, "total": 0}, 
+                "adept": {"learned": 0, "total": 0}, "expert": {"learned": 0, "total": 0}, 
+                "master": {"learned": 0, "total": 0}, "legendary": {"learned": 0, "total": 0}}
+        for effect in ingredient.effects:
+            effectIndex = ingredient["effects"].index(effect)
+            effectKnown = False
+            for difficulty in effect.completion:
+                if(ingredient["effects"][effectIndex]["completion"][difficulty] > 0):
+                    data["sources"][ingredient.source][difficulty]["learned"] += 1
+                    effectKnown = True
+                data["sources"][ingredient.source][difficulty]["total"] += 1
+            if(effectKnown):
+                if(not data["effects"].get(effect.name)):
+                    data["effects"][effect.name] = ""
+                data["effects"][effect.name] += ", {}".format(ingredient.name)
+    return render(request, 'skyrimseIngredients.html', {'data': data})
+
+def ingredientsLoad(request):
+    # Pull data from JSON file
+    toLoad = "skyrimse/static/json/ingredients/{source}Ingredients.json".format(source=request.path.split("=")[1])
+    with open(file=toLoad, mode="r") as f:
+        jsonData = load(f)
+        f.close()
+    # Create and save a Quest object
+    for ingredientData in jsonData:
+        ingredient = Ingredient(name=ingredientData["name"], source=ingredientData["source"],
+            locations=ingredientData["location"], effects=[])
+        for effect in ["primary", "secondary", "tertiary", "quatrary"]:
+            effect = Effect(name=ingredientData[effect], order=effect,
+                completion=Tracker(novice=0, apprentice=0, adept=0, expert=0, master=0, legendary=0))
+            ingredient["effects"].append(effect)
+        ingredient.save()
+    return redirect("/skyrimse/ingredients")
+
+def ingredientsDetail(request):
+    # Pull the school and source from HTTP request.path
+    source = request.path.split("/ingredients/")[1]
+    # Pull all the ingredients
+    allIngredients = Ingredient.objects(source=source)
+    docs = {"novice": None, "apprentice": None, "adept": None,
+        "expert": None, "master": None, "legendary": None}
+    for doc in Progress.objects.all():
+        docs[doc.difficulty] = True
+    # Create the Data
+    data = {"source": source, "ingredients": []}
+    for ingredient in allIngredients:
+        tempIngredient = {"id": ingredient.id, "name": ingredient.name,
+            "location": ingredient.locations, "effects": []}
+        for effect in ingredient["effects"]:
+            effectIndex = ingredient["effects"].index(effect)
+            tempEffect = {"name": effect.name, "order": effect.order, "known": False,
+                "completion": {
+                    "novice": {"started": docs["novice"], "learned": ingredient["effects"][effectIndex]["completion"]["novice"]},
+                    "apprentice": {"started": docs["apprentice"], "learned": ingredient["effects"][effectIndex]["completion"]["apprentice"]},
+                    "adept": {"started": docs["adept"], "learned": ingredient["effects"][effectIndex]["completion"]["adept"]},
+                    "expert": {"started": docs["expert"], "learned": ingredient["effects"][effectIndex]["completion"]["expert"]},
+                    "master": {"started": docs["master"], "learned": ingredient["effects"][effectIndex]["completion"]["master"]},
+                    "legendary": {"started": docs["legendary"], "learned": ingredient["effects"][effectIndex]["completion"]["legendary"]}}}
+            for difficulty in ["novice", "apprentice", "adept", "expert", "master", "legendary"]:
+                if(tempEffect["completion"][difficulty]["learned"] > 0):
+                    tempEffect["known"] = True
+                    break
+            tempIngredient["effects"].append(tempEffect)
+        data["ingredients"].append(tempIngredient)
+    return render(request, 'skyrimseIngredientsDetail.html', {'data': data})
+
+def learnEffect(request):
+    # Pull shout.id, shout.word, and difficulty from HTTP request.path
+    ingredientID = request.path.split("/ingredients/")[1].split("&")[0].split("=")[1]
+    effectName = request.path.split("/ingredients/")[1].split("&")[1].split("=")[1]
+    difficulty = request.path.split("/ingredients/")[1].split("&")[2].split("=")[1]
+    # Pull the Ingredient and Progress objects
+    ingredient = Ingredient.objects(id=ingredientID).first()
+    progress = Progress.objects(difficulty=difficulty).first()
+    # Update the Location and Progress objects
+    for effect in ingredient.effects:
+        if(effect.name == effectName):
+            effectIndex = ingredient["effects"].index(effect)
+            ingredient["effects"][effectIndex]["completion"][difficulty] += 1
+            break
+    if(ingredient.source in ("vanilla", "dawnguard", "dragonborn", "hearthfire")):
+        progress["collected"]["ingredients"] += 1
+        progress["collected"]["total"] += 1
+        progress["completion"]["vanilla"] = progress.collected.total / progress.collectedTotal.total
+    else:
+        progress["collected"]["modIngredients"] += 1
+        progress["collected"]["modTotal"] += 1
+        progress["completion"]["mod"] = progress.collected.modTotal / progress.collectedTotal.modTotal
+    ingredient.save()
+    progress.save()
+    return redirect("/skyrimse/ingredients/{source}".format(source=ingredient.source))

@@ -1,0 +1,51 @@
+<!-- Extending from base.html -->
+{% extends 'base.html' %}
+<!-- Used to load in static files -->
+{% load static %}
+
+{% block content %}
+<!-- Page Title Descriptor -->
+<div>
+  <h1>Ingredients</h1>
+  <!-- Link back to previous page -->
+  <a href="/skyrimse/">The Elder Scrolls V: Skyrim Special Edition (Home Page)</a>
+  <!-- Load Shouts into MongoDB -->
+  <div class="row">
+    {% for key, value in data.counts.items %}
+      {% if value == 0 %}
+        <div class="col-sm-2"><input type="button" onclick="window.location.href='ingredientsLoad={{key}}'" value="Load {{key}}"></div>
+      {% endif %}
+    {% endfor %}
+  </div>
+  <div class="row">
+    {% for name, source in data.sources.items %}
+      <div class="col-6">
+        <a href="{{ name }}"><h4>{{ name }}</h4></a>
+        <table border="1">
+          <tr><td>
+            {% for difficulty, stats in source.items %}
+              <div class="row">
+                <div class="col">{{ difficulty }}</div>
+                <div class="col"><progress value={{ stats.learned }} max={{stats.total }}></progress></div>
+                <div class="col">{{ stats.learned }} / {{stats.total }}</div>
+              </div>
+            {% endfor %}
+          </td></tr>
+        </table>
+      </div>
+    {% endfor %}
+  </div>
+  <!-- Effects Known -->
+  <br>
+  <div>
+    <h1>Known Effects</h1>
+    <table border="1">
+      {% for effect, ingredients in data.effects.items %}
+        <tr>
+          <td>{{ effect }}</td>
+          <td>{{ ingredients }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
+{% endblock %}
