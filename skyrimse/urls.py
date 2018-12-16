@@ -46,5 +46,10 @@ urlpatterns = [
     url(r"^ingredients/$", views.ingredients),
     url(r"^ingredients/ingredientsLoad=\w+", views.ingredientsLoad),
     url(r"^ingredients/learnEffect=\w+", views.learnEffect),
-    url(r"^ingredients/\w+", views.ingredientsDetail)
+    url(r"^ingredients/\w+", views.ingredientsDetail),
+    # Weapon Related
+    url(r"^weapons/$", views.weapons),
+    url(r"^weapons/weaponsLoad=\w+", views.weaponsLoad),
+    url(r"^weapons/collectWeapon=\w+", views.collectWeapon),
+    url(r"^weapons/\w+-\w+", views.weaponType)
 ]

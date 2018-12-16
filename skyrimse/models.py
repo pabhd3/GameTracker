@@ -49,6 +49,8 @@ class Collected(EmbeddedDocument):
     modEnchantments = fields.IntField(min_value=0)  
     ingredients = fields.IntField(min_value=0)
     modIngredients = fields.IntField(min_value=0) 
+    weapons = fields.IntField(min_value=0)
+    modWeapons = fields.IntField(min_value=0)
     total = fields.IntField(min_value=0)
     modTotal = fields.IntField(min_value=0)
 
@@ -65,10 +67,10 @@ class Progress(Document):
     collectedTotal = fields.EmbeddedDocumentField(Collected)
 
     def __str__(self):
-        data = {"created": self.created, "difficulty": self.difficulty,
+        return dumps({"created": self.created, "difficulty": self.difficulty,
             "completion": {"vanilla": self.completion.vanilla, "mod": self.completion.mod},
-            "level": self.level, "health": self.health, "magicka": self.magicka, "stamina": self.stamina}
-        return dumps(data, indent=4) 
+            "level": self.level, "health": self.health, "magicka": self.magicka, 
+            "stamina": self.stamina}, indent=4) 
 
 #########################
 ##### Quest Related #####
@@ -81,6 +83,11 @@ class Tracker(EmbeddedDocument):
     master = fields.IntField(min_value=0)
     legendary = fields.IntField(min_value=0)
 
+    def __str__(self):
+        return dumps({"novice": self.novice, "apprentice": self.apprentice,
+            "adept": self.adept, "expert": self.expert, "master": self.master,
+            "legendary": self.legendary}, indent=4)
+
 class Quest(Document):
     name = fields.StringField()
     questLine = fields.StringField()
@@ -90,9 +97,9 @@ class Quest(Document):
     radiant = fields.BooleanField()
 
     def __str__(self):
-        data = {"name": self.name, "questLine": self.questLine, "source": self.source,
-            "section": self.section, "radiant": self.radiant}
-        return dumps(data, indent=4) 
+        return dumps({"name": self.name, "questLine": self.questLine, 
+            "source": self.source, "section": self.section, 
+            "radiant": self.radiant, "completion": self.completion}, indent=4) 
     
 
 ###############################
@@ -107,9 +114,9 @@ class Perk(Document):
     completion = fields.EmbeddedDocumentField(Tracker)
 
     def __str__(self):
-        data = {"name": self.name, "skill": self.skill, "description": self.description,
-            "level": self.level, "source": self.source}
-        return dumps(data, indent=4) 
+        return dumps({"name": self.name, "skill": self.skill, 
+            "description": self.description, "level": self.level, 
+            "source": self.source, "completion": self.completion}, indent=4) 
     
 
 ################################
@@ -121,6 +128,11 @@ class Word(EmbeddedDocument):
     cooldown = fields.IntField()
     location = fields.StringField()
     completion = fields.EmbeddedDocumentField(Tracker)
+
+    def __str__(self):
+        return dumps({"original": self.original, "translation": self.translation,
+            "cooldown": self.completion, "location": self.location,
+            "completion": self.completion}, indent=4)
 
 class Shout(Document):
     name = fields.StringField()
@@ -143,6 +155,10 @@ class Location(Document):
     locationType = fields.StringField()
     completion = fields.EmbeddedDocumentField(Tracker)
 
+    def __str__(self):
+        return dumps({"name": self.name, "source": self.source,
+            "location": self.locationType, "completion": self.completion}, indent=4)
+
 #########################
 ##### Spell Related #####
 #########################
@@ -154,6 +170,11 @@ class Spell(Document):
     description = fields.StringField()
     completion = fields.EmbeddedDocumentField(Tracker)
 
+    def __str__(self):
+        return dumps({"name": self.name, "source": self.source, "school": self.school,
+            "level": self.level, "description": self.description,
+            "completion": self.completion}, indent=4)
+
 ###############################
 ##### Enchantment Related #####
 ###############################
@@ -164,6 +185,12 @@ class Enchantment(Document):
     description = fields.StringField()
     completion = fields.EmbeddedDocumentField(Tracker)
 
+    def __str__(self):
+        return dumps({"name": self.name, "source": self.source, 
+            "type": self.enchantmentType, "description": self.description,
+            "completion": self.completion}, indent=4)
+    
+
 ##############################
 ##### Ingredient Related #####
 ##############################
@@ -173,7 +200,7 @@ class Effect(EmbeddedDocument):
     completion = fields.EmbeddedDocumentField(Tracker)
 
     def __str__(self):
-        return dumps({"name": self.name, "order": self.order})
+        return dumps({"name": self.name, "order": self.order}, indent=4)
 
 class Ingredient(Document):
     name = fields.StringField()
@@ -182,5 +209,18 @@ class Ingredient(Document):
     effects = fields.EmbeddedDocumentListField(Effect)
 
     def __str__(self):
+        return dumps({"name": self.name, "source": self.source}, indent=4)
+
+##########################
+##### Weapon Related #####
+##########################
+class Weapon(Document):
+    name = fields.StringField()
+    source = fields.StringField()
+    weaponClass = fields.StringField()
+    weaponType = fields.StringField()
+    completion = fields.EmbeddedDocumentField(Tracker)
+
+    def __str__(self):
         return dumps({"name": self.name, "source": self.source,
-            "effects": len(self.effects)})
+            "class": self.weaponClass, "type": self.weaponType}, indent=4)

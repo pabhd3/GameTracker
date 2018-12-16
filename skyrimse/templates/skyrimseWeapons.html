@@ -1,0 +1,41 @@
+<!-- Extending from base.html -->
+{% extends 'base.html' %}
+<!-- Used to load in static files -->
+{% load static %}
+
+{% block content %}
+<!-- Page Title Descriptor -->
+  <h1>Weapons</h1>
+  <!-- Link back to previous page -->
+  <a href="/skyrimse/">The Elder Scrolls V: Skyrim Special Edition (Home Page)</a>
+  <!-- Load Shouts into MongoDB -->
+  <div class="row">
+    {% for key, value in data.counts.items %}
+      {% if value == 0 %}
+        <div class="col-sm-2"><input type="button" onclick="window.location.href='weaponsLoad={{key}}'" value="Load {{key}}"></div>
+      {% endif %}
+    {% endfor %}
+  </div>
+  {% for type, typeData in data.types.items %}
+    <h4>{{ type }}</h4>
+    <div class="row">
+      {% for source, sourceData in typeData.items %}
+        <div class="col-4">
+          <a href="{{ source }}-{{ type }}"><h5>{{ source }}</h5></a>
+          <table border="1">
+            <tr><td>
+              {% for difficulty, stats in sourceData.items %}
+                <div class="row">
+                  <div class="col">{{ difficulty }}</div>
+                  <div class="col"><progress value={{ stats.collected }} max={{ stats.total }}></div>
+                  <div class="col">{{ stats.collected }} / {{ stats.total }}</div>
+                </div>
+              {% endfor %}
+            </td></tr>
+          </table>
+        </div>
+      {% endfor %}
+    </div>
+    <br><br>
+  {% endfor %}
+{% endblock %}
