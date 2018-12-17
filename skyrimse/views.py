@@ -11,6 +11,7 @@ import os
 ##### Shared Methods #####
 ##########################
 def updateProgressCompletion(source, vanillaSection, modSection, progress):
+    print("updateProgressCompletion", source, vanillaSection, modSection, progress)
     if(source in ("vanilla", "dawnguard", "dragonborn", "hearthfire")):
         progress["collected"][vanillaSection] += 1
         progress["collected"]["total"] += 1
@@ -88,21 +89,25 @@ def addDifficulty(request):
     # Get Weapon Count
     weaponCount = sum([len(Weapon.objects(source=source)) for source in ["vanilla", "dawnguard", "dragonborn", "hearthfire"]])
     modWeaponCount = (len(Weapon.objects.all())) - weaponCount
+    # Get Armor Count
+    armorCount = sum([len(Armor.objects(source=source)) for source in ["vanilla", "dawnguard", "dragonborn", "hearthfire"]])
+    modArmorCount = (len(Armor.objects.all())) - weaponCount
     # Get Total Count
     totalCount = sum([questCount, perkCount, wordCount, locationCount, spellCount, enchantmentCount,
-        ingredientCount, weaponCount])
+        ingredientCount, weaponCount, armorCount])
     modTotalCount = sum([modQuestCount, modPerkCount, modWordCount, modLocationCount, modSpellCount,
-        modEnchantmentCount, modIngredientCount, modWeaponCount])
+        modEnchantmentCount, modIngredientCount, modWeaponCount, modArmorCount])
     # Add Counts to Progress object
     progress.collected = Collected(quests=0, modQuests=0, perks=0, modPerks=0, 
         words=0, modWords=0, locations=0, modLocations=0, spells=0, modSpells=0, enchantments=0,
-        modEnchantments=0, ingredients=0, modIngredients=0, weapons=0, modWeapons=0, total=0, modTotal=0)
+        modEnchantments=0, ingredients=0, modIngredients=0, weapons=0, modWeapons=0, armors=0,
+        modArmors=0, total=0, modTotal=0)
     progress.collectedTotal = Collected(quests=questCount, modQuests=modQuestCount, perks=perkCount, 
         words=wordCount, modWords=modWordCount, modPerks=modPerkCount, locations=locationCount, 
         modLocations=modLocationCount, spells=spellCount, modSpells=modSpellCount, 
         enchantments=enchantmentCount, modEnchantments=modEnchantmentCount, ingredients=ingredientCount, 
-        modIngredients=modIngredientCount, weapons=weaponCount, modWeapons=modWeaponCount, 
-        total=totalCount, modTotal=modTotalCount)
+        modIngredients=modIngredientCount, weapons=weaponCount, modWeapons=modWeaponCount, armors=armorCount,
+        modArmors=modArmorCount, total=totalCount, modTotal=modTotalCount)
     progress.save()
     # Generate a Radar Graph for the progress
     skillLevels = {"Alchemy": 0, "Alteration": 0, "Archery": 0, "Block": 0, "Conjuration": 0, 
@@ -154,10 +159,14 @@ def deleteDifficulty(request):
             effectIndex = ingredient["effects"].index(effect)
             ingredient["effects"][effectIndex]["completion"][progress.difficulty] = 0
         ingredient.save()
-    # Delete Enchantment Data
+    # Delete Weapon Data
     for weapon in Weapon.objects.all():
         weapon["completion"][progress.difficulty] = 0
         weapon.save()
+    # Delete Armor Data
+    for armor in Armor.objects.all():
+        armor["completion"][progress.difficulty] = 0
+        armor.save()
     return redirect("/skyrimse/progress")
 
 def levelSkill(request):
@@ -930,3 +939,89 @@ def collectWeapon(request):
     updateProgressCompletion(source=weapon.source, vanillaSection="weapons", 
         modSection="modWeapons", progress=progress)
     return redirect("/skyrimse/weapons/{source}-{type}".format(source=weapon.source, type=weapon.weaponType))
+
+#########################
+##### Armor Related #####
+#########################
+def armors(request):
+    # Pull all the ingredients, ingredient's sources, and ingredients's effects
+    allArmors = Armor.objects.all()
+    allSources = set([a.source for a in allArmors])
+    allTypes = set([a.armorType for a in allArmors])
+    # Dynamically load quest sources
+    armorFiles = [a for a in os.listdir('skyrimse/static/json/armors')]
+    data = {"counts": {}, "types": {}}
+    for a in armorFiles:
+        source = a.replace("Armors.json", "")
+        data["counts"][source] = len(Armor.objects(source=source))
+    # Load weapon data
+    for armor in allArmors:
+        if(not data["types"].get(armor.armorType)):
+            data["types"][armor.armorType] = {}
+        if(not data["types"][armor.armorType].get(armor.source)):
+            data["types"][armor.armorType][armor.source] = {
+                "novice": {"collected": 0, "total": 0}, "apprentice": {"collected": 0, "total": 0}, 
+                "adept": {"collected": 0, "total": 0}, "expert": {"collected": 0, "total": 0}, 
+                "master": {"collected": 0, "total": 0}, "legendary": {"collected": 0, "total": 0}}
+        for difficulty in armor.completion:
+            if(armor["completion"][difficulty] > 0):
+                data["types"][armor.armorType][armor.source][difficulty]["collected"] += 1
+            data["types"][armor.armorType][armor.source][difficulty]["total"] += 1
+    return render(request, "skyrimseArmors.html", {'data': data})
+
+def armorsLoad(request):
+    # Pull data from JSON file
+    toLoad = "skyrimse/static/json/armors/{source}Armors.json".format(source=request.path.split("=")[1])
+    with open(file=toLoad, mode="r") as f:
+        jsonData = load(f)
+        f.close()
+    # Create and save a Quest object
+    for armorData in jsonData:
+        armor = Armor(name=armorData["name"], source=armorData["source"],
+            armorClass=armorData["class"], armorType=armorData["type"],
+            completion=Tracker(novice=0, apprentice=0, adept=0, expert=0, master=0, legendary=0))
+        armor.save()
+    return redirect("/skyrimse/armors")
+
+def armorType(request):
+    # Pull the type and class from HTTP request.path
+    source = request.path.split("/armors/")[1].split("-")[0]
+    armorType = request.path.split("/armors/")[1].split("-")[1]
+    # Pull all the spells
+    allArmors = Armor.objects(armorType=armorType, source=source)
+    docs = {"novice": None, "apprentice": None, "adept": None,
+        "expert": None, "master": None, "legendary": None}
+    for doc in Progress.objects.all():
+        docs[doc.difficulty] = True
+    # Start the data object
+    data = {"source": source, "type": armorType, "classes": {}}
+    # Add weapon data
+    for armor in allArmors:
+        if(not data["classes"].get(armor.armorClass)):
+            data["classes"][armor.armorClass] = []
+        data["classes"][armor.armorClass].append({"id": armor.id, "name": armor.name,
+            "completion": {
+                "novice": {"started": docs["novice"], "collected": armor["completion"]["novice"]},
+                "apprentice": {"started": docs["apprentice"], "collected": armor["completion"]["apprentice"]},
+                "adept": {"started": docs["adept"], "collected": armor["completion"]["adept"]},
+                "expert": {"started": docs["expert"], "collected": armor["completion"]["expert"]},
+                "master": {"started": docs["master"], "collected": armor["completion"]["master"]},
+                "legendary": {"started": docs["legendary"], "collected": armor["completion"]["legendary"]}}})
+    return render(request, 'skyrimseArmorType.html', {'data': data})
+
+def collectArmor(request):
+    # Pull weapon.id and difficulty from HTTP request.path
+    armorID = request.path.split("/armors/")[1].split("&")[0].split("=")[1]
+    difficulty = request.path.split("/armors/")[1].split("&")[1].split("=")[1]
+    # Pull the Ingredient and Progress objects
+    armor = Armor.objects(id=armorID).first()
+    progress = Progress.objects(difficulty=difficulty).first()
+    print(armor)
+    print(progress)
+    # Update the Weapon and Progress objects
+    armor["completion"][difficulty] += 1
+    armor.save()
+    updateProgressCompletion(source=armor.source, vanillaSection="armors", 
+        modSection="modArmors", progress=progress)
+    print("Armor Update Complete")
+    return redirect("/skyrimse/armors/{source}-{type}".format(source=armor.source, type=armor.armorType))

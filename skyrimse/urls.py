@@ -51,5 +51,10 @@ urlpatterns = [
     url(r"^weapons/$", views.weapons),
     url(r"^weapons/weaponsLoad=\w+", views.weaponsLoad),
     url(r"^weapons/collectWeapon=\w+", views.collectWeapon),
-    url(r"^weapons/\w+-\w+", views.weaponType)
+    url(r"^weapons/\w+-\w+", views.weaponType),
+    # Armor Related
+    url(r"^armors/$", views.armors),
+    url(r"^armors/armorsLoad=\w+", views.armorsLoad),
+    url(r"^armors/collectArmor=\w+", views.collectArmor),
+    url(r"^armors/\w+-\w+", views.armorType)
 ]
