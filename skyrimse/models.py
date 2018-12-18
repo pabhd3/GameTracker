@@ -53,6 +53,8 @@ class Collected(EmbeddedDocument):
     modWeapons = fields.IntField(min_value=0)
     armors = fields.IntField(min_value=0)
     modArmors = fields.IntField(min_value=0)
+    jewelry = fields.IntField(min_value=0)
+    modJewelry = fields.IntField(min_value=0)
     total = fields.IntField(min_value=0)
     modTotal = fields.IntField(min_value=0)
 
@@ -235,6 +237,20 @@ class Armor(Document):
     source = fields.StringField()
     armorClass = fields.StringField()
     armorType = fields.StringField()
+    completion = fields.EmbeddedDocumentField(Tracker)
+
+    def __str__(self):
+        return dumps({"name": self.name, "source": self.source,
+            "class": self.armorClass, "type": self.armorType}, indent=4)
+
+###########################
+##### Jewelry Related #####
+###########################
+class Jewelry(Document):
+    name = fields.StringField()
+    source = fields.StringField()
+    jewelryClass = fields.StringField()
+    jewelryType = fields.StringField()
     completion = fields.EmbeddedDocumentField(Tracker)
 
     def __str__(self):

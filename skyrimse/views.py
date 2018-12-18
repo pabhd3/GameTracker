@@ -11,7 +11,6 @@ import os
 ##### Shared Methods #####
 ##########################
 def updateProgressCompletion(source, vanillaSection, modSection, progress):
-    print("updateProgressCompletion", source, vanillaSection, modSection, progress)
     if(source in ("vanilla", "dawnguard", "dragonborn", "hearthfire")):
         progress["collected"][vanillaSection] += 1
         progress["collected"]["total"] += 1
@@ -92,22 +91,26 @@ def addDifficulty(request):
     # Get Armor Count
     armorCount = sum([len(Armor.objects(source=source)) for source in ["vanilla", "dawnguard", "dragonborn", "hearthfire"]])
     modArmorCount = (len(Armor.objects.all())) - weaponCount
+    # Get Jewelry Count
+    jewelryCount = sum([len(Jewelry.objects(source=source)) for source in ["vanilla", "dawnguard", "dragonborn", "hearthfire"]])
+    modJewelryCount = (len(Jewelry.objects.all())) - jewelryCount
     # Get Total Count
     totalCount = sum([questCount, perkCount, wordCount, locationCount, spellCount, enchantmentCount,
-        ingredientCount, weaponCount, armorCount])
+        ingredientCount, weaponCount, armorCount, jewelryCount])
     modTotalCount = sum([modQuestCount, modPerkCount, modWordCount, modLocationCount, modSpellCount,
-        modEnchantmentCount, modIngredientCount, modWeaponCount, modArmorCount])
+        modEnchantmentCount, modIngredientCount, modWeaponCount, modArmorCount, modJewelryCount])
     # Add Counts to Progress object
     progress.collected = Collected(quests=0, modQuests=0, perks=0, modPerks=0, 
         words=0, modWords=0, locations=0, modLocations=0, spells=0, modSpells=0, enchantments=0,
         modEnchantments=0, ingredients=0, modIngredients=0, weapons=0, modWeapons=0, armors=0,
-        modArmors=0, total=0, modTotal=0)
+        modArmors=0, jewelry=0, modJewelry=0, total=0, modTotal=0)
     progress.collectedTotal = Collected(quests=questCount, modQuests=modQuestCount, perks=perkCount, 
         words=wordCount, modWords=modWordCount, modPerks=modPerkCount, locations=locationCount, 
         modLocations=modLocationCount, spells=spellCount, modSpells=modSpellCount, 
         enchantments=enchantmentCount, modEnchantments=modEnchantmentCount, ingredients=ingredientCount, 
         modIngredients=modIngredientCount, weapons=weaponCount, modWeapons=modWeaponCount, armors=armorCount,
-        modArmors=modArmorCount, total=totalCount, modTotal=modTotalCount)
+        modArmors=modArmorCount, jewelry=jewelryCount, modJewelry=modJewelryCount, total=totalCount, 
+        modTotal=modTotalCount)
     progress.save()
     # Generate a Radar Graph for the progress
     skillLevels = {"Alchemy": 0, "Alteration": 0, "Archery": 0, "Block": 0, "Conjuration": 0, 
@@ -167,6 +170,10 @@ def deleteDifficulty(request):
     for armor in Armor.objects.all():
         armor["completion"][progress.difficulty] = 0
         armor.save()
+    # Delete Jewelry Data
+    for jewelry in Jewelry.objects.all():
+        jewelry["completion"][progress.difficulty] = 0
+        jewelry.save()
     return redirect("/skyrimse/progress")
 
 def levelSkill(request):
@@ -1016,12 +1023,92 @@ def collectArmor(request):
     # Pull the Ingredient and Progress objects
     armor = Armor.objects(id=armorID).first()
     progress = Progress.objects(difficulty=difficulty).first()
-    print(armor)
-    print(progress)
     # Update the Weapon and Progress objects
     armor["completion"][difficulty] += 1
     armor.save()
     updateProgressCompletion(source=armor.source, vanillaSection="armors", 
         modSection="modArmors", progress=progress)
-    print("Armor Update Complete")
     return redirect("/skyrimse/armors/{source}-{type}".format(source=armor.source, type=armor.armorType))
+
+###########################
+##### Jewelry Related #####
+###########################
+def jewelry(request):
+    # Pull all the jewelry and jewelry's sources
+    allJewelry = Jewelry.objects.all()
+    allSources = set([j.source for j in allJewelry])
+    allTypes = set([j.jewelryType for j in allJewelry])
+    # Dynamically load quest sources
+    jewelryFiles = [j for j in os.listdir('skyrimse/static/json/jewelry')]
+    data = {"counts": {}, "types": {}}
+    for j in jewelryFiles:
+        source = j.replace("Jewelry.json", "")
+        data["counts"][source] = len(Jewelry.objects(source=source))
+    # Load weapon data
+    for jewelry in allJewelry:
+        if(not data["types"].get(jewelry.jewelryType)):
+            data["types"][jewelry.jewelryType] = {}
+        if(not data["types"][jewelry.jewelryType].get(jewelry.source)):
+            data["types"][jewelry.jewelryType][jewelry.source] = {
+                "novice": {"collected": 0, "total": 0}, "apprentice": {"collected": 0, "total": 0}, 
+                "adept": {"collected": 0, "total": 0}, "expert": {"collected": 0, "total": 0}, 
+                "master": {"collected": 0, "total": 0}, "legendary": {"collected": 0, "total": 0}}
+        for difficulty in jewelry.completion:
+            if(jewelry["completion"][difficulty] > 0):
+                data["types"][jewelry.jewelryType][jewelry.source][difficulty]["collected"] += 1
+            data["types"][jewelry.jewelryType][jewelry.source][difficulty]["total"] += 1
+    return render(request, "skyrimseJewelry.html", {'data': data})
+
+def jewelryLoad(request):
+    # Pull data from JSON file
+    toLoad = "skyrimse/static/json/jewelry/{source}Jewelry.json".format(source=request.path.split("=")[1])
+    with open(file=toLoad, mode="r") as f:
+        jsonData = load(f)
+        f.close()
+    # Create and save a Quest object
+    for jewelryData in jsonData:
+        jewelry = Jewelry(name=jewelryData["name"], source=jewelryData["source"],
+            jewelryClass=jewelryData["class"], jewelryType=jewelryData["type"],
+            completion=Tracker(novice=0, apprentice=0, adept=0, expert=0, master=0, legendary=0))
+        jewelry.save()
+    return redirect("/skyrimse/jewelry")
+
+def jewelryType(request):
+    # Pull the type and class from HTTP request.path
+    source = request.path.split("/jewelry/")[1].split("-")[0]
+    jewelryType = request.path.split("/jewelry/")[1].split("-")[1]
+    # Pull all the spells
+    allJewelry = Jewelry.objects(jewelryType=jewelryType, source=source)
+    docs = {"novice": None, "apprentice": None, "adept": None,
+        "expert": None, "master": None, "legendary": None}
+    for doc in Progress.objects.all():
+        docs[doc.difficulty] = True
+    # Start the data object
+    data = {"source": source, "type": jewelryType, "classes": {}}
+    # Add weapon data
+    for jewelry in allJewelry:
+        if(not data["classes"].get(jewelry.jewelryClass)):
+            data["classes"][jewelry.jewelryClass] = []
+        data["classes"][jewelry.jewelryClass].append({"id": jewelry.id, "name": jewelry.name,
+            "completion": {
+                "novice": {"started": docs["novice"], "collected": jewelry["completion"]["novice"]},
+                "apprentice": {"started": docs["apprentice"], "collected": jewelry["completion"]["apprentice"]},
+                "adept": {"started": docs["adept"], "collected": jewelry["completion"]["adept"]},
+                "expert": {"started": docs["expert"], "collected": jewelry["completion"]["expert"]},
+                "master": {"started": docs["master"], "collected": jewelry["completion"]["master"]},
+                "legendary": {"started": docs["legendary"], "collected": jewelry["completion"]["legendary"]}}})
+    return render(request, 'skyrimseJewelryType.html', {'data': data})
+
+def collectJewelry(request):
+    # Pull weapon.id and difficulty from HTTP request.path
+    jewelryID = request.path.split("/jewelry/")[1].split("&")[0].split("=")[1]
+    difficulty = request.path.split("/jewelry/")[1].split("&")[1].split("=")[1]
+    # Pull the Ingredient and Progress objects
+    jewelry = Jewelry.objects(id=jewelryID).first()
+    progress = Progress.objects(difficulty=difficulty).first()
+    # Update the Weapon and Progress objects
+    jewelry["completion"][difficulty] += 1
+    jewelry.save()
+    updateProgressCompletion(source=jewelry.source, vanillaSection="jewelry", 
+        modSection="modJewelry", progress=progress)
+    return redirect("/skyrimse/jewelry/{source}-{type}".format(source=jewelry.source, type=jewelry.jewelryType))

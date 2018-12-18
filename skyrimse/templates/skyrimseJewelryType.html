@@ -1,0 +1,43 @@
+<!-- Extending from base.html -->
+{% extends 'base.html' %}
+<!-- Used to load in static files -->
+{% load static %}
+
+{% block content %}
+<!-- Page Title Descriptor -->
+  <h1>{{ data.source }} Jewelry</h1>
+  <h5>Type: {{ data.type }}</h5>
+  <!-- Link back to previous page -->
+  <a href="/skyrimse/jewelry/">The Elder Scrolls V: Skyrim Special Edition (Jewelry Page)</a>
+  <!-- Load Spells from MongoDB -->
+  {% for class, jewelrys in data.classes.items %}
+    <h5>{{ class }}</h5>
+    <div class="row">
+      {% for jewelry in jewelrys %}
+        <div class="col-4">
+          <h6>{{ jewelry.name }}</h6>
+          <table border="1" width=100%>
+            <tr><td>
+              {% for difficulty, stats in jewelry.completion.items%}
+                <div class="row">
+                  <div class="col">{{ difficulty }}</div>
+                  <div class="col">
+                    {% if stats.started == None %}
+                      Difficulty not started
+                    {% else %}
+                      {% if stats.collected > 0 %}
+                        Collected
+                      {% else %}
+                        <input type="button" onclick="window.location.href='collectJewelry={{ jewelry.id }}&difficulty={{ difficulty }}'" value="Collect">
+                      {% endif %}
+                    {% endif %}
+                  </div>
+                </div>
+              {% endfor %}
+            </td></tr>
+          </table>
+        </div>
+      {% endfor %}
+    </div>
+  {% endfor %}
+{% endblock %}

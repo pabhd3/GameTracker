@@ -1,0 +1,9 @@
+[
+    {"name": "Bone Hawk Ring", "source": "dawnguard", "class": "Ring", "type": "unique"}, 
+    {"name": "Ring of the Beast", "source": "dawnguard", "class": "Ring", "type": "unique"}, 
+    {"name": "Ring of the Erudite", "source": "dawnguard", "class": "Ring", "type": "unique"},
+    {"name": "Bone Hawk Amulet", "source": "dawnguard", "class": "Necklace/Amulet", "type": "craftable"},
+    {"name": "Amulet of the Gargoyle", "source": "dawnguard", "class": "Necklace/Amulet", "type": "unique"},
+    {"name": "Amulet of Bats", "source": "dawnguard", "class": "Necklace/Amulet", "type": "unique"},
+    {"name": "Locket of Saint Jiub", "source": "dawnguard", "class": "Necklace/Amulet", "type": "unique"}
+]

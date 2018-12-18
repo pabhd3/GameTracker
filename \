@@ -1,0 +1,20 @@
+Version 1.1.14: Skyrim Jewelry
+Added all the pages related to jewelry, including a page to show the number of jewelry collected per difficulty per type, a page to show each jewelry per class per type, and buttons to update the database per difficulty per type per jewelry per source.
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch WIP
+# Your branch is up to date with 'origin/WIP'.
+#
+# Changes to be committed:
+#	modified:   GameTracker/templates/base.html
+#	modified:   skyrimse/models.py
+#	new file:   skyrimse/static/json/jewelry/dawnguardJewelry.json
+#	new file:   skyrimse/static/json/jewelry/dragonbornJewelry.json
+#	new file:   skyrimse/static/json/jewelry/vanillaJewelry.json
+#	modified:   skyrimse/templates/skyrimseIndex.html
+#	new file:   skyrimse/templates/skyrimseJewelry.html
+#	new file:   skyrimse/templates/skyrimseJewelryType.html
+#	modified:   skyrimse/urls.py
+#	modified:   skyrimse/views.py
+#
