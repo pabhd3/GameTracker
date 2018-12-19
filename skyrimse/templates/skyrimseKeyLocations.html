@@ -1,0 +1,40 @@
+<!-- Extending from base.html -->
+{% extends 'base.html' %}
+<!-- Used to load in static files -->
+{% load static %}
+
+{% block content %}
+<!-- Page Title Descriptor -->
+  <h1>{{ data.source }} Keys</h1>
+  <h5>Location: {{ data.location }}</h5>
+  <!-- Link back to previous page -->
+  <a href="/skyrimse/keys/">The Elder Scrolls V: Skyrim Special Edition (Keys Page)</a>
+  <!-- Load Spells from MongoDB -->
+  <div class="row">
+    {% for key in data.keys %}
+      <div class="col-4">
+        <h6>{{ key.name }}</h6>
+        <table border="1" width=100%>
+          <tr><td>
+            {% for difficulty, stats in key.completion.items%}
+              <div class="row">
+                <div class="col">{{ difficulty }}</div>
+                <div class="col">
+                  {% if stats.started == None %}
+                    Difficulty not started
+                  {% else %}
+                    {% if stats.collected > 0 %}
+                      Collected
+                    {% else %}
+                      <input type="button" onclick="window.location.href='collectKey={{ key.id }}&difficulty={{ difficulty }}'" value="Collect">
+                    {% endif %}
+                  {% endif %}
+                </div>
+              </div>
+            {% endfor %}
+          </td></tr>
+        </table>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

@@ -90,31 +90,35 @@ def addDifficulty(request):
     modWeaponCount = (len(Weapon.objects.all())) - weaponCount
     # Get Armor Count
     armorCount = sum([len(Armor.objects(source=source)) for source in ["vanilla", "dawnguard", "dragonborn", "hearthfire"]])
-    modArmorCount = (len(Armor.objects.all())) - weaponCount
+    modArmorCount = (len(Armor.objects.all())) - armorCount
     # Get Jewelry Count
     jewelryCount = sum([len(Jewelry.objects(source=source)) for source in ["vanilla", "dawnguard", "dragonborn", "hearthfire"]])
     modJewelryCount = (len(Jewelry.objects.all())) - jewelryCount
     # Get Book Count
     bookCount = sum([len(Book.objects(source=source)) for source in ["vanilla", "dawnguard", "dragonborn", "hearthfire"]])
     modBookCount = (len(Book.objects.all())) - bookCount
+    # Get Key Count
+    keyCount = sum([len(Key.objects(source=source)) for source in ["vanilla", "dawnguard", "dragonborn", "hearthfire"]])
+    modKeyCount = (len(Key.objects.all())) - keyCount
     # Get Total Count
     totalCount = sum([questCount, perkCount, wordCount, locationCount, spellCount, enchantmentCount,
-        ingredientCount, weaponCount, armorCount, jewelryCount, bookCount])
+        ingredientCount, weaponCount, armorCount, jewelryCount, bookCount, keyCount])
     modTotalCount = sum([modQuestCount, modPerkCount, modWordCount, modLocationCount, modSpellCount,
         modEnchantmentCount, modIngredientCount, modWeaponCount, modArmorCount, modJewelryCount,
-        modBookCount])
+        modBookCount, modKeyCount])
     # Add Counts to Progress object
     progress.collected = Collected(quests=0, modQuests=0, perks=0, modPerks=0, 
         words=0, modWords=0, locations=0, modLocations=0, spells=0, modSpells=0, enchantments=0,
         modEnchantments=0, ingredients=0, modIngredients=0, weapons=0, modWeapons=0, armors=0,
-        modArmors=0, jewelry=0, modJewelry=0, books=0, modBooks=0,total=0, modTotal=0)
+        modArmors=0, jewelry=0, modJewelry=0, books=0, modBooks=0, keys=0, modKeys=0, total=0, 
+        modTotal=0)
     progress.collectedTotal = Collected(quests=questCount, modQuests=modQuestCount, perks=perkCount, 
         words=wordCount, modWords=modWordCount, modPerks=modPerkCount, locations=locationCount, 
         modLocations=modLocationCount, spells=spellCount, modSpells=modSpellCount, 
         enchantments=enchantmentCount, modEnchantments=modEnchantmentCount, ingredients=ingredientCount, 
         modIngredients=modIngredientCount, weapons=weaponCount, modWeapons=modWeaponCount, armors=armorCount,
         modArmors=modArmorCount, jewelry=jewelryCount, modJewelry=modJewelryCount, books=bookCount, 
-        modBooks=modBookCount, total=totalCount, modTotal=modTotalCount)
+        modBooks=modBookCount, keys=keyCount, modKeys=modKeyCount, total=totalCount, modTotal=modTotalCount)
     progress.save()
     # Generate a Radar Graph for the progress
     skillLevels = {"Alchemy": 0, "Alteration": 0, "Archery": 0, "Block": 0, "Conjuration": 0, 
@@ -1202,3 +1206,81 @@ def readBook(request):
     updateProgressCompletion(source=book.source, vanillaSection="books", 
         modSection="modBooks", progress=progress)
     return redirect("/skyrimse/books/{startsWith}".format(startsWith=book.startsWith))
+
+#######################
+##### Key Related #####
+#######################
+def keys(request):
+    # Pull all the books and book's sources
+    allKeys = Key.objects.all()
+    allSources = set([k.source for k in allKeys])
+    allLocations = set([k.location for k in allKeys])
+    # Dynamically load quest sources
+    keyFiles = [k for k in os.listdir('skyrimse/static/json/keys')]
+    data = {"counts": {}, "locations": {}}
+    for k in keyFiles:
+        source = k.replace("Keys.json", "")
+        data["counts"][source] = len(Key.objects(source=source))
+    for key in allKeys:
+        if(not data["locations"].get(key.location)):
+            data["locations"][key.location] = {}
+        if(not data["locations"][key.location].get(key.source)):
+            data["locations"][key.location][key.source] = {
+                "novice": {"collected": 0, "total": 0}, "apprentice": {"collected": 0, "total": 0}, 
+                "adept": {"collected": 0, "total": 0}, "expert": {"collected": 0, "total": 0}, 
+                "master": {"collected": 0, "total": 0}, "legendary": {"collected": 0, "total": 0}}
+        for difficulty in key["completion"]:
+            if(key["completion"][difficulty] > 0):
+                data["locations"][key.location][key.source][difficulty]["collected"] += 1
+            data["locations"][key.location][key.source][difficulty]["total"] += 1
+    return render(request, 'skyrimseKeys.html', {'data': data})
+
+def keysLoad(request):
+    # Pull data from JSON file
+    toLoad = "skyrimse/static/json/keys/{source}Keys.json".format(source=request.path.split("=")[1])
+    with open(file=toLoad, mode="r") as f:
+        jsonData = load(f)
+        f.close()
+    # Create and save a Quest object
+    for keyData in jsonData:
+        key = Key(name=keyData["name"], source=keyData["source"], location=keyData["location"],
+            completion=Tracker(novice=0, apprentice=0, adept=0, expert=0, master=0, legendary=0))
+        key.save()
+    return redirect("/skyrimse/keys")
+
+def keyLocations(request):
+    # Pull the location and difficulty from HTTP request.path
+    source = request.path.split("/keys/")[1].split("-")[0]
+    location = request.path.split("/keys/")[1].split("-")[1]
+    # Pull all the spells
+    allKeys = Key.objects(location=location, source=source)
+    docs = {"novice": None, "apprentice": None, "adept": None,
+        "expert": None, "master": None, "legendary": None}
+    for doc in Progress.objects.all():
+        docs[doc.difficulty] = True
+    # Start the data object
+    data = {"source": source, "location": location, "keys": []}
+    for key in allKeys:
+        data["keys"].append({"id": key.id, "name": key.name,
+            "completion": {
+                "novice": {"started": docs["novice"], "collected": key["completion"]["novice"]},
+                "apprentice": {"started": docs["apprentice"], "collected": key["completion"]["apprentice"]},
+                "adept": {"started": docs["adept"], "collected": key["completion"]["adept"]},
+                "expert": {"started": docs["expert"], "collected": key["completion"]["expert"]},
+                "master": {"started": docs["master"], "collected": key["completion"]["master"]},
+                "legendary": {"started": docs["legendary"], "collected": key["completion"]["legendary"]}}})
+    return render(request, 'skyrimseKeyLocations.html', {'data': data})
+
+def collectKey(request):
+    # Pull key.id and difficulty from HTTP request.path
+    keyID = request.path.split("/keys/")[1].split("&")[0].split("=")[1]
+    difficulty = request.path.split("/keys/")[1].split("&")[1].split("=")[1]
+    # Pull the Ingredient and Progress objects
+    key = Key.objects(id=keyID).first()
+    progress = Progress.objects(difficulty=difficulty).first()
+    # Update the Weapon and Progress objects
+    key["completion"][difficulty] += 1
+    key.save()
+    updateProgressCompletion(source=key.source, vanillaSection="keys", 
+        modSection="modKeys", progress=progress)
+    return redirect("/skyrimse/keys/{source}-{location}".format(source=key.source, location=key.location))

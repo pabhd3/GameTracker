@@ -57,6 +57,8 @@ class Collected(EmbeddedDocument):
     modJewelry = fields.IntField(min_value=0)
     books = fields.IntField(min_value=0)
     modBooks = fields.IntField(min_value=0)
+    keys = fields.IntField(min_value=0)
+    modKeys = fields.IntField(min_value=0)
     total = fields.IntField(min_value=0)
     modTotal = fields.IntField(min_value=0)
 
@@ -272,3 +274,16 @@ class Book(Document):
     def __str__(self):
         return dumps({"name": self.name, "source": self.source,
             "type": self.bookType}, indent=4)
+
+#######################
+##### Key Related #####
+#######################
+class Key(Document):
+    name = fields.StringField()
+    source = fields.StringField()
+    location = fields.StringField()
+    completion = fields.EmbeddedDocumentField(Tracker)
+
+    def __str__(self):
+        return dumps({"name": self.name, "source": self.source,
+            "location": self.location}, indent=4)

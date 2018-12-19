@@ -67,4 +67,9 @@ urlpatterns = [
     url(r"^books/booksLoad=\w+", views.booksLoad),
     url(r"^books/readBook=\w+", views.readBook),
     url(r"^books/[0A-Z]$", views.booksList),
+    # Keys Related
+    url(r"^keys/$", views.keys),
+    url(r"^keys/keysLoad=\w+", views.keysLoad),
+    url(r"keys/collectKey=\w+", views.collectKey),
+    url(r"^keys/\w+-\w+", views.keyLocations)
 ]
