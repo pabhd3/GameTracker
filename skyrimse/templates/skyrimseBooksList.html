@@ -1,0 +1,46 @@
+<!-- Extending from base.html -->
+{% extends 'base.html' %}
+<!-- Used to load in static files -->
+{% load static %}
+
+{% block content %}
+<!-- Page Title Descriptor -->
+  <h1>Books Starting with "{{ data.startsWith }}"</h1>
+  <!-- Link back to previous page -->
+  <a href="/skyrimse/books/">The Elder Scrolls V: Skyrim Special Edition (Books Page)</a>
+  <!-- Load Books from MongoDB -->
+  <div class="row">
+    {% for book in data.books %}
+      <div class="col-6">
+        <h5>{{ book.name }}</h5>
+        <table border="1" width=100%>
+          <tr>
+            <td>
+              <b>Source: </b>{{ book.source }}<br>
+              <b>Type: </b>{{ book.type }}
+            </td>
+            <td>
+              {% for difficulty, stats in book.completion.items %}
+                <div class="row">
+                  <div class="col">{{ difficulty }}</div>
+                  <div class="col">
+                    {% if stats.started == None %}
+                      Difficulty not started
+                    {% else %}
+                      {% if stats.read > 0 %}
+                        Read
+                      {% else %}
+                        <input type="button" onclick="window.location.href='readBook={{ book.id }}&difficulty={{ difficulty }}'" value="Read">
+                      {% endif %}
+                    {% endif %}
+                  </div>
+                </div>
+              {% endfor %}
+            </td>
+          </tr>
+        </table>
+      </div>
+    {% endfor %}
+  </div>
+  {{ data }}
+{% endblock %}

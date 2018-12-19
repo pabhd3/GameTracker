@@ -1,0 +1,7 @@
+[
+    {"name": "Consider Adoption", "startsWith": "C", "source": "hearthfire", "type": "Book"}, 
+    {"name": "Lakeview Manor Charter", "startsWith": "L", "source": "hearthfire", "type": "Book"}, 
+    {"name": "Letter from the Jarl of Falkreath", "startsWith": "L", "source": "hearthfire", "type": "Book"}, 
+    {"name": "Letter from the Steward of Falkreath", "startsWith": "L", "source": "hearthfire", "type": "Book"}, 
+    {"name": "The Beginner's Guide to Homesteading", "startsWith": "T", "source": "hearthfire", "type": "Book"}
+]

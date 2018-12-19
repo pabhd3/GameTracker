@@ -1,0 +1,19 @@
+[
+    {"name": "Confessions of a Khajiit Fur Trader", "startsWith": "C", "source": "dawnguard", "type": "Book"}, 
+    {"name": "Diary of Faire Agarwen", "startsWith": "D", "source": "dawnguard", "type": "Book"}, 
+    {"name": "Journal of Mirtil Angoth", "startsWith": "J", "source": "dawnguard", "type": "Book"}, 
+    {"name": "Notes on Dimhollow Crypt, Vol. 3", "startsWith": "N", "source": "dawnguard", "type": "Book"}, 
+    {"name": "Saint Jiub's Opus", "startsWith": "S", "source": "dawnguard", "type": "Book"}, 
+    {"name": "The Betrayed", "startsWith": "T", "source": "dawnguard", "type": "Book"}, 
+    {"name": "The Book of Life and Service", "startsWith": "T", "source": "dawnguard", "type": "Book"}, 
+    {"name": "The Sultry Argonian Bard, v1", "startsWith": "T", "source": "dawnguard", "type": "Book"}, 
+    {"name": "Touching the Sky", "startsWith": "T", "source": "dawnguard", "type": "Book"}, 
+    {"name": "Unknown Book, Vol. I", "startsWith": "U", "source": "dawnguard", "type": "Book"}, 
+    {"name": "Unknown Book, Vol. II", "startsWith": "U", "source": "dawnguard", "type": "Book"}, 
+    {"name": "Unknown Book, Vol. III", "startsWith": "U", "source": "dawnguard", "type": "Book"}, 
+    {"name": "Unknown Book, Vol. IV", "startsWith": "U", "source": "dawnguard", "type": "Book"}, 
+    {"name": "Frenzy Poison", "startsWith": "F", "source": "dawnguard", "type": "Recipie"}, 
+    {"name": "Elder Scroll (Dragon)", "startsWith": "E", "source": "dawnguard", "type": "Elder Scroll"}, 
+    {"name": "Elder Scroll (Blood)", "startsWith": "E", "source": "dawnguard", "type": "Elder Scroll"}, 
+    {"name": "Elder Scroll (Sun)", "startsWith": "E", "source": "dawnguard", "type": "Elder Scroll"}
+]

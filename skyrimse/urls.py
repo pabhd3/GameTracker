@@ -61,5 +61,10 @@ urlpatterns = [
     url(r"^jewelry/$", views.jewelry),
     url(r"^jewelry/jewelryLoad=\w+", views.jewelryLoad),
     url(r"^jewelry/collectJewelry=\w+", views.collectJewelry),
-    url(r"^jewelry/\w+-\w+", views.jewelryType)
+    url(r"^jewelry/\w+-\w+", views.jewelryType),
+    # Books Related
+    url(r"^books/$", views.books),
+    url(r"^books/booksLoad=\w+", views.booksLoad),
+    url(r"^books/readBook=\w+", views.readBook),
+    url(r"^books/[0A-Z]$", views.booksList),
 ]

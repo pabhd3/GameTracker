@@ -94,23 +94,27 @@ def addDifficulty(request):
     # Get Jewelry Count
     jewelryCount = sum([len(Jewelry.objects(source=source)) for source in ["vanilla", "dawnguard", "dragonborn", "hearthfire"]])
     modJewelryCount = (len(Jewelry.objects.all())) - jewelryCount
+    # Get Book Count
+    bookCount = sum([len(Book.objects(source=source)) for source in ["vanilla", "dawnguard", "dragonborn", "hearthfire"]])
+    modBookCount = (len(Book.objects.all())) - bookCount
     # Get Total Count
     totalCount = sum([questCount, perkCount, wordCount, locationCount, spellCount, enchantmentCount,
-        ingredientCount, weaponCount, armorCount, jewelryCount])
+        ingredientCount, weaponCount, armorCount, jewelryCount, bookCount])
     modTotalCount = sum([modQuestCount, modPerkCount, modWordCount, modLocationCount, modSpellCount,
-        modEnchantmentCount, modIngredientCount, modWeaponCount, modArmorCount, modJewelryCount])
+        modEnchantmentCount, modIngredientCount, modWeaponCount, modArmorCount, modJewelryCount,
+        modBookCount])
     # Add Counts to Progress object
     progress.collected = Collected(quests=0, modQuests=0, perks=0, modPerks=0, 
         words=0, modWords=0, locations=0, modLocations=0, spells=0, modSpells=0, enchantments=0,
         modEnchantments=0, ingredients=0, modIngredients=0, weapons=0, modWeapons=0, armors=0,
-        modArmors=0, jewelry=0, modJewelry=0, total=0, modTotal=0)
+        modArmors=0, jewelry=0, modJewelry=0, books=0, modBooks=0,total=0, modTotal=0)
     progress.collectedTotal = Collected(quests=questCount, modQuests=modQuestCount, perks=perkCount, 
         words=wordCount, modWords=modWordCount, modPerks=modPerkCount, locations=locationCount, 
         modLocations=modLocationCount, spells=spellCount, modSpells=modSpellCount, 
         enchantments=enchantmentCount, modEnchantments=modEnchantmentCount, ingredients=ingredientCount, 
         modIngredients=modIngredientCount, weapons=weaponCount, modWeapons=modWeaponCount, armors=armorCount,
-        modArmors=modArmorCount, jewelry=jewelryCount, modJewelry=modJewelryCount, total=totalCount, 
-        modTotal=modTotalCount)
+        modArmors=modArmorCount, jewelry=jewelryCount, modJewelry=modJewelryCount, books=bookCount, 
+        modBooks=modBookCount, total=totalCount, modTotal=modTotalCount)
     progress.save()
     # Generate a Radar Graph for the progress
     skillLevels = {"Alchemy": 0, "Alteration": 0, "Archery": 0, "Block": 0, "Conjuration": 0, 
@@ -174,6 +178,10 @@ def deleteDifficulty(request):
     for jewelry in Jewelry.objects.all():
         jewelry["completion"][progress.difficulty] = 0
         jewelry.save()
+    # Delete Book Data
+    for book in Book.objects.all():
+        book["completion"][progress.difficulty] = 0
+        book.save()
     return redirect("/skyrimse/progress")
 
 def levelSkill(request):
@@ -1112,3 +1120,85 @@ def collectJewelry(request):
     updateProgressCompletion(source=jewelry.source, vanillaSection="jewelry", 
         modSection="modJewelry", progress=progress)
     return redirect("/skyrimse/jewelry/{source}-{type}".format(source=jewelry.source, type=jewelry.jewelryType))
+
+########################
+##### Book Related #####
+########################
+def books(request):
+    # Pull all the books and book's sources
+    allBooks = Book.objects.all()
+    allSources = set([b.source for b in allBooks])
+    allTypes = set([b.bookType for b in allBooks])
+    # Dynamically load quest sources
+    bookFiles = [b for b in os.listdir('skyrimse/static/json/books')]
+    data = {"counts": {}, "types": {}, "startsWith": ""}
+    for b in bookFiles:
+        source = b.replace("Books.json", "")
+        data["counts"][source] = len(Book.objects(source=source))
+    for book in allBooks:
+        if(book.startsWith not in data["startsWith"]):
+            data["startsWith"] += book.startsWith
+        if(not data["types"].get(book.bookType)):
+            data["types"][book.bookType] = {}
+        if(not data["types"][book.bookType].get(book.source)):
+            data["types"][book.bookType][book.source] = {
+                "novice": {"read": 0, "total": 0}, "apprentice": {"read": 0, "total": 0}, 
+                "adept": {"read": 0, "total": 0}, "expert": {"read": 0, "total": 0}, 
+                "master": {"read": 0, "total": 0}, "legendary": {"read": 0, "total": 0}}
+        for difficulty in book.completion:
+            if(book["completion"][difficulty] > 0):
+                data["types"][book.bookType][book.source][difficulty]["read"] += 1
+            data["types"][book.bookType][book.source][difficulty]["total"] += 1
+    data["startsWith"] = "".join(sorted(data["startsWith"]))
+    return render(request, 'skyrimseBooks.html', {'data': data})
+
+def booksLoad(request):
+    # Pull data from JSON file
+    toLoad = "skyrimse/static/json/books/{source}Books.json".format(source=request.path.split("=")[1])
+    with open(file=toLoad, mode="r") as f:
+        jsonData = load(f)
+        f.close()
+    # Create and save a Quest object
+    for bookData in jsonData:
+        book = Book(name=bookData["name"], source=bookData["source"],
+            startsWith=bookData["startsWith"], bookType=bookData["type"],
+            completion=Tracker(novice=0, apprentice=0, adept=0, expert=0, master=0, legendary=0))
+        book.save()
+    return redirect("/skyrimse/books")
+
+def booksList(request):
+    # Pull the letter from HTTP request.path
+    startsWith = request.path.split("/books/")[1]
+    # Pull all the spells
+    allBooks = Book.objects(startsWith=startsWith)
+    docs = {"novice": None, "apprentice": None, "adept": None,
+        "expert": None, "master": None, "legendary": None}
+    for doc in Progress.objects.all():
+        docs[doc.difficulty] = True
+    # Start the data object
+    data = {"startsWith": startsWith, "books": [], "startsWithList": ""}
+    # Load the data
+    for book in allBooks:
+        data["books"].append({"id": book.id, "name": book.name, "source": book.source, "type": book.bookType,
+            "completion": {
+                "novice": {"started": docs["novice"], "read": book["completion"]["novice"]},
+                "apprentice": {"started": docs["apprentice"], "read": book["completion"]["apprentice"]},
+                "adept": {"started": docs["adept"], "read": book["completion"]["adept"]},
+                "expert": {"started": docs["expert"], "read": book["completion"]["expert"]},
+                "master": {"started": docs["master"], "read": book["completion"]["master"]},
+                "legendary": {"started": docs["legendary"], "read": book["completion"]["legendary"]}}})
+    return render(request, 'skyrimseBooksList.html', {'data': data})
+
+def readBook(request):
+    # Pull book.id and difficulty from HTTP request.path
+    bookID = request.path.split("/books/")[1].split("&")[0].split("=")[1]
+    difficulty = request.path.split("/books/")[1].split("&")[1].split("=")[1]
+    # Pull the Ingredient and Progress objects
+    book = Book.objects(id=bookID).first()
+    progress = Progress.objects(difficulty=difficulty).first()
+    # Update the Weapon and Progress objects
+    book["completion"][difficulty] += 1
+    book.save()
+    updateProgressCompletion(source=book.source, vanillaSection="books", 
+        modSection="modBooks", progress=progress)
+    return redirect("/skyrimse/books/{startsWith}".format(startsWith=book.startsWith))

@@ -1,0 +1,56 @@
+<!-- Extending from base.html -->
+{% extends 'base.html' %}
+<!-- Used to load in static files -->
+{% load static %}
+
+{% block content %}
+<!-- Page Title Descriptor -->
+  <h1>Books</h1>
+  <!-- Link back to previous page -->
+  <a href="/skyrimse/">The Elder Scrolls V: Skyrim Special Edition (Home Page)</a>
+  <!-- Load Shouts into MongoDB -->
+  <div class="row">
+    {% for key, value in data.counts.items %}
+      {% if value == 0 %}
+        <div class="col-sm-2"><input type="button" onclick="window.location.href='booksLoad={{key}}'" value="Load {{key}}"></div>
+      {% endif %}
+    {% endfor %}
+  </div>
+  <!-- Display Links to By Letter-->
+  <div>
+    <br><br>
+    <h3>View Books Starting By Letter</h3>
+    <div class="row">
+      {% for letter in data.startsWith %}
+        <div class="col-1"><a href="{{ letter }}">{{ letter }}</a></div>
+      {% endfor %}
+    </div>
+  </div>
+  <!-- Display Data-->
+  <br>
+  {% for type, typeData in data.types.items %}
+  <br>
+    <h4>{{ type }}</h4>
+    <div class="row">
+      {% for source, sourceData in typeData.items %}
+        <div class="col-6">
+          <h5>{{ source }}</h5>
+          <table border="1" width=100%>
+            <tr>
+              <td>TODO: Summary</td>
+              <td>
+                {% for difficulty, stats in sourceData.items %}
+                  <div class="row">
+                    <div class="col">{{ difficulty }}</div>
+                    <div class="col"><progress value="{{ stats.read }}" max="{{ stats.total }}"></progress></div>
+                    <div class="col">{{ stats.read }} / {{ stats.total }}</div>
+                  </div>
+                {% endfor %}
+              </td>
+            </tr>
+          </table>
+        </div>
+      {% endfor %}
+    </div>
+  {% endfor %}
+{% endblock %}
