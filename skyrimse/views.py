@@ -100,25 +100,29 @@ def addDifficulty(request):
     # Get Key Count
     keyCount = sum([len(Key.objects(source=source)) for source in ["vanilla", "dawnguard", "dragonborn", "hearthfire"]])
     modKeyCount = (len(Key.objects.all())) - keyCount
+    # Get Collectible Count
+    collectibleCount = sum([len(Collectible.objects(source=source)) for source in ["vanilla", "dawnguard", "dragonborn", "hearthfire"]])
+    modCollectibleCount = (len(Collectible.objects.all())) - collectibleCount
     # Get Total Count
     totalCount = sum([questCount, perkCount, wordCount, locationCount, spellCount, enchantmentCount,
-        ingredientCount, weaponCount, armorCount, jewelryCount, bookCount, keyCount])
+        ingredientCount, weaponCount, armorCount, jewelryCount, bookCount, keyCount, collectibleCount])
     modTotalCount = sum([modQuestCount, modPerkCount, modWordCount, modLocationCount, modSpellCount,
         modEnchantmentCount, modIngredientCount, modWeaponCount, modArmorCount, modJewelryCount,
-        modBookCount, modKeyCount])
+        modBookCount, modKeyCount, modCollectibleCount])
     # Add Counts to Progress object
     progress.collected = Collected(quests=0, modQuests=0, perks=0, modPerks=0, 
         words=0, modWords=0, locations=0, modLocations=0, spells=0, modSpells=0, enchantments=0,
         modEnchantments=0, ingredients=0, modIngredients=0, weapons=0, modWeapons=0, armors=0,
-        modArmors=0, jewelry=0, modJewelry=0, books=0, modBooks=0, keys=0, modKeys=0, total=0, 
-        modTotal=0)
+        modArmors=0, jewelry=0, modJewelry=0, books=0, modBooks=0, keys=0, modKeys=0, collectibles=0,
+        modCollectibles=0, total=0, modTotal=0)
     progress.collectedTotal = Collected(quests=questCount, modQuests=modQuestCount, perks=perkCount, 
         words=wordCount, modWords=modWordCount, modPerks=modPerkCount, locations=locationCount, 
         modLocations=modLocationCount, spells=spellCount, modSpells=modSpellCount, 
         enchantments=enchantmentCount, modEnchantments=modEnchantmentCount, ingredients=ingredientCount, 
         modIngredients=modIngredientCount, weapons=weaponCount, modWeapons=modWeaponCount, armors=armorCount,
         modArmors=modArmorCount, jewelry=jewelryCount, modJewelry=modJewelryCount, books=bookCount, 
-        modBooks=modBookCount, keys=keyCount, modKeys=modKeyCount, total=totalCount, modTotal=modTotalCount)
+        modBooks=modBookCount, keys=keyCount, modKeys=modKeyCount, collectibles=collectibleCount, 
+        modCollectibles=modCollectibleCount,total=totalCount, modTotal=modTotalCount)
     progress.save()
     # Generate a Radar Graph for the progress
     skillLevels = {"Alchemy": 0, "Alteration": 0, "Archery": 0, "Block": 0, "Conjuration": 0, 
@@ -186,6 +190,14 @@ def deleteDifficulty(request):
     for book in Book.objects.all():
         book["completion"][progress.difficulty] = 0
         book.save()
+    # Delete Key Data
+    for key in Key.objects.all():
+        key["completion"][progress.difficulty] = 0
+        key.save()
+    # Delete Collectible Data
+    for collectible in Collectible.objects.all():
+        collectible["completion"][progress.difficulty] = 0
+        collectible.save()
     return redirect("/skyrimse/progress")
 
 def levelSkill(request):
@@ -1284,3 +1296,83 @@ def collectKey(request):
     updateProgressCompletion(source=key.source, vanillaSection="keys", 
         modSection="modKeys", progress=progress)
     return redirect("/skyrimse/keys/{source}-{location}".format(source=key.source, location=key.location))
+
+################################
+##### Collectibles Related #####
+################################
+def collectibles(request):
+    # Pull all the books and book's sources
+    allCollectibles = Collectible.objects.all()
+    allSources = set([c.source for c in allCollectibles])
+    allTypes = set([c.collectibleType for c in allCollectibles])
+    # Dynamically load quest sources
+    collectibleFiles = [c for c in os.listdir('skyrimse/static/json/collectibles')]
+    data = {"counts": {}, "types": {}}
+    for c in collectibleFiles:
+        source = c.replace("Collectibles.json", "")
+        data["counts"][source] = len(Collectible.objects(source=source))
+    # Load data
+    for collectible in allCollectibles:
+        if(not data["types"].get(collectible.collectibleType)):
+            data["types"][collectible.collectibleType] = {}
+        if(not data["types"][collectible.collectibleType].get(collectible.source)):
+            data["types"][collectible.collectibleType][collectible.source] = {
+                "novice": {"collected": 0, "total": 0}, "apprentice": {"collected": 0, "total": 0}, 
+                "adept": {"collected": 0, "total": 0}, "expert": {"collected": 0, "total": 0}, 
+                "master": {"collected": 0, "total": 0}, "legendary": {"collected": 0, "total": 0}}
+        for difficulty in collectible["completion"]:
+            if(collectible["completion"][difficulty] > 0):
+                data["types"][collectible.collectibleType][collectible.source][difficulty]["collected"] += 1
+            data["types"][collectible.collectibleType][collectible.source][difficulty]["total"] += 1
+    return render(request, 'skyrimseCollectibles.html', {'data': data})
+
+def collectiblesLoad(request):
+    # Pull data from JSON file
+    toLoad = "skyrimse/static/json/collectibles/{source}Collectibles.json".format(source=request.path.split("=")[1])
+    with open(file=toLoad, mode="r") as f:
+        jsonData = load(f)
+        f.close()
+    # Create and save a Quest object
+    for collectibleData in jsonData:
+        collectible = Collectible(name=collectibleData["name"], source=collectibleData["source"], 
+            collectibleType=collectibleData["type"], notes="",
+            completion=Tracker(novice=0, apprentice=0, adept=0, expert=0, master=0, legendary=0))
+        collectible.save()
+    return redirect("/skyrimse/collectibles")
+
+def collectibleType(request):
+    # Pull the location and difficulty from HTTP request.path
+    source = request.path.split("/collectibles/")[1].split("-")[0]
+    collectibleType = request.path.split("/collectibles/")[1].split("-")[1]
+    # Pull all the spells
+    allCollectibles = Collectible.objects(collectibleType=collectibleType, source=source)
+    docs = {"novice": None, "apprentice": None, "adept": None,
+        "expert": None, "master": None, "legendary": None}
+    for doc in Progress.objects.all():
+        docs[doc.difficulty] = True
+    # Start the data object
+    data = {"source": source, "type": collectibleType, "collectibles": []}
+    for collectible in allCollectibles:
+        data["collectibles"].append({"id": collectible.id, "name": collectible.name, "notes": collectible.notes,
+            "completion": {
+                "novice": {"started": docs["novice"], "collected": collectible["completion"]["novice"]},
+                "apprentice": {"started": docs["apprentice"], "collected": collectible["completion"]["apprentice"]},
+                "adept": {"started": docs["adept"], "collected": collectible["completion"]["adept"]},
+                "expert": {"started": docs["expert"], "collected": collectible["completion"]["expert"]},
+                "master": {"started": docs["master"], "collected": collectible["completion"]["master"]},
+                "legendary": {"started": docs["legendary"], "collected": collectible["completion"]["legendary"]}}})
+    return render(request, 'skyrimseCollectibleType.html', {'data': data})
+
+def collectCollectible(request):
+    # Pull key.id and difficulty from HTTP request.path
+    colletibleID = request.path.split("/collectibles/")[1].split("&")[0].split("=")[1]
+    difficulty = request.path.split("/collectibles/")[1].split("&")[1].split("=")[1]
+    # Pull the Ingredient and Progress objects
+    collectible = Collectible.objects(id=colletibleID).first()
+    progress = Progress.objects(difficulty=difficulty).first()
+    # Update the Weapon and Progress objects
+    collectible["completion"][difficulty] += 1
+    collectible.save()
+    updateProgressCompletion(source=collectible.source, vanillaSection="collectibles", 
+        modSection="modCollectibles", progress=progress)
+    return redirect("/skyrimse/collectibles/{source}-{type}".format(source=collectible.source, type=collectible.collectibleType))

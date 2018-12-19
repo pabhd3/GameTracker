@@ -70,6 +70,11 @@ urlpatterns = [
     # Keys Related
     url(r"^keys/$", views.keys),
     url(r"^keys/keysLoad=\w+", views.keysLoad),
-    url(r"keys/collectKey=\w+", views.collectKey),
-    url(r"^keys/\w+-\w+", views.keyLocations)
+    url(r"^keys/collectKey=\w+", views.collectKey),
+    url(r"^keys/\w+-\w+", views.keyLocations),
+    # Collectibles Related
+    url(r"^collectibles/$", views.collectibles),
+    url(r"^collectibles/collectiblesLoad=\w+", views.collectiblesLoad),
+    url(r"^collectibles/collectCollectible=\w+", views.collectCollectible),
+    url(r"^collectibles/\w+-\w+", views.collectibleType)
 ]
