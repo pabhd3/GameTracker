@@ -143,62 +143,24 @@ def deleteDifficulty(request):
         if(os.path.isfile(strFile)):
             os.remove(strFile)
     progress.delete()
-    # Delete Quest Data
-    for quest in Quest.objects.all():
-        quest["completion"][progress.difficulty] = 0
-        quest.save()
-    # Delete Perk Data
-    for perk in Perk.objects.all():
-        perk["completion"][progress.difficulty] = 0
-        perk.save()
+    # Delete Generic Objects
+    for obj in [Quest, Perk, Location, Spell, Enchantment, Weapon, Armor, Jewelry,
+                Book, Key, Collectible]:
+        for o in obj.objects.all():
+            o["completion"][progress.difficulty] = 0
+            o.save()
     # Delete Shout Data
     for shout in Shout.objects.all():
         for word in shout.words:
             wordIndex = shout["words"].index(word)
             shout["words"][wordIndex]["completion"][progress.difficulty] = 0
         shout.save()
-    # Delete Location Data
-    for location in Location.objects.all():
-        location["completion"][progress.difficulty] = 0
-        location.save()
-    # Delete Spell Data
-    for spell in Spell.objects.all():
-        spell["completion"][progress.difficulty] = 0
-        spell.save()
-    # Delete Enchantment Data
-    for enchantment in Enchantment.objects.all():
-        enchantment["completion"][progress.difficulty] = 0
-        enchantment.save()
     # Delete Ingredient Data
     for ingredient in Ingredient.objects.all():
         for effect in ingredient.effects:
             effectIndex = ingredient["effects"].index(effect)
             ingredient["effects"][effectIndex]["completion"][progress.difficulty] = 0
         ingredient.save()
-    # Delete Weapon Data
-    for weapon in Weapon.objects.all():
-        weapon["completion"][progress.difficulty] = 0
-        weapon.save()
-    # Delete Armor Data
-    for armor in Armor.objects.all():
-        armor["completion"][progress.difficulty] = 0
-        armor.save()
-    # Delete Jewelry Data
-    for jewelry in Jewelry.objects.all():
-        jewelry["completion"][progress.difficulty] = 0
-        jewelry.save()
-    # Delete Book Data
-    for book in Book.objects.all():
-        book["completion"][progress.difficulty] = 0
-        book.save()
-    # Delete Key Data
-    for key in Key.objects.all():
-        key["completion"][progress.difficulty] = 0
-        key.save()
-    # Delete Collectible Data
-    for collectible in Collectible.objects.all():
-        collectible["completion"][progress.difficulty] = 0
-        collectible.save()
     return redirect("/skyrimse/progress")
 
 def levelSkill(request):
@@ -285,24 +247,18 @@ def quests(request):
         source = f.replace("Quests.json", "")
         data["counts"][source] = len(Quest.objects(source=source))
     # Sort questlines into sources, and get counts per difficulty per questline
-    for source in allSources:
-        data["sources"][source] = {}
-        for quest in allQuests:
-            if(quest.questLine not in data["sources"][source] and quest.source == source):
-                total = len(Quest.objects(questLine=quest.questLine, source=source))
-                progData = {"novice": {"complete": len(Quest.objects(questLine=quest.questLine, source=source, completion__novice__gt=0)), 
-                            "total": total},
-                            "apprentice": {"complete": len(Quest.objects(questLine=quest.questLine, source=source, completion__apprentice__gt=0)), 
-                            "total": total},
-                            "adept": {"complete": len(Quest.objects(questLine=quest.questLine, source=source, completion__adept__gt=0)), 
-                            "total": total},
-                            "expert": {"complete": len(Quest.objects(questLine=quest.questLine, source=source, completion__expert__gt=0)), 
-                            "total": total},
-                            "master": {"complete": len(Quest.objects(questLine=quest.questLine, source=source, completion__master__gt=0)), 
-                            "total": total},
-                            "legendary": {"complete": len(Quest.objects(questLine=quest.questLine, source=source, completion__legendary__gt=0)), 
-                            "total": total}}
-                data["sources"][source][quest.questLine] = progData
+    for quest in allQuests:
+        if(not data["sources"].get(quest.source)):
+            data["sources"][quest.source] = {}
+        if(not data["sources"][quest.source].get(quest.questLine)):
+            data["sources"][quest.source][quest.questLine] = {
+                "novice": {"complete": 0, "total": 0}, "apprentice": {"complete": 0, "total": 0}, 
+                "adept": {"complete": 0, "total": 0}, "expert": {"complete": 0, "total": 0}, 
+                "master": {"complete": 0, "total": 0}, "legendary": {"complete": 0, "total": 0}}
+        for difficulty in quest["completion"]:
+            if(quest["completion"][difficulty] > 0):
+                data["sources"][quest.source][quest.questLine][difficulty]["complete"] += 1
+            data["sources"][quest.source][quest.questLine][difficulty]["total"] += 1
     return render(request, "skyrimseQuests.html", {'data': data})
 
 def questsLoad(request):
@@ -378,23 +334,18 @@ def perks(request):
         source = p.replace("Perks.json", "")
         data["counts"][source] = len(Perk.objects(source=source))
     # Sort skills into sources, and get counts per difficulty per questline
-    for skill in allSkills:
-        data["skills"][skill] = {}
-        for source in allSources:
-            total = len(Perk.objects(skill=skill, source=source))
-            progData = {"novice": {"complete": len(Perk.objects(skill=skill, source=source, completion__novice__gt=0)), 
-                        "total": total},
-                        "apprentice": {"complete": len(Perk.objects(skill=skill, source=source, completion__apprentice__gt=0)), 
-                        "total": total},
-                        "adept": {"complete": len(Perk.objects(skill=skill, source=source, completion__adept__gt=0)), 
-                        "total": total},
-                        "expert": {"complete": len(Perk.objects(skill=skill, source=source, completion__expert__gt=0)), 
-                        "total": total},
-                        "master": {"complete": len(Perk.objects(skill=skill, source=source, completion__master__gt=0)), 
-                        "total": total},
-                        "legendary": {"complete": len(Perk.objects(skill=skill, source=source, completion__legendary__gt=0)), 
-                        "total": total}}
-            data["skills"][skill][source] = progData
+    for perk in allPerks:
+        if(not data["skills"].get(perk.skill)):
+            data["skills"][perk.skill] = {}
+        if(not data["skills"][perk.skill].get(perk.source)):
+            data["skills"][perk.skill][perk.source] = {
+                "novice": {"complete": 0, "total": 0}, "apprentice": {"complete": 0, "total": 0}, 
+                "adept": {"complete": 0, "total": 0}, "expert": {"complete": 0, "total": 0}, 
+                "master": {"complete": 0, "total": 0}, "legendary": {"complete": 0, "total": 0}}
+        for difficulty in perk["completion"]:
+            if(perk["completion"][difficulty] > 0):
+                data["skills"][perk.skill][perk.source][difficulty]["complete"] += 1
+            data["skills"][perk.skill][perk.source][difficulty]["total"] += 1
     return render(request, "skyrimsePerks.html", {'data': data})
 
 def perksLoad(request):
