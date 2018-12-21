@@ -111,25 +111,37 @@ class Quest(Document):
     def __str__(self):
         return dumps({"name": self.name, "questLine": self.questLine, 
             "source": self.source, "section": self.section, 
-            "radiant": self.radiant, "completion": self.completion}, indent=4) 
-    
+            "radiant": self.radiant}, indent=4) 
+
+    meta = {'indexes': [
+        {'fields': ['$name', "$source", "$questLine"],
+         'default_language': 'english',
+         'weights': {'name': 10, 'source': 2, 'questLine': 5}
+        }
+    ]}
 
 ###############################
 ##### Perk Related Models #####
 ###############################
 class Perk(Document):
-    skill = fields.StringField()
     name = fields.StringField()
-    description = fields.StringField()
-    level = fields.IntField()
     source = fields.StringField()
+    description = fields.StringField()
+    skill = fields.StringField()
+    level = fields.IntField()
     completion = fields.EmbeddedDocumentField(Tracker)
 
     def __str__(self):
         return dumps({"name": self.name, "skill": self.skill, 
             "description": self.description, "level": self.level, 
-            "source": self.source, "completion": self.completion}, indent=4) 
-    
+            "source": self.source}, indent=4) 
+
+    meta = {'indexes': [
+        {'fields': ['$name', "$source", "$description", "$skill"],
+         'default_language': 'english',
+         'weights': {'name': 10, 'source': 2, 'description': 7, 'skill': 5}
+        }
+    ]}
 
 ################################
 ##### Shout Related Models #####
@@ -143,8 +155,7 @@ class Word(EmbeddedDocument):
 
     def __str__(self):
         return dumps({"original": self.original, "translation": self.translation,
-            "cooldown": self.completion, "location": self.location,
-            "completion": self.completion}, indent=4)
+            "location": self.location}, indent=4)
 
 class Shout(Document):
     name = fields.StringField()
@@ -155,8 +166,14 @@ class Shout(Document):
     def __str__(self):
         data = {"name": self.name, "source": self.source, 
             "description": self.description, "words": self.words}
-        return dumps(data, indent=4) 
-    
+        return dumps(data, indent=4)
+
+    meta = {'indexes': [
+        {'fields': ['$name', "$source", "$description"],
+         'default_language': 'english',
+         'weights': {'name': 10, 'source': 2, 'description': 7}
+        }
+    ]}
 
 ############################
 ##### Location Related #####
@@ -169,7 +186,14 @@ class Location(Document):
 
     def __str__(self):
         return dumps({"name": self.name, "source": self.source,
-            "location": self.locationType, "completion": self.completion}, indent=4)
+            "location": self.locationType}, indent=4)
+
+    meta = {'indexes': [
+        {'fields': ['$name', "$source"],
+         'default_language': 'english',
+         'weights': {'name': 10, 'source': 2}
+        }
+    ]}
 
 #########################
 ##### Spell Related #####
@@ -184,8 +208,14 @@ class Spell(Document):
 
     def __str__(self):
         return dumps({"name": self.name, "source": self.source, "school": self.school,
-            "level": self.level, "description": self.description,
-            "completion": self.completion}, indent=4)
+            "level": self.level, "description": self.description}, indent=4)
+
+    meta = {'indexes': [
+        {'fields': ['$name', "$source", "$description"],
+         'default_language': 'english',
+         'weights': {'name': 10, 'source': 2, 'description': 7}
+        }
+    ]}
 
 ###############################
 ##### Enchantment Related #####
@@ -199,9 +229,14 @@ class Enchantment(Document):
 
     def __str__(self):
         return dumps({"name": self.name, "source": self.source, 
-            "type": self.enchantmentType, "description": self.description,
-            "completion": self.completion}, indent=4)
-    
+            "type": self.enchantmentType, "description": self.description}, indent=4)
+
+    meta = {'indexes': [
+        {'fields': ['$name', "$source", "$description"],
+         'default_language': 'english',
+         'weights': {'name': 10, 'source': 2, 'description': 7}
+        }
+    ]}
 
 ##############################
 ##### Ingredient Related #####
@@ -223,6 +258,13 @@ class Ingredient(Document):
     def __str__(self):
         return dumps({"name": self.name, "source": self.source}, indent=4)
 
+    meta = {'indexes': [
+        {'fields': ['$name', "$source"],
+         'default_language': 'english',
+         'weights': {'name': 10, 'source': 2}
+        }
+    ]}
+
 ##########################
 ##### Weapon Related #####
 ##########################
@@ -236,6 +278,13 @@ class Weapon(Document):
     def __str__(self):
         return dumps({"name": self.name, "source": self.source,
             "class": self.weaponClass, "type": self.weaponType}, indent=4)
+
+    meta = {'indexes': [
+        {'fields': ['$name', "$source", "$weaponClass", "$weaponType"],
+         'default_language': 'english',
+         'weights': {'name': 10, 'source': 2, 'weaponClass': 1, 'weaponType': 1}
+        }
+    ]}
 
 #########################
 ##### Armor Related #####
@@ -251,6 +300,13 @@ class Armor(Document):
         return dumps({"name": self.name, "source": self.source,
             "class": self.armorClass, "type": self.armorType}, indent=4)
 
+    meta = {'indexes': [
+        {'fields': ['$name', "$source", "$armorClass", "$armorType"],
+         'default_language': 'english',
+         'weights': {'name': 10, 'source': 2, 'armorClass': 1, 'armorType': 1}
+        }
+    ]}
+
 ###########################
 ##### Jewelry Related #####
 ###########################
@@ -265,6 +321,13 @@ class Jewelry(Document):
         return dumps({"name": self.name, "source": self.source,
             "class": self.jewelryClass, "type": self.jewelryType}, indent=4)
 
+    meta = {'indexes': [
+        {'fields': ['$name', "$source", "$jewelryClass", "$jewelryType"],
+         'default_language': 'english',
+         'weights': {'name': 10, 'source': 2, 'jewelryClass': 1, 'jewelryType': 1}
+        }
+    ]}
+
 ########################
 ##### Book Related #####
 ########################
@@ -278,6 +341,13 @@ class Book(Document):
     def __str__(self):
         return dumps({"name": self.name, "source": self.source,
             "type": self.bookType}, indent=4)
+    
+    meta = {'indexes': [
+        {'fields': ['$name', "$source", "$bookType"],
+         'default_language': 'english',
+         'weights': {'name': 10, 'source': 2, 'bookType': 1}
+        }
+    ]}
 
 #######################
 ##### Key Related #####
@@ -291,6 +361,13 @@ class Key(Document):
     def __str__(self):
         return dumps({"name": self.name, "source": self.source,
             "location": self.location}, indent=4)
+    
+    meta = {'indexes': [
+        {'fields': ['$name', "$source", "$location"],
+         'default_language': 'english',
+         'weights': {'name': 10, 'source': 2, 'location': 1}
+        }
+    ]}
 
 ###############################
 ##### Collectible Related #####
@@ -305,3 +382,10 @@ class Collectible(Document):
     def __str__(self):
         return dumps({"name": self.name, "source": self.source, 
             "type": self.collectibleType, "notes": self.notes}, indent=4)
+    
+    meta = {'indexes': [
+        {'fields': ['$name', "$source", "$notes"],
+         'default_language': 'english',
+         'weights': {'name': 10, 'source': 2, 'notes': 2}
+        }
+    ]}
