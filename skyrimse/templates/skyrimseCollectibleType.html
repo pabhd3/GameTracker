@@ -12,26 +12,44 @@
   <!-- Load Spells from MongoDB -->
   <div class="row">
     {% for collectible in data.collectibles %}
-      <div class="col-4">
+      <div class="col-6">
         <h6>{{ collectible.name }}</h6>
         <table border="1" width=100%>
-          <tr><td>
-            {% for difficulty, stats in collectible.completion.items%}
-              <div class="row">
-                <div class="col">{{ difficulty }}</div>
-                <div class="col">
-                  {% if stats.started == None %}
-                    Difficulty not started
-                  {% else %}
-                    {% if stats.collected > 0 %}
-                      Collected
+          <tr>
+            <td>
+              <h5>Notes</h5>
+              <ul>
+                {% for note in collectible.notes %}
+                  <li>{{ note }}</li>
+                {% endfor %}
+              </ul>
+            </td>
+            <td>
+              {% for difficulty, stats in collectible.completion.items%}
+                <div class="row">
+                  <div class="col">{{ difficulty }}</div>
+                  <div class="col">
+                    {% if stats.started == None %}
+                      Difficulty not started
                     {% else %}
-                      <input type="button" onclick="window.location.href='collectCollectible={{ collectible.id }}&difficulty={{ difficulty }}'" value="Collect">
+                      {% if stats.collected > 0 %}
+                        Collected
+                      {% else %}
+                        <input type="button" onclick="window.location.href='collectCollectible={{ collectible.id }}&difficulty={{ difficulty }}'" value="Collect">
+                      {% endif %}
                     {% endif %}
-                  {% endif %}
+                  </div>
                 </div>
-              </div>
-            {% endfor %}
+              {% endfor %}
+            </td>
+          </tr>
+          <tr><td colspan="2">
+            <form action="/skyrimse/collectibleNotes={{ collectible.id }}" method="post">
+              {% csrf_token %}
+              <label for="Notes">Add Notes: </label>
+              <input id="notes" type="text" name="notes">
+              <input type="submit" value="OK">
+            </form>
           </td></tr>
         </table>
       </div>

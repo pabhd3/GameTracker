@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from skyrimse.models import *
+from skyrimse.forms import *
 from mongoengine.context_managers import switch_db
 from datetime import datetime
 from .customScripts import plotRadars
@@ -1335,7 +1336,7 @@ def collectiblesLoad(request):
     # Create and save a Quest object
     for collectibleData in jsonData:
         collectible = Collectible(name=collectibleData["name"], source=collectibleData["source"], 
-            collectibleType=collectibleData["type"], notes="",
+            collectibleType=collectibleData["type"], notes=[],
             completion=Tracker(novice=0, apprentice=0, adept=0, expert=0, master=0, legendary=0))
         collectible.save()
     return redirect("/skyrimse/collectibles")
@@ -1376,3 +1377,13 @@ def collectCollectible(request):
     updateProgressCompletion(source=collectible.source, vanillaSection="collectibles", 
         modSection="modCollectibles", progress=progress)
     return redirect("/skyrimse/collectibles/{source}-{type}".format(source=collectible.source, type=collectible.collectibleType))
+
+def collectibleNotes(request):
+    if(request.method == "POST"):
+        form = CollectibleNotes(request.POST)
+        if(form.is_valid()):
+            collectible = Collectible.objects(id=request.path.split("collectibleNotes=")[1]).first()
+            collectible["notes"].append(form.cleaned_data["notes"])
+            collectible.save()
+            return redirect("/skyrimse/collectibles/{source}-{type}".format(source=collectible.source, type=collectible.collectibleType))
+    return redirect("/skyrimse/collectibles/")

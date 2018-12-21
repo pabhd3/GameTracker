@@ -76,5 +76,6 @@ urlpatterns = [
     url(r"^collectibles/$", views.collectibles),
     url(r"^collectibles/collectiblesLoad=\w+", views.collectiblesLoad),
     url(r"^collectibles/collectCollectible=\w+", views.collectCollectible),
-    url(r"^collectibles/\w+-\w+", views.collectibleType)
+    url(r"^collectibles/\w+-\w+", views.collectibleType),
+    url(r"^collectibleNotes=\w+", views.collectibleNotes)
 ]

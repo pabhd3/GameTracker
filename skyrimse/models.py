@@ -299,7 +299,7 @@ class Collectible(Document):
     name = fields.StringField()
     source = fields.StringField()
     collectibleType = fields.StringField()
-    notes = fields.StringField()
+    notes = fields.ListField()
     completion = fields.EmbeddedDocumentField(Tracker)
 
     def __str__(self):
