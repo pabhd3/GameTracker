@@ -10,10 +10,15 @@
       <div class="col-md-6">
         <a href="/skyrimse/">
           <h4>The Elder Scrolls V: Skyrim Special Edition</h4>
-          <img src="{% static '/images/skyrimse-logo.jpg' %}" alt="Skyrim SE Logo" height=100% width=100%>
+          <img src="{% static '/images/skyrimse-logo.jpg' %}" alt="Skyrim SE Logo">
         </a>
+        <div class="row">
+          <div class="col">
+            <progress value={{ data.skyrimse }} max="100" style="width:100%;"></progress>
+            </div>
+          <div class="col">{{ data.skyrimse }} / 100</div>
+        </div>
       </div>
     </div>
   </div>
-  {{ data }}
 {% endblock %}

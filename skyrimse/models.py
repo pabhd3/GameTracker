@@ -80,7 +80,9 @@ class Progress(Document):
         return dumps({"created": self.created, "difficulty": self.difficulty,
             "completion": {"vanilla": self.completion.vanilla, "mod": self.completion.mod},
             "level": self.level, "health": self.health, "magicka": self.magicka, 
-            "stamina": self.stamina}, indent=4) 
+            "stamina": self.stamina}, indent=4)
+    
+    meta = {'db_alias': 'skyrimse'}
 
 #########################
 ##### Quest Related #####
