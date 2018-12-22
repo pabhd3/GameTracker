@@ -15,11 +15,11 @@ def updateProgressCompletion(source, vanillaSection, modSection, progress):
     if(source in ("vanilla", "dawnguard", "dragonborn", "hearthfire")):
         progress["collected"][vanillaSection] += 1
         progress["collected"]["total"] += 1
-        progress["completion"]["vanilla"] = progress.collected.total / progress.collectedTotal.total
+        progress["completion"]["vanilla"] = (progress.collected.total / progress.collectedTotal.total) * 100
     else:
         progress["collected"][modSection] += 1
         progress["collected"]["modTotal"] += 1
-        progress["completion"]["mod"] = progress.collected.modTotal / progress.collectedTotal.modTotal
+        progress["completion"]["mod"] = (progress.collected.modTotal / progress.collectedTotal.modTotal) * 100
     progress.save()
 
 #####################
@@ -51,20 +51,20 @@ def addDifficulty(request):
     # Set/save starting info for a progress object
     progress.created = datetime.strftime(datetime.now(), "%A %B %d, %Y %H:%M:%S:%f %Z")
     progress.difficulty = difficulty
-    progress.level = 0
-    progress.health = 0
-    progress.magicka = 0
-    progress.stamina = 0
+    progress.level = 1
+    progress.health = 100
+    progress.magicka = 100
+    progress.stamina = 100
     progress.completion = Completion(vanilla=0, mod=0)
-    progress.skills = Skills(alchemy=Skill(level=0, legendary=0), alteration=Skill(level=0, legendary=0), 
-            archery=Skill(level=0, legendary=0), block=Skill(level=0, legendary=0), 
-            conjuration=Skill(level=0, legendary=0), destruction=Skill(level=0, legendary=0), 
-            enchanting=Skill(level=0, legendary=0), heavyArmor=Skill(level=0, legendary=0), 
-            illusion=Skill(level=0, legendary=0), lightArmor=Skill(level=0, legendary=0), 
-            lockpicking=Skill(level=0, legendary=0), oneHanded=Skill(level=0, legendary=0), 
-            pickPocket=Skill(level=0, legendary=0), restoration=Skill(level=0, legendary=0), 
-            smithing=Skill(level=0, legendary=0), sneak=Skill(level=0, legendary=0), 
-            speech=Skill(level=0, legendary=0), twoHanded=Skill(level=0, legendary=0))
+    progress.skills = Skills(alchemy=Skill(level=15, legendary=0), alteration=Skill(level=15, legendary=0), 
+            archery=Skill(level=15, legendary=0), block=Skill(level=15, legendary=0), 
+            conjuration=Skill(level=15, legendary=0), destruction=Skill(level=15, legendary=0), 
+            enchanting=Skill(level=15, legendary=0), heavyArmor=Skill(level=15, legendary=0), 
+            illusion=Skill(level=15, legendary=0), lightArmor=Skill(level=15, legendary=0), 
+            lockpicking=Skill(level=15, legendary=0), oneHanded=Skill(level=15, legendary=0), 
+            pickPocket=Skill(level=15, legendary=0), restoration=Skill(level=15, legendary=0), 
+            smithing=Skill(level=15, legendary=0), sneak=Skill(level=15, legendary=0), 
+            speech=Skill(level=15, legendary=0), twoHanded=Skill(level=15, legendary=0))
     # Get Quest Count
     questCount = sum([len(Quest.objects(source=source)) for source in ["vanilla", "dawnguard", "dragonborn", "hearthfire"]])
     modQuestCount = len(Quest.objects.all()) - questCount
@@ -126,10 +126,10 @@ def addDifficulty(request):
         modCollectibles=modCollectibleCount,total=totalCount, modTotal=modTotalCount)
     progress.save()
     # Generate a Radar Graph for the progress
-    skillLevels = {"Alchemy": 0, "Alteration": 0, "Archery": 0, "Block": 0, "Conjuration": 0, 
-        "Destruction": 0, "Enchanting": 0, "Heavy Armor": 0, "Illusion": 0, "Light Armor": 0, 
-        "Lockpicking": 0, "One-Handed": 0, "Pickpocket": 0, "Restoration": 0, "Smithing": 0, 
-        "Sneak": 0, "Speech": 0, "Two-Handed": 0}
+    skillLevels = {"Alchemy": 15, "Alteration": 15, "Archery": 15, "Block": 15, "Conjuration": 15, 
+        "Destruction": 15, "Enchanting": 15, "Heavy Armor": 15, "Illusion": 15, "Light Armor": 15, 
+        "Lockpicking": 15, "One-Handed": 15, "Pickpocket": 15, "Restoration": 15, "Smithing": 15, 
+        "Sneak": 15, "Speech": 15, "Two-Handed": 15}
     plotRadars(values=skillLevels, difficulty=progress.difficulty)
     return redirect("/skyrimse/progress")
 
@@ -175,8 +175,24 @@ def levelSkill(request):
     if(levelType == "level"):
         progress["skills"][skill]["level"] += 1
     else:
-        progress["skills"][skill]["level"] = 0
+        progress["skills"][skill]["level"] = 15
         progress["skills"][skill]["legendary"] += 1
+        # Remove Perk Progress
+        learnedPerks = 0
+        modLearnedPerks = 0
+        for perk in Perk.objects(skill=skill):
+            if(perk["completion"][difficulty] > 0 and perk["source"] in ("vanilla", "dawnguard", "dragonborn", "hearthfire")):
+                learnedPerks += 1
+                perk["completion"][difficulty] = 0
+            elif(perk["completion"][difficulty] > 0 and perk["source"] not in ("vanilla", "dawnguard", "dragonborn", "hearthfire")):
+                modLearnedPerks += 1
+                perk["completion"][difficulty] = 0
+            perk.save()
+        # Update Progress completion
+        progress["collected"]["perks"] =- learnedPerks
+        progress["completion"]["vanilla"] = (progress.collected.total / progress.collectedTotal.total) * 100
+        progress["collected"]["modPerks"] -= modLearnedPerks
+        progress["completion"]["mod"] = (progress.collected.modTotal / progress.collectedTotal.modTotal) * 100
     progress.save()
     # Pull levels for new Radar Graph
     skillLevels = {"Alchemy": progress.skills.alchemy.level, "Alteration": progress.skills.alteration.level, 
