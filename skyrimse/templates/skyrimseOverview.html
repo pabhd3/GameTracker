@@ -42,20 +42,34 @@
       <!-- List out the desired category by source -->
       <div class="collapse" id="{{ progress.target }}">
         <div class="card card-body">
-          {% for source, sourceData in progress.sources.items %}
-            <h5>{{ source }}</h5>
+          {% if data.category == True %}
             <div class="row">
-              {% for category, stats in sourceData.items %}
+              {% for source, sourceData in progress.sources.items %}
                 <div class="col-6">
                   <div class="row">
-                    <div class="col">{{ category }}</div>
-                    <div class="col"><progress value={{ stats.complete }} max={{ stats.total }}></progress></div>
-                    <div class="col">{{ stats.complete }} / {{ stats.total }}</div>
+                    <div class="col">{{ source }}</div>
+                    <div class="col"><progress value={{ sourceData.complete }} max={{ sourceData.total }}></progress></div>
+                    <div class="col">{{ sourceData.complete }} / {{ sourceData.total }}</div>
                   </div>
                 </div>
               {% endfor %}
-            </div><br>
-          {% endfor %}
+            </div>
+          {% else %}
+            {% for source, sourceData in progress.sources.items %}
+              <h5>{{ source }}</h5>
+              <div class="row">
+                {% for category, stats in sourceData.items %}
+                  <div class="col-6">
+                    <div class="row">
+                      <div class="col">{{ category }}</div>
+                      <div class="col"><progress value={{ stats.complete }} max={{ stats.total }}></progress></div>
+                      <div class="col">{{ stats.complete }} / {{ stats.total }}</div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div><br>
+            {% endfor %}
+          {% endif %}
         </div>
       </div><br>
     {% endfor %}

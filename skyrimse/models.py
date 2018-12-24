@@ -7,8 +7,8 @@ from json import dumps
 ##### Progress Related Models #####
 ###################################
 class Completion(EmbeddedDocument):
-    vanilla = fields.FloatField(min_value=0, max_value=1)
-    mod = fields.FloatField(min_value=0, max_value=1)
+    vanilla = fields.FloatField(min_value=0)
+    mod = fields.FloatField(min_value=0)
 
 class Skill(EmbeddedDocument):
     level = fields.IntField(min_value=0)

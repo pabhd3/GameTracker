@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from skyrimse.models import *
 from skyrimse.forms import *
 from mongoengine.context_managers import switch_db
+from mongoengine.base.datastructures import EmbeddedDocumentList
 from datetime import datetime
 from .customScripts import plotRadars
 from json import load, loads, dumps
@@ -32,26 +33,44 @@ def generateData(obj, objDir, objStr, category):
     for f in objFiles:
         source = f.replace("{}.json".format(objStr), "")
         data["counts"][source] = len(obj.objects(source=source))
+    # Determine if all the data is loaded and if we're dealing with an embeddedDocumentList
     data["allLoaded"] = False if False in [data["counts"][source] > 0 for source in data["counts"]] else True
+    data["category"] = True if isinstance(allOBj[0][category], EmbeddedDocumentList) else False
     # Load Character Completion Data
     for doc in Progress.objects.all():
         difficulty = doc.difficulty
         stats = {"difficulty": difficulty, "complete": 0,"total": 0, 
             "target": "collapse{}".format(difficulty), "sources": {}}
         for o in allOBj:
-            source, categ = o["source"], o[category]
-            if(not stats["sources"].get(source)):
-                stats["sources"][source] = {}
-            if(not stats["sources"][source].get(categ)):
-                stats["sources"][source][categ] = {"complete": 0, "total": 0}
-            if(o["completion"][difficulty] > 0):
-                stats["sources"][source][categ]["complete"] += 1
-                stats["complete"] += 1
-            stats["sources"][source][categ]["total"] += 1
-            stats["total"] += 1
-            allNames.add(o.name)
-        data["progress"].append(stats)
+            source = o["source"]
+            # If the desired field is an embeddedDocument list
+            if(isinstance(o[category], EmbeddedDocumentList)):
+                if(not stats["sources"].get(source)):
+                    stats["sources"][source] = {"complete": 0, "total": 0}
+                # Check the completion data for each embeddedDocument
+                for embedded in o[category]:
+                    if(embedded["completion"][difficulty] > 0):
+                        stats["sources"][source]["complete"] += 1
+                        stats["complete"] += 1
+                    stats["sources"][source]["total"] += 1
+                    stats["total"] += 1
+                allNames.add(o.name)
+            else:
+                # Otherwise, add completion difficulty per category
+                categ = o[category]
+                if(not stats["sources"].get(source)):
+                    stats["sources"][source] = {}
+                if(not stats["sources"][source].get(categ)):
+                    stats["sources"][source][categ] = {"complete": 0, "total": 0}
+                if(o["completion"][difficulty] > 0):
+                    stats["sources"][source][categ]["complete"] += 1
+                    stats["complete"] += 1
+                stats["sources"][source][categ]["total"] += 1
+                stats["total"] += 1
+                allNames.add(o.name)
+        # Sort the names
         data["all"] = sorted(allNames)
+        data["progress"].append(stats)
     return data
 
 #####################
@@ -412,29 +431,9 @@ def learnPerk(request):
 ##### Shout Related #####
 #########################
 def shouts(request):
-    # Pull all the quests, quest's cources, and quest's questlines
-    allShouts = Shout.objects.all()
-    allSources = set([s.source for s in allShouts])
-    # Dynamically load quest sources
-    shoutFiles = list(filter(lambda x: "Shouts" in x, [f for f in os.listdir('skyrimse/static/json/shouts')]))
-    data = {"counts": {}, "sources": {}}
-    for f in shoutFiles:
-        source = f.replace("Shouts.json", "")
-        data["counts"][source] = len(Shout.objects(source=source))
-    # Start completion data
-    for source in allSources:
-        data["sources"][source] = {"novice": {"complete": 0, "total": 0}, 
-            "apprentice": {"complete": 0, "total": 0}, "adept": {"complete": 0, "total": 0},
-            "expert": {"complete": 0, "total": 0}, "master": {"complete": 0, "total": 0},
-            "legendary": {"complete": 0, "total": 0}}
-    # Count Completion data
-    for shout in allShouts:
-        for word in shout["words"]:
-            for difficulty in word["completion"]:
-                if(shout["words"][shout["words"].index(word)]["completion"][difficulty]):
-                    data["sources"][shout.source][difficulty]["complete"] += 1
-                data["sources"][shout.source][difficulty]["total"] += 1
-    return render(request, "skyrimseShouts.html", {'data': data})
+    data = generateData(obj=Shout, objDir="skyrimse/static/json/shouts", 
+        objStr="Shouts", category="words")
+    return render(request, 'skyrimseOverview.html', {'data': data})
 
 def shoutsLoad(request):
     # Pull data from JSON file
@@ -682,34 +681,9 @@ def learnEnchantment(request):
 ##### Ingredients Related #####
 ###############################
 def ingredients(request):
-    # Pull all the ingredients, ingredient's sources, and ingredients's effects
-    allIngredients = Ingredient.objects.all()
-    allSources = set([i.source for i in allIngredients])
-    # Dynamically load quest sources
-    ingredientFiles = [f for f in os.listdir('skyrimse/static/json/ingredients')]
-    data = {"counts": {}, "sources": {}, "effects": {}}
-    for i in ingredientFiles:
-        source = i.replace("Ingredients.json", "")
-        data["counts"][source] = len(Ingredient.objects(source=source))
-    for ingredient in allIngredients:
-        if(not data["sources"].get(ingredient.source)):
-            data["sources"][ingredient.source] = {
-                "novice": {"learned": 0, "total": 0}, "apprentice": {"learned": 0, "total": 0}, 
-                "adept": {"learned": 0, "total": 0}, "expert": {"learned": 0, "total": 0}, 
-                "master": {"learned": 0, "total": 0}, "legendary": {"learned": 0, "total": 0}}
-        for effect in ingredient.effects:
-            effectIndex = ingredient["effects"].index(effect)
-            effectKnown = False
-            for difficulty in effect.completion:
-                if(ingredient["effects"][effectIndex]["completion"][difficulty] > 0):
-                    data["sources"][ingredient.source][difficulty]["learned"] += 1
-                    effectKnown = True
-                data["sources"][ingredient.source][difficulty]["total"] += 1
-            if(effectKnown):
-                if(not data["effects"].get(effect.name)):
-                    data["effects"][effect.name] = ""
-                data["effects"][effect.name] += ", {}".format(ingredient.name)
-    return render(request, 'skyrimseIngredients.html', {'data': data})
+    data = generateData(obj=Ingredient, objDir="skyrimse/static/json/ingredients", 
+        objStr="Ingredients", category="effects")
+    return render(request, 'skyrimseOverview.html', {'data': data})
 
 def ingredientsLoad(request):
     # Pull data from JSON file
