@@ -22,6 +22,38 @@ def updateProgressCompletion(source, vanillaSection, modSection, progress):
         progress["completion"]["mod"] = (progress.collected.modTotal / progress.collectedTotal.modTotal) * 100
     progress.save()
 
+def generateData(obj, objDir, objStr, category):
+    # Pull all the Objects
+    allOBj = obj.objects.all()
+    # Dynamically load quest sources
+    objFiles = [f for f in os.listdir(objDir)]
+    data = {"type": objStr, "counts": {},"load": "load{}".format(objStr), "progress": []}
+    allNames = set()
+    for f in objFiles:
+        source = f.replace("{}.json".format(objStr), "")
+        data["counts"][source] = len(obj.objects(source=source))
+    data["allLoaded"] = False if False in [data["counts"][source] > 0 for source in data["counts"]] else True
+    # Load Character Completion Data
+    for doc in Progress.objects.all():
+        difficulty = doc.difficulty
+        stats = {"difficulty": difficulty, "complete": 0,"total": 0, 
+            "target": "collapse{}".format(difficulty), "sources": {}}
+        for o in allOBj:
+            source, categ = o["source"], o[category]
+            if(not stats["sources"].get(source)):
+                stats["sources"][source] = {}
+            if(not stats["sources"][source].get(categ)):
+                stats["sources"][source][categ] = {"complete": 0, "total": 0}
+            if(o["completion"][difficulty] > 0):
+                stats["sources"][source][categ]["complete"] += 1
+                stats["complete"] += 1
+            stats["sources"][source][categ]["total"] += 1
+            stats["total"] += 1
+            allNames.add(o.name)
+        data["progress"].append(stats)
+        data["all"] = sorted(allNames)
+    return data
+
 #####################
 ##### Home Page #####
 #####################
@@ -252,30 +284,9 @@ def levelProgress(request):
 ##### Quests Related #####
 ##########################
 def quests(request):
-    # Pull all the quests, quest's cources, and quest's questlines
-    allQuests = Quest.objects.all()
-    allSources = set([q.source for q in allQuests])
-    allQuestLines = set([q.questLine for q in allQuests])
-    # Dynamically load quest sources
-    questFiles = list(filter(lambda x: "Quests" in x, [f for f in os.listdir('skyrimse/static/json/quests/')]))
-    data = {"counts": {}, "sources": {}}
-    for f in questFiles:
-        source = f.replace("Quests.json", "")
-        data["counts"][source] = len(Quest.objects(source=source))
-    # Sort questlines into sources, and get counts per difficulty per questline
-    for quest in allQuests:
-        if(not data["sources"].get(quest.source)):
-            data["sources"][quest.source] = {}
-        if(not data["sources"][quest.source].get(quest.questLine)):
-            data["sources"][quest.source][quest.questLine] = {
-                "novice": {"complete": 0, "total": 0}, "apprentice": {"complete": 0, "total": 0}, 
-                "adept": {"complete": 0, "total": 0}, "expert": {"complete": 0, "total": 0}, 
-                "master": {"complete": 0, "total": 0}, "legendary": {"complete": 0, "total": 0}}
-        for difficulty in quest["completion"]:
-            if(quest["completion"][difficulty] > 0):
-                data["sources"][quest.source][quest.questLine][difficulty]["complete"] += 1
-            data["sources"][quest.source][quest.questLine][difficulty]["total"] += 1
-    return render(request, "skyrimseQuests.html", {'data': data})
+    data = generateData(obj=Quest, objDir="skyrimse/static/json/quests", 
+        objStr="Quests", category="questLine")
+    return render(request, "skyrimseOverview.html", {'data': data})
 
 def questsLoad(request):
     # Pull data from JSON file
@@ -339,30 +350,9 @@ def completeQuest(request):
 ##### Perk Related #####
 ########################
 def perks(request):
-    # Pull all the questsallPerks, quest's cources, and quest's questlines
-    allPerks = Perk.objects.all()   
-    allSources = set([p.source for p in allPerks])
-    allSkills = set([p.skill for p in allPerks])
-    # Dynamically load quest sources
-    perkFiles = list(filter(lambda x: "Perks" in x, [f for f in os.listdir('skyrimse/static/json/perks/')]))
-    data = {"counts": {}, "skills": {}}
-    for p in perkFiles:
-        source = p.replace("Perks.json", "")
-        data["counts"][source] = len(Perk.objects(source=source))
-    # Sort skills into sources, and get counts per difficulty per questline
-    for perk in allPerks:
-        if(not data["skills"].get(perk.skill)):
-            data["skills"][perk.skill] = {}
-        if(not data["skills"][perk.skill].get(perk.source)):
-            data["skills"][perk.skill][perk.source] = {
-                "novice": {"complete": 0, "total": 0}, "apprentice": {"complete": 0, "total": 0}, 
-                "adept": {"complete": 0, "total": 0}, "expert": {"complete": 0, "total": 0}, 
-                "master": {"complete": 0, "total": 0}, "legendary": {"complete": 0, "total": 0}}
-        for difficulty in perk["completion"]:
-            if(perk["completion"][difficulty] > 0):
-                data["skills"][perk.skill][perk.source][difficulty]["complete"] += 1
-            data["skills"][perk.skill][perk.source][difficulty]["total"] += 1
-    return render(request, "skyrimsePerks.html", {'data': data})
+    data = generateData(obj=Perk, objDir="skyrimse/static/json/perks", 
+        objStr="Perks", category="skill")
+    return render(request, "skyrimseOverview.html", {'data': data})
 
 def perksLoad(request):
     # Pull data from JSON file
@@ -510,28 +500,9 @@ def learnWord(request):
 ##### Location Related #####
 ############################
 def locations(request):
-    # Pull all the quests, quest's cources, and quest's questlines
-    allLocations = Location.objects.all()
-    allSources = set([s.source for s in allLocations])
-    # Dynamically load quest sources
-    locationFiles = list(filter(lambda x: "Locations" in x, [f for f in os.listdir('skyrimse/static/json/locations')]))
-    data = {"counts": {}, "sources": {}}
-    for f in locationFiles:
-        source = f.replace("Locations.json", "")
-        data["counts"][source] = len(Location.objects(source=source))
-    # Start completion data
-    for source in allSources:
-        data["sources"][source] = {"novice": {"complete": 0, "total": 0}, 
-            "apprentice": {"complete": 0, "total": 0}, "adept": {"complete": 0, "total": 0},
-            "expert": {"complete": 0, "total": 0}, "master": {"complete": 0, "total": 0},
-            "legendary": {"complete": 0, "total": 0}}
-    # Count Completion data
-    for location in allLocations:
-        for difficulty in location["completion"]:
-            if(location["completion"][difficulty]):
-                data["sources"][location.source][difficulty]["complete"] += 1
-            data["sources"][location.source][difficulty]["total"] += 1
-    return render(request, 'skyrimseLocations.html', {'data': data})
+    data = generateData(obj=Location, objDir="skyrimse/static/json/locations", 
+        objStr="Locations", category="locationType")
+    return render(request, 'skyrimseOverview.html', {'data': data})
 
 def locationsLoad(request):
     # Pull data from JSON file
@@ -592,33 +563,9 @@ def visitLocation(request):
 ##### Spell Related #####
 #########################
 def spells(request):
-    # Pull all the spells, spell's cources, and quest's questlines
-    allSpells = Spell.objects.all()
-    allSources = set([s.source for s in allSpells])
-    allSchools = set([s.school for s in allSpells])
-    # Dynamically load quest sources
-    spellFiles = list(filter(lambda x: "Spells" in x, [f for f in os.listdir('skyrimse/static/json/spells')]))
-    data = {"counts": {}, "schools": {}}
-    for s in spellFiles:
-        source = s.replace("Spells.json", "")
-        data["counts"][source] = len(Spell.objects(source=source))
-    # Start Spell Completion Data
-    for school in allSchools:
-        data["schools"][school] = {}
-        for spell in allSpells:
-            if(spell.school not in data["schools"][school] and spell.school == school):
-                data["schools"][school][spell.source] = {"novice": {"learned": 0, "total": 0}, 
-                    "apprentice": {"learned": 0, "total": 0}, "adept": {"learned": 0, "total": 0}, 
-                    "expert": {"learned": 0, "total": 0}, "master": {"learned": 0, "total": 0}, 
-                    "legendary": {"learned": 0, "total": 0}}
-    # Finish Spell Data
-    for spell in allSpells:
-        for difficulty in spell.completion:
-            if(spell["completion"][difficulty]):
-                data["schools"][spell.school][spell.source][difficulty]["learned"] += 1
-            data["schools"][spell.school][spell.source][difficulty]["total"] += 1
-
-    return render(request, 'skyrimseSpells.html', {'data': data})
+    data = generateData(obj=Spell, objDir="skyrimse/static/json/spells", 
+        objStr="Spells", category="school")
+    return render(request, 'skyrimseOverview.html', {'data': data})
 
 def spellsLoad(request):
     # Pull data from JSON file
@@ -676,33 +623,9 @@ def learnSpell(request):
 ##### Enchantment Related #####
 ###############################
 def enchantments(request):
-    # Pull all the enchantments, enchantment's sources, and enchantment's types
-    allEnchantments = Enchantment.objects.all()
-    allSources = set([e.source for e in allEnchantments])
-    allTypes = set([e.enchantmentType for e in allEnchantments])
-    # Dynamically load quest sources
-    enchantmentFiles = [f for f in os.listdir('skyrimse/static/json/enchantments')]
-    data = {"counts": {}, "types": {}}
-    for e in enchantmentFiles:
-        source = e.replace("Enchantments.json", "")
-        data["counts"][source] = len(Enchantment.objects(source=source))
-    # Start the data
-    for enchantment in allEnchantments:
-        # Check if type exists
-        if(not data["types"].get(enchantment.enchantmentType)):
-            data["types"][enchantment.enchantmentType] = {}
-        # Check if source in type exists
-        if(not data["types"][enchantment.enchantmentType].get(enchantment.source)):
-            data["types"][enchantment.enchantmentType][enchantment.source] = {
-                "novice": {"learned": 0, "total": 0}, "apprentice": {"learned": 0, "total": 0}, 
-                "adept": {"learned": 0, "total": 0}, "expert": {"learned": 0, "total": 0}, 
-                "master": {"learned": 0, "total": 0}, "legendary": {"learned": 0, "total": 0}}
-        # Check if complete per difficulty
-        for difficulty in enchantment.completion:
-            if(enchantment["completion"][difficulty] > 0):
-                data["types"][enchantment.enchantmentType][enchantment.source][difficulty]["learned"] += 1
-            data["types"][enchantment.enchantmentType][enchantment.source][difficulty]["total"] += 1
-    return render(request, 'skyrimseEnchantments.html', {'data': data})
+    data = generateData(obj=Enchantment, objDir="skyrimse/static/json/enchantments", 
+        objStr="Enchantments", category="enchantmentType")
+    return render(request, 'skyrimseOverview.html', {'data': data})
 
 def enchantmentsLoad(request):
     # Pull data from JSON file
@@ -860,30 +783,9 @@ def learnEffect(request):
 ##### Weapon Related #####
 ##########################
 def weapons(request):
-    # Pull all the ingredients, ingredient's sources, and ingredients's effects
-    allWeapons = Weapon.objects.all()
-    allSources = set([w.source for w in allWeapons])
-    allTypes = set([w.weaponType for w in allWeapons])
-    # Dynamically load quest sources
-    weaponFiles = [w for w in os.listdir('skyrimse/static/json/weapons')]
-    data = {"counts": {}, "types": {}}
-    for w in weaponFiles:
-        source = w.replace("Weapons.json", "")
-        data["counts"][source] = len(Weapon.objects(source=source))
-    # Load weapon data
-    for weapon in allWeapons:
-        if(not data["types"].get(weapon.weaponType)):
-            data["types"][weapon.weaponType] = {}
-        if(not data["types"][weapon.weaponType].get(weapon.source)):
-            data["types"][weapon.weaponType][weapon.source] = {
-                "novice": {"collected": 0, "total": 0}, "apprentice": {"collected": 0, "total": 0}, 
-                "adept": {"collected": 0, "total": 0}, "expert": {"collected": 0, "total": 0}, 
-                "master": {"collected": 0, "total": 0}, "legendary": {"collected": 0, "total": 0}}
-        for difficulty in weapon.completion:
-            if(weapon["completion"][difficulty] > 0):
-                data["types"][weapon.weaponType][weapon.source][difficulty]["collected"] += 1
-            data["types"][weapon.weaponType][weapon.source][difficulty]["total"] += 1
-    return render(request, "skyrimseWeapons.html", {'data': data})
+    data = generateData(obj=Weapon, objDir="skyrimse/static/json/weapons", 
+        objStr="Weapons", category="weaponType")
+    return render(request, 'skyrimseOverview.html', {'data': data})
 
 def weaponsLoad(request):
     # Pull data from JSON file
@@ -943,30 +845,9 @@ def collectWeapon(request):
 ##### Armor Related #####
 #########################
 def armors(request):
-    # Pull all the ingredients, ingredient's sources, and ingredients's effects
-    allArmors = Armor.objects.all()
-    allSources = set([a.source for a in allArmors])
-    allTypes = set([a.armorType for a in allArmors])
-    # Dynamically load quest sources
-    armorFiles = [a for a in os.listdir('skyrimse/static/json/armors')]
-    data = {"counts": {}, "types": {}}
-    for a in armorFiles:
-        source = a.replace("Armors.json", "")
-        data["counts"][source] = len(Armor.objects(source=source))
-    # Load weapon data
-    for armor in allArmors:
-        if(not data["types"].get(armor.armorType)):
-            data["types"][armor.armorType] = {}
-        if(not data["types"][armor.armorType].get(armor.source)):
-            data["types"][armor.armorType][armor.source] = {
-                "novice": {"collected": 0, "total": 0}, "apprentice": {"collected": 0, "total": 0}, 
-                "adept": {"collected": 0, "total": 0}, "expert": {"collected": 0, "total": 0}, 
-                "master": {"collected": 0, "total": 0}, "legendary": {"collected": 0, "total": 0}}
-        for difficulty in armor.completion:
-            if(armor["completion"][difficulty] > 0):
-                data["types"][armor.armorType][armor.source][difficulty]["collected"] += 1
-            data["types"][armor.armorType][armor.source][difficulty]["total"] += 1
-    return render(request, "skyrimseArmors.html", {'data': data})
+    data = generateData(obj=Armor, objDir="skyrimse/static/json/armors", 
+        objStr="Armors", category="armorType")
+    return render(request, 'skyrimseOverview.html', {'data': data})
 
 def armorsLoad(request):
     # Pull data from JSON file
@@ -1026,30 +907,9 @@ def collectArmor(request):
 ##### Jewelry Related #####
 ###########################
 def jewelry(request):
-    # Pull all the jewelry and jewelry's sources
-    allJewelry = Jewelry.objects.all()
-    allSources = set([j.source for j in allJewelry])
-    allTypes = set([j.jewelryType for j in allJewelry])
-    # Dynamically load quest sources
-    jewelryFiles = [j for j in os.listdir('skyrimse/static/json/jewelry')]
-    data = {"counts": {}, "types": {}}
-    for j in jewelryFiles:
-        source = j.replace("Jewelry.json", "")
-        data["counts"][source] = len(Jewelry.objects(source=source))
-    # Load weapon data
-    for jewelry in allJewelry:
-        if(not data["types"].get(jewelry.jewelryType)):
-            data["types"][jewelry.jewelryType] = {}
-        if(not data["types"][jewelry.jewelryType].get(jewelry.source)):
-            data["types"][jewelry.jewelryType][jewelry.source] = {
-                "novice": {"collected": 0, "total": 0}, "apprentice": {"collected": 0, "total": 0}, 
-                "adept": {"collected": 0, "total": 0}, "expert": {"collected": 0, "total": 0}, 
-                "master": {"collected": 0, "total": 0}, "legendary": {"collected": 0, "total": 0}}
-        for difficulty in jewelry.completion:
-            if(jewelry["completion"][difficulty] > 0):
-                data["types"][jewelry.jewelryType][jewelry.source][difficulty]["collected"] += 1
-            data["types"][jewelry.jewelryType][jewelry.source][difficulty]["total"] += 1
-    return render(request, "skyrimseJewelry.html", {'data': data})
+    data = generateData(obj=Jewelry, objDir="skyrimse/static/json/jewelry", 
+        objStr="Jewelry", category="jewelryType")
+    return render(request, 'skyrimseOverview.html', {'data': data})
 
 def jewelryLoad(request):
     # Pull data from JSON file
@@ -1109,32 +969,9 @@ def collectJewelry(request):
 ##### Book Related #####
 ########################
 def books(request):
-    # Pull all the books and book's sources
-    allBooks = Book.objects.all()
-    allSources = set([b.source for b in allBooks])
-    allTypes = set([b.bookType for b in allBooks])
-    # Dynamically load quest sources
-    bookFiles = [b for b in os.listdir('skyrimse/static/json/books')]
-    data = {"counts": {}, "types": {}, "startsWith": ""}
-    for b in bookFiles:
-        source = b.replace("Books.json", "")
-        data["counts"][source] = len(Book.objects(source=source))
-    for book in allBooks:
-        if(book.startsWith not in data["startsWith"]):
-            data["startsWith"] += book.startsWith
-        if(not data["types"].get(book.bookType)):
-            data["types"][book.bookType] = {}
-        if(not data["types"][book.bookType].get(book.source)):
-            data["types"][book.bookType][book.source] = {
-                "novice": {"read": 0, "total": 0}, "apprentice": {"read": 0, "total": 0}, 
-                "adept": {"read": 0, "total": 0}, "expert": {"read": 0, "total": 0}, 
-                "master": {"read": 0, "total": 0}, "legendary": {"read": 0, "total": 0}}
-        for difficulty in book.completion:
-            if(book["completion"][difficulty] > 0):
-                data["types"][book.bookType][book.source][difficulty]["read"] += 1
-            data["types"][book.bookType][book.source][difficulty]["total"] += 1
-    data["startsWith"] = "".join(sorted(data["startsWith"]))
-    return render(request, 'skyrimseBooks.html', {'data': data})
+    data = generateData(obj=Book, objDir="skyrimse/static/json/books", 
+        objStr="Books", category="bookType")
+    return render(request, 'skyrimseOverview.html', {'data': data})
 
 def booksLoad(request):
     # Pull data from JSON file
@@ -1191,29 +1028,9 @@ def readBook(request):
 ##### Key Related #####
 #######################
 def keys(request):
-    # Pull all the books and book's sources
-    allKeys = Key.objects.all()
-    allSources = set([k.source for k in allKeys])
-    allLocations = set([k.location for k in allKeys])
-    # Dynamically load quest sources
-    keyFiles = [k for k in os.listdir('skyrimse/static/json/keys')]
-    data = {"counts": {}, "locations": {}}
-    for k in keyFiles:
-        source = k.replace("Keys.json", "")
-        data["counts"][source] = len(Key.objects(source=source))
-    for key in allKeys:
-        if(not data["locations"].get(key.location)):
-            data["locations"][key.location] = {}
-        if(not data["locations"][key.location].get(key.source)):
-            data["locations"][key.location][key.source] = {
-                "novice": {"collected": 0, "total": 0}, "apprentice": {"collected": 0, "total": 0}, 
-                "adept": {"collected": 0, "total": 0}, "expert": {"collected": 0, "total": 0}, 
-                "master": {"collected": 0, "total": 0}, "legendary": {"collected": 0, "total": 0}}
-        for difficulty in key["completion"]:
-            if(key["completion"][difficulty] > 0):
-                data["locations"][key.location][key.source][difficulty]["collected"] += 1
-            data["locations"][key.location][key.source][difficulty]["total"] += 1
-    return render(request, 'skyrimseKeys.html', {'data': data})
+    data = generateData(obj=Key, objDir="skyrimse/static/json/keys", 
+        objStr="Keys", category="location")
+    return render(request, 'skyrimseOverview.html', {'data': data})
 
 def keysLoad(request):
     # Pull data from JSON file
@@ -1269,30 +1086,9 @@ def collectKey(request):
 ##### Collectibles Related #####
 ################################
 def collectibles(request):
-    # Pull all the books and book's sources
-    allCollectibles = Collectible.objects.all()
-    allSources = set([c.source for c in allCollectibles])
-    allTypes = set([c.collectibleType for c in allCollectibles])
-    # Dynamically load quest sources
-    collectibleFiles = [c for c in os.listdir('skyrimse/static/json/collectibles')]
-    data = {"counts": {}, "types": {}}
-    for c in collectibleFiles:
-        source = c.replace("Collectibles.json", "")
-        data["counts"][source] = len(Collectible.objects(source=source))
-    # Load data
-    for collectible in allCollectibles:
-        if(not data["types"].get(collectible.collectibleType)):
-            data["types"][collectible.collectibleType] = {}
-        if(not data["types"][collectible.collectibleType].get(collectible.source)):
-            data["types"][collectible.collectibleType][collectible.source] = {
-                "novice": {"collected": 0, "total": 0}, "apprentice": {"collected": 0, "total": 0}, 
-                "adept": {"collected": 0, "total": 0}, "expert": {"collected": 0, "total": 0}, 
-                "master": {"collected": 0, "total": 0}, "legendary": {"collected": 0, "total": 0}}
-        for difficulty in collectible["completion"]:
-            if(collectible["completion"][difficulty] > 0):
-                data["types"][collectible.collectibleType][collectible.source][difficulty]["collected"] += 1
-            data["types"][collectible.collectibleType][collectible.source][difficulty]["total"] += 1
-    return render(request, 'skyrimseCollectibles.html', {'data': data})
+    data = generateData(obj=Collectible, objDir="skyrimse/static/json/collectibles", 
+        objStr="Collectibles", category="collectibleType")
+    return render(request, 'skyrimseOverview.html', {'data': data})
 
 def collectiblesLoad(request):
     # Pull data from JSON file
@@ -1354,3 +1150,7 @@ def collectibleNotes(request):
             collectible.save()
             return redirect("/skyrimse/collectibles/{source}-{type}".format(source=collectible.source, type=collectible.collectibleType))
     return redirect("/skyrimse/collectibles/")
+
+def testing(request):
+    data = {}
+    return render(request, 'skyrimseTesting.html', {'data': data})

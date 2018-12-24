@@ -19,7 +19,7 @@ urlpatterns = [
     url(r"^quests/completeQuest=\w+", views.completeQuest),
     # Perk Related
     url(r"^perks/$", views.perks),
-    url(r"^perks/perksLoad=\w+", views.perksLoad),
+    url(r"^perks/loadPerks=\w+", views.perksLoad),
     url(r"^perks/\w+-\w+", views.perkDetail),
     url(r"^perks/learnPerk=\w+", views.learnPerk),
     # Shout Related
@@ -29,53 +29,55 @@ urlpatterns = [
     url(r"^shouts/\w+", views.shoutsDetail),
     # Location Related
     url(r"^locations/$", views.locations),
-    url(r"^locations/locationsLoad=\w+", views.locationsLoad),
+    url(r"^locations/loadLocations=\w+", views.locationsLoad),
     url(r"^locations/visitLocation=\w+", views.visitLocation),
     url(r"^locations/\w+", views.locationsDetail),
     # Spells Related
     url(r"^spells/$", views.spells),
-    url(r"^spells/spellsLoad=\w+", views.spellsLoad),
+    url(r"^spells/loadSpells=\w+", views.spellsLoad),
     url(r"^spells/learnSpell=\w+", views.learnSpell), 
     url(r"^spells/\w+-\w+", views.spellSchool),
     # Enchantment Related
     url(r"^enchantments/$", views.enchantments),
-    url(r"^enchantments/enchantmentsLoad=\w+", views.enchantmentsLoad),
+    url(r"^enchantments/loadEnchantments=\w+", views.enchantmentsLoad),
     url(r"^enchantments/learnEnchantment=\w+", views.learnEnchantment),
     url(r"^enchantments/\w+-\w+", views.enchantmentType),
     # Ingredients Related
     url(r"^ingredients/$", views.ingredients),
-    url(r"^ingredients/ingredientsLoad=\w+", views.ingredientsLoad),
+    url(r"^ingredients/loadIngredients=\w+", views.ingredientsLoad),
     url(r"^ingredients/learnEffect=\w+", views.learnEffect),
     url(r"^ingredients/\w+", views.ingredientsDetail),
     # Weapon Related
     url(r"^weapons/$", views.weapons),
-    url(r"^weapons/weaponsLoad=\w+", views.weaponsLoad),
+    url(r"^weapons/loadWeapons=\w+", views.weaponsLoad),
     url(r"^weapons/collectWeapon=\w+", views.collectWeapon),
     url(r"^weapons/\w+-\w+", views.weaponType),
     # Armor Related
     url(r"^armors/$", views.armors),
-    url(r"^armors/armorsLoad=\w+", views.armorsLoad),
+    url(r"^armors/loadArmors=\w+", views.armorsLoad),
     url(r"^armors/collectArmor=\w+", views.collectArmor),
     url(r"^armors/\w+-\w+", views.armorType),
     # Jewelry Related
     url(r"^jewelry/$", views.jewelry),
-    url(r"^jewelry/jewelryLoad=\w+", views.jewelryLoad),
+    url(r"^jewelry/loadJewelry=\w+", views.jewelryLoad),
     url(r"^jewelry/collectJewelry=\w+", views.collectJewelry),
     url(r"^jewelry/\w+-\w+", views.jewelryType),
     # Books Related
     url(r"^books/$", views.books),
-    url(r"^books/booksLoad=\w+", views.booksLoad),
+    url(r"^books/loadBooks=\w+", views.booksLoad),
     url(r"^books/readBook=\w+", views.readBook),
     url(r"^books/[0A-Z]$", views.booksList),
     # Keys Related
     url(r"^keys/$", views.keys),
-    url(r"^keys/keysLoad=\w+", views.keysLoad),
+    url(r"^keys/loadKeys=\w+", views.keysLoad),
     url(r"^keys/collectKey=\w+", views.collectKey),
     url(r"^keys/\w+-\w+", views.keyLocations),
     # Collectibles Related
     url(r"^collectibles/$", views.collectibles),
-    url(r"^collectibles/collectiblesLoad=\w+", views.collectiblesLoad),
+    url(r"^collectibles/loadCollectibles=\w+", views.collectiblesLoad),
     url(r"^collectibles/collectCollectible=\w+", views.collectCollectible),
     url(r"^collectibles/\w+-\w+", views.collectibleType),
-    url(r"^collectibleNotes=\w+", views.collectibleNotes)
+    url(r"^collectibleNotes=\w+", views.collectibleNotes),
+    # Testing Area
+    url(r"^testing/$", views.testing)
 ]
