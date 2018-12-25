@@ -64,6 +64,23 @@ class Collected(EmbeddedDocument):
     total = fields.IntField(min_value=0)
     modTotal = fields.IntField(min_value=0)
 
+    def __str__(self):
+        return dumps({"quests": {"vanilla": self.quests, "mod": self.modQuests},
+            "perks": {"vanilla": self.perks, "mod": self.modPerks},
+            "words": {"vanilla": self.words, "mod": self.modWords},
+            "locations": {"vanilla": self.locations, "mod": self.modLocations},
+            "spells": {"vanilla": self.spells, "mod": self.modSpells},
+            "enchantments": {"vanilla": self.enchantments, "mod": self.modEnchantments},
+            "ingredients": {"vanilla": self.ingredients, "mod": self.modIngredients},
+            "weapons": {"vanilla": self.weapons, "mod": self.modWeapons},
+            "armors": {"vanilla": self.armors, "mod": self.modArmors},
+            "jewelry": {"vanilla": self.jewelry, "mod": self.modJewelry},
+            "books": {"vanilla": self.books, "mod": self.modBooks},
+            "keys": {"vanilla": self.keys, "mod": self.modKeys},
+            "collectibles": {"vanilla": self.collectibles, "mod": self.modCollectibles},
+            "total": {"vanilla": self.total, "mod": self.modTotal}}, indent=4)
+    
+
 class Progress(Document):
     created = fields.StringField(max_length=50)
     difficulty = fields.StringField(max_length=10)
@@ -389,3 +406,29 @@ class Collectible(Document):
          'weights': {'name': 10, 'source': 2, 'notes': 2}
         }
     ]}
+
+##########################
+##### Backup Related #####
+##########################
+class Backup(Document):
+    ts = fields.StringField(max_length=50)
+    difficulty = fields.StringField(max_length=10)
+    level = fields.IntField(min_value=0)
+    health = fields.IntField(min_value=0)
+    magicka = fields.IntField(min_value=0)
+    stamina = fields.IntField(min_value=0)
+    skills = fields.EmbeddedDocumentField(Skills)
+    completion = fields.EmbeddedDocumentField(Completion)
+    quests = fields.DictField()
+    perks = fields.DictField()
+    words = fields.DictField()
+    locations = fields.DictField()
+    spells = fields.DictField()
+    enchantments = fields.DictField()
+    ingredients = fields.DictField()
+    weapons = fields.DictField()
+    armors = fields.DictField()
+    jewelry = fields.DictField()
+    books = fields.DictField()
+    keys = fields.DictField()
+    collectibles = fields.DictField()

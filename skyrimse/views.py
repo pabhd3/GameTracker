@@ -7,7 +7,7 @@ from mongoengine.base.datastructures import EmbeddedDocumentList
 from datetime import datetime
 from urllib.parse import unquote
 from .customScripts import plotRadars
-from json import load, loads, dumps
+from json import load, loads, dumps, dump
 import os
 
 ##########################
@@ -105,6 +105,58 @@ def generateDetails(obj, objClass, request, embedded):
             data["embedded"].append(embeddedTemp)
     return data
 
+def createBackup(difficulty):
+    print("Made it into createBackup()")
+    # Pull Progress Object Data
+    progress = Progress.objects(difficulty=difficulty).first()
+    if(not Backup.objects(difficulty=difficulty).first()):
+        backup = Backup()
+    else:
+        backup = Backup.objects(difficulty=difficulty).first()
+    backup["ts"] = datetime.strftime(datetime.now(), "%A %B %d, %Y %H:%M:%S:%f %Z")
+    backup["difficulty"] = difficulty
+    backup["level"] = progress["level"]
+    backup["health"] = progress["health"]
+    backup["magicka"] = progress["magicka"]
+    backup["stamina"] = progress["stamina"]
+    backup["skills"] = progress["skills"]
+    backup["completion"] = progress["completion"]
+    for obj in [{"key": "quests", "object": Quest}, {"key": "perks", "object": Perk}, {"key": "locations", "object": Location}, 
+        {"key": "spells", "object": Spell}, {"key": "enchantments", "object": Enchantment}, {"key": "weapons", "object": Weapon}, 
+        {"key": "armors", "object": Armor}, {"key": "jewelry", "object": Jewelry}, {"key": "books", "object": Book}, 
+        {"key": "keys", "object": Key}, {"key": "collectibles", "object": Collectible}, {"key": "words", "object": Shout},
+        {"key": "ingredients", "object": Ingredient}]:
+        backup[obj["key"]] = {"sources": {}, "count": 0, "modCount": 0}
+        for o in obj["object"].objects.all():
+            if(o["source"] in ("vanilla", "dragonborn", "dawnguard", "hearthfire")):
+                backup[obj["key"]]["count"] += 1
+            else:
+                backup[obj["key"]]["modCount"] += 1
+            if(obj["key"] == "words"):
+                tempWord = {"shout": o["name"], "words": []}
+                for word in o["words"]:
+                    if(word["completion"][difficulty] > 0):
+                        if(not backup[obj["key"]]["sources"].get(o["source"])):
+                            backup[obj["key"]]["sources"][o["source"]] = []
+                        tempWord["words"].append(word["translation"])
+                if(tempWord["words"]):
+                    backup[obj["key"]]["sources"][o["source"]].append(tempWord)
+            elif(obj["key"] == "ingredients"):
+                tempIngredient = {"ingredient": o["name"], "effects": []}
+                for effect in o["effects"]:
+                    if(effect["completion"][difficulty] > 0):
+                        if(not backup[obj["key"]]["sources"].get(o["source"])):
+                            backup[obj["key"]]["sources"][o["source"]] = []
+                        tempIngredient["effects"].append(effect["name"])
+                if(tempIngredient["effects"]):
+                    backup[obj["key"]]["sources"][o["source"]].append(tempIngredient)
+            else:
+                if(o["completion"][difficulty] > 0):
+                    if(not backup[obj["key"]]["sources"].get(o["source"])):
+                        backup[obj["key"]]["sources"][o["source"]] = []
+                    backup[obj["key"]]["sources"][o["source"]].append(o["name"])
+    backup.save()
+
 #####################
 ##### Home Page #####
 #####################
@@ -117,13 +169,17 @@ def index(request):
 def progress(request):
     # Pull list of progress objects
     docs = Progress.objects.all()
-    data = {"novice": None, "apprentice": None, "adept": None,
-            "expert": None, "master": None, "legendary": None}
+    data = {"novice": {"started": False}, "apprentice": {"started": False}, "adept": {"started": False},
+            "expert": {"started": False}, "master": {"started": False}, "legendary": {"started": False}}
     # Set whether an object exists
     for doc in docs:
-        data[doc.difficulty] = {"level": doc.level, "health": doc.health, 
+        data[doc.difficulty] = {"started": True, "level": doc.level, 
+            "health": doc.health, 
             "magicka": doc.magicka,"stamina": doc.stamina,
-            "completion": {"vanilla": doc.completion.vanilla, "mod": doc.completion.mod}}
+            "completion": {"vanilla": doc.completion.vanilla, 
+            "mod": doc.completion.mod, "lastBackup": None}}
+    for backup in Backup.objects.all():
+        data[backup.difficulty]["lastBackup"] = backup["ts"]
     return render(request, 'skyrimseProgress.html', {'data': data})
 
 def addDifficulty(request):
@@ -208,6 +264,8 @@ def addDifficulty(request):
         modBooks=modBookCount, keys=keyCount, modKeys=modKeyCount, collectibles=collectibleCount, 
         modCollectibles=modCollectibleCount,total=totalCount, modTotal=modTotalCount)
     progress.save()
+    # Create a Backup
+    createBackup(difficulty=difficulty)
     # Generate a Radar Graph for the progress
     skillLevels = {"Alchemy": 15, "Alteration": 15, "Archery": 15, "Block": 15, "Conjuration": 15, 
         "Destruction": 15, "Enchanting": 15, "Heavy Armor": 15, "Illusion": 15, "Light Armor": 15, 
@@ -874,6 +932,120 @@ def collectibleNotes(request):
             collectible.save()
             return redirect("/skyrimse/collectibles/{source}-{type}".format(source=collectible.source, type=collectible.collectibleType))
     return redirect("/skyrimse/collectibles/")
+
+##########################
+##### Backup Related #####
+##########################
+def backup(request):
+    # Pull difficulty to backup from request.path
+    createBackup(difficulty=request.path.split("backupProgress=")[1])
+    return redirect("/skyrimse/progress/")
+
+def loadBackup(request):
+    difficulty=request.path.split("loadBackup=")[1]
+    backup = Backup.objects(difficulty=difficulty).first()
+    if(Progress.objects(difficulty=difficulty).first()):
+        progress = Progress.objects(difficulty=difficulty).first()
+    else:
+        progress = Progress()
+        progress.created = ""
+        progress.collected = Collected()
+        progress.collectedTotal = Collected()
+        progress.completion = Completion()
+    # Update Progress Related
+    progress["difficulty"] = backup["difficulty"]
+    progress["level"] = backup["level"]
+    progress["health"] = backup["health"]
+    progress["magicka"] = backup["magicka"]
+    progress["stamina"] = backup["stamina"]
+    progress["skills"] = backup["skills"]
+    # Pull levels for new Radar Graph
+    skillLevels = {"Alchemy": progress.skills.alchemy.level, "Alteration": progress.skills.alteration.level, 
+        "Archery": progress.skills.archery.level, "Block": progress.skills.block.level, 
+        "Conjuration": progress.skills.conjuration.level, "Destruction": progress.skills.destruction.level, 
+        "Enchanting": progress.skills.enchanting.level, "Heavy Armor": progress.skills.heavyArmor.level, 
+        "Illusion": progress.skills.illusion.level, "Light Armor": progress.skills.lightArmor.level, 
+        "Lockpicking": progress.skills.lockpicking.level, "One-Handed": progress.skills.oneHanded.level, 
+        "Pickpocket": progress.skills.pickPocket.level, "Restoration": progress.skills.restoration.level, 
+        "Smithing": progress.skills.smithing.level, "Sneak": progress.skills.sneak.level, 
+        "Speech": progress.skills.speech.level, "Two-Handed": progress.skills.twoHanded.level}
+    plotRadars(values=skillLevels, difficulty=progress.difficulty)
+    # Update Tracked Objects
+    for obj in [{"key": "quests", "object": Quest, "mod": "modQuests"}, {"key": "perks", "object": Perk, "mod": "modPerks"}, 
+        {"key": "locations", "object": Location, "mod": "modLocations"}, {"key": "spells", "object": Spell, "mod": "modSpells"}, 
+        {"key": "enchantments", "object": Enchantment, "mod": "modEnchantments"}, {"key": "weapons", "object": Weapon, "mod": "modWeapons"}, 
+        {"key": "armors", "object": Armor, "mod": "modArmors"}, {"key": "jewelry", "object": Jewelry, "mod": "modJewelry"}, 
+        {"key": "books", "object": Book, "mod": "modBooks"}, {"key": "keys", "object": Key, "mod": "modKeys"}, 
+        {"key": "collectibles", "object": Collectible, "mod": "modCollectibles"}, {"key": "words", "object": Shout, "mod": "modWords"},
+        {"key": "ingredients", "object": Ingredient, "mod": "modIngredients"}]:
+        progress["collected"][obj["key"]] = 0
+        progress["collected"][obj["mod"]] = 0
+        progress["collectedTotal"][obj["key"]] = backup[obj["key"]]["count"]
+        progress["collectedTotal"][obj["mod"]] = backup[obj["key"]]["modCount"]
+        if(obj["key"] == "words"):
+            for temp in obj["object"].objects().all():
+                for word in temp["words"]:
+                    word["completion"][difficulty] = 0
+                temp.save()
+            for source in backup[obj["key"]]["sources"]:
+                for shout in backup[obj["key"]]["sources"][source]:
+                    temp = obj["object"].objects(name=shout["shout"], source=source).first()
+                    for word in shout["words"]:
+                        for tempWord in temp["words"]:
+                            if(word == tempWord["translation"]):
+                                temp["words"][temp["words"].index(tempWord)]["completion"][difficulty] = 1
+                                break
+                    temp.save()
+                    if(source in ("vanilla", "dragonborn", "dawnguard", "hearthfire")):
+                        progress["collected"][obj["key"]] += len(backup[obj["key"]]["sources"][source])
+                    else:
+                        progress["collected"][obj["mod"]] += len(backup[obj["key"]]["sources"][source])
+        elif(obj["key"] == "ingredients"):
+            for temp in obj["object"].objects().all():
+                for effect in temp["effects"]:
+                    effect["completion"][difficulty] = 0
+                temp.save()
+            for source in backup[obj["key"]]["sources"]:
+                for ingredient in backup[obj["key"]]["sources"][source]:
+                    temp = obj["object"].objects(name=ingredient["ingredient"], source=source).first()
+                    for effect in ingredient["effects"]:
+                        for tempEffect in temp["effects"]:
+                            if(effect == tempEffect["name"]):
+                                temp["effects"][temp["effects"].index(tempEffect)]["completion"][difficulty] = 1
+                                break
+                    temp.save()
+                    if(source in ("vanilla", "dragonborn", "dawnguard", "hearthfire")):
+                        progress["collected"][obj["key"]] += len(backup[obj["key"]]["sources"][source])
+                    else:
+                        progress["collected"][obj["mod"]] += len(backup[obj["key"]]["sources"][source])
+        else:
+            for temp in obj["object"].objects().all():
+                temp["completion"][difficulty] = 0
+                temp.save()
+            for source in backup[obj["key"]]["sources"]:
+                for name in backup[obj["key"]]["sources"][source]:
+                    temp = obj["object"].objects(name=name, source=source).first()
+                    temp["completion"][difficulty] = 1
+                    temp.save()
+                if(source in ("vanilla", "dragonborn", "dawnguard", "hearthfire")):
+                    progress["collected"][obj["key"]] += len(backup[obj["key"]]["sources"][source])
+                else:
+                    progress["collected"][obj["mod"]] += len(backup[obj["key"]]["sources"][source])
+    progress["collected"]["total"] = sum([progress["collected"]["quests"], progress["collected"]["perks"],
+        progress["collected"]["words"], progress["collected"]["locations"], progress["collected"]["spells"],
+        progress["collected"]["enchantments"], progress["collected"]["ingredients"], progress["collected"]["weapons"],
+        progress["collected"]["armors"], progress["collected"]["jewelry"], progress["collected"]["books"],
+        progress["collected"]["keys"], progress["collected"]["collectibles"]])
+    progress["collected"]["modTotal"] = sum([progress["collected"]["modQuests"], progress["collected"]["modPerks"],
+        progress["collected"]["modWords"], progress["collected"]["modLocations"], progress["collected"]["modSpells"],
+        progress["collected"]["modEnchantments"], progress["collected"]["modIngredients"], progress["collected"]["modWeapons"],
+        progress["collected"]["modArmors"], progress["collected"]["modJewelry"], progress["collected"]["modBooks"],
+        progress["collected"]["modKeys"], progress["collected"]["modCollectibles"]])
+    progress["completion"]["vanilla"] = (progress["collected"]["total"] / progress["collectedTotal"]["total"]) * 100
+    progress["completion"]["mod"] = (progress["collected"]["modTotal"] / progress["collectedTotal"]["modTotal"]) * 100
+    print(progress.collected)
+    progress.save()
+    return redirect("/skyrimse/progress/")
 
 def testing(request):
     data = {}

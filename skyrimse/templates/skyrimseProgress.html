@@ -17,12 +17,20 @@
         <td>
           <!-- Difficulty -->
           <b style="font-size:20px;">{{ difficulty }}</b>&nbsp;&nbsp;&nbsp;&nbsp;
-          {% if stats == None %}
+          {% if stats.started == False %}
             <!-- Create Button -->
             <input type="button" onclick="window.location.href='addDifficulty={{ difficulty }}'" value="Start {{ difficulty }}">
+            {% if stats.lastBackup != None %}
+              &nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="Load Backup" onclick="window.location.href='loadBackup={{ difficulty }}'">
+              <br>Last Backup: {{ stats.lastBackup }}
+            {% endif %}
           {% else %}
             <!-- Refresh Button -->
-            <input type="button" value="Refresh" onclick="window.location.href='refreshProgress={{ difficulty }}'" disabled><br><br>
+            <input type="button" value="Refresh" onclick="window.location.href='refreshProgress={{ difficulty }}'" disabled>&nbsp;&nbsp;&nbsp;&nbsp;
+            <!-- Backup Button -->
+            <input type="button" value="Backup" onclick="window.location.href='backupProgress={{ difficulty }}'">&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="button" value="Load Backup" onclick="window.location.href='loadBackup={{ difficulty }}'"><br>
+            Last Backup: {{ stats.lastBackup }}<br><br>
             <!-- Level & Health -->
             <div class="row">
               <div class="col">
