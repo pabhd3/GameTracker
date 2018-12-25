@@ -647,7 +647,7 @@ def spellSchool(request):
     # Start the data object
     data = {"source": source, "school": school, "spells": {}}
     # Load Spells into Data object
-    spellLevels = {"novice": 0, "apprentice": 25, "adept": 50, "expert": 75, "master": 100}
+    spellLevels = {"novice": 1, "apprentice": 11, "adept": 23, "expert": 35, "master": 90}
     for spell in allSpells:
         data["spells"][spell.name] = {"id": spell.id, "description": spell.description, "level": spellLevels[spell.level], 
             "completion": {"novice": {"skillLevel": docs["novice"], "learned": spell.completion.novice},
