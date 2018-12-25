@@ -6,13 +6,13 @@
 {% block content %}
   <!-- Display the basic quest info -->
   <div>
-    <h1>{{ data.jewelry.name }}</h1>
-    <h6>Jewelry Type: {{ data.jewelry.jewelryType }}</h6>
-    <h6>Source: {{ data.jewelry.source }}</h6>
+    <h1>{{ data.location.name }}</h1>
+    <h6>Location Type: {{ data.location.locationType }}</h6>
+    <h6>Source: {{ data.location.source }}</h6>
   </div>
   <!-- Link back to Quests Page -->
   <div style="padding-top:25px;">
-    <a href="/skyrimse/jewelry/">The Elder Scrolls V: Skyrim Special Edition (Jewelry Page)</a>
+    <a href="/skyrimse/locations/">The Elder Scrolls V: Skyrim Special Edition (Locations Page)</a>
   </div>
   <!-- Show Completion Data -->
   <div style="padding-top:25px;">
@@ -28,10 +28,10 @@
                   <div class="col">Difficulty not started</div>
                 {% elif data.quest.radiant %}
                   <div class="col">{{ stats.times }} times</div>
-                  <div class="col"><input type="submit" onclick="window.location.href='/skyrimse/jewelry/collectJewelry={{ data.jewelry.id }}&difficulty={{ difficulty }}'" value="Complete"></div>
+                  <div class="col"><input type="submit" onclick="window.location.href='/skyrimse/locations/visitLocation={{ data.location.id }}&difficulty={{ difficulty }}'" value="Complete"></div>
                 {% else %}
                   {% if stats.times == 0%}
-                    <div class="col"><input type="submit" onclick="window.location.href='/skyrimse/jewelry/collectJewelry={{ data.jewelry.id }}&difficulty={{ difficulty }}'" value="Complete"></div>
+                    <div class="col"><input type="submit" onclick="window.location.href='/skyrimse/locations/visitLocation={{ data.location.id }}&difficulty={{ difficulty }}'" value="Complete"></div>
                   {% else %}
                     <div class="col">Completed</div>
                   {% endif %}

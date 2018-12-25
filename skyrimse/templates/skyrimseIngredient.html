@@ -1,0 +1,42 @@
+<!-- Extending from base.html -->
+{% extends 'base.html' %}
+<!-- Used to load in static files -->
+{% load static %}
+
+{% block content %}
+  <!-- Display the basic quest info -->
+  <div>
+    <h1>{{ data.shout.name }}</h1>
+    <h6>Source: {{ data.shout.source }}</h6>
+  </div>
+  <!-- Link back to Quests Page -->
+  <div style="padding-top:25px;">
+    <a href="/skyrimse/ingredients/">The Elder Scrolls V: Skyrim Special Edition (Ingredients Page)</a>
+  </div>
+  <!-- Show Completion Data -->
+  <div style="padding-top:25px;">
+    <h3>Progress Data</h3>
+    <table border="1" width=100%>
+      <tr>
+        {% for item in data.embedded %}
+          <td>
+            <h5>{{ item.embeddedObj.name }}</h5>
+            {% for difficulty, stats in item.completion.items %}
+              <div class="row" style="padding:5px;">
+                <div class="col">{{ difficulty }}</div>
+                {% if stats.started == None %}
+                  <div class="col">Difficulty not started</div>
+                {% else %}
+                  {% if stats.times == 0%}
+                    <div class="col"><input type="button" onclick="window.location.href='/skyrimse/ingredients/learnEffect={{ data.ingredient.id }}&effect={{ item.embeddedObj.name }}&difficulty={{ difficulty }}'" value="Learn"></div>
+                  {% else %}
+                    <div class="col">Learned</div>
+                  {% endif %}
+                {% endif %}
+              </div>
+            {% endfor %}
+          </td>
+        {% endfor %}
+      </tr>
+    </table>
+{% endblock %}

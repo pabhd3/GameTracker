@@ -11,9 +11,9 @@
       <h4>{{ group }}</h4>
       <div class="row">
         {% for result in results %}
-          <div class="col-2" width="100%" style="padding:5px;">
+          <div class="col-2" width="100%" style="padding:10px;">
           <table border="1"></tr><td>
-            <a href="{{ result.url }}">{{ result.name }}</a>
+            <a href="{{ result.url }}">{{ result.name }} ({{ result.source }})</a>
           </td></tr></table>
           </div>
         {% endfor %}
