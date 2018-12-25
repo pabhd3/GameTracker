@@ -165,7 +165,7 @@ class Shout(Document):
 
     def __str__(self):
         data = {"name": self.name, "source": self.source, 
-            "description": self.description, "words": self.words}
+            "description": self.description}
         return dumps(data, indent=4)
 
     meta = {'indexes': [

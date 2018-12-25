@@ -1,0 +1,46 @@
+<!-- Extending from base.html -->
+{% extends 'base.html' %}
+<!-- Used to load in static files -->
+{% load static %}
+
+{% block content %}
+  <!-- Display the basic quest info -->
+  <div>
+    <h1>{{ data.enchantment.name }}</h1>
+    <h6>School: {{ data.enchantment.school }}</h6>
+    <h6>Source: {{ data.enchantment.source }}</h6>
+  </div>
+  <!-- Link back to Quests Page -->
+  <div style="padding-top:25px;">
+    <a href="/skyrimse/enchantments/">The Elder Scrolls V: Skyrim Special Edition (Enchantments Page)</a>
+  </div>
+  <!-- Show Completion Data -->
+  <div style="padding-top:25px;">
+    <h3>Progress Data</h3>
+    <table border="1" width=100%>
+      <tr><td>
+        <div class="row">
+          {% for difficulty, stats in data.completion.items %}
+            <div class="col-4">
+              <div class="row" style="padding:5px;">
+                <div class="col">{{ difficulty }}</div>
+                {% if stats.started == None %}
+                  <div class="col">Difficulty not started</div>
+                {% elif data.quest.radiant %}
+                  <div class="col">{{ stats.times }} times</div>
+                  <div class="col"><input type="submit" onclick="window.location.href='/skyrimse/enchantments/learnEnchantment={{ data.enchantment.id }}&difficulty={{ difficulty }}'" value="Complete"></div>
+                {% else %}
+                  {% if stats.times == 0%}
+                    <div class="col"><input type="submit" onclick="window.location.href='/skyrimse/enchantments/learnEnchantment={{ data.enchantment.id }}&difficulty={{ difficulty }}'" value="Complete"></div>
+                  {% else %}
+                    <div class="col">Completed</div>
+                  {% endif %}
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </td></tr>
+    </table>
+  </div>
+{% endblock %}

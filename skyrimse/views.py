@@ -5,6 +5,7 @@ from skyrimse.forms import *
 from mongoengine.context_managers import switch_db
 from mongoengine.base.datastructures import EmbeddedDocumentList
 from datetime import datetime
+from urllib.parse import unquote
 from .customScripts import plotRadars
 from json import load, loads, dumps
 import os
@@ -35,7 +36,8 @@ def generateData(obj, objDir, objStr, category):
         data["counts"][source] = len(obj.objects(source=source))
     # Determine if all the data is loaded and if we're dealing with an embeddedDocumentList
     data["allLoaded"] = False if False in [data["counts"][source] > 0 for source in data["counts"]] else True
-    data["category"] = True if isinstance(allOBj[0][category], EmbeddedDocumentList) else False
+    if(allOBj):
+        data["category"] = True if isinstance(allOBj[0][category], EmbeddedDocumentList) else False
     # Load Character Completion Data
     for doc in Progress.objects.all():
         difficulty = doc.difficulty
@@ -71,6 +73,36 @@ def generateData(obj, objDir, objStr, category):
         # Sort the names
         data["all"] = sorted(allNames)
         data["progress"].append(stats)
+    return data
+
+def generateDetails(obj, objClass, request, embedded):
+    # Pull quest name from the HTTP response.path
+    name = unquote(request.path.split("details/")[1])
+    temp = obj.objects(name=name).first()
+    docs = Progress.objects.all()
+    if(embedded == None):
+        data = {objClass: temp,
+            "completion": {"novice": {"times": temp.completion.novice, "started": None}, 
+                            "apprentice": {"times": temp.completion.apprentice, "started": None},
+                            "adept": {"times": temp.completion.adept, "started": None}, 
+                            "expert": {"times": temp.completion.expert, "started": None},
+                            "master": {"times": temp.completion.master, "started": None}, 
+                            "legendary": {"times": temp.completion.legendary, "started": None}}}
+        for doc in docs:
+            data["completion"][doc.difficulty]["started"] = True
+    else:
+        data = {objClass: temp, "embedded": []}
+        for embedded in temp[embedded]:
+            embeddedTemp = {"embeddedObj": embedded,
+                "completion": {"novice": {"times": embedded.completion.novice, "started": None}, 
+                            "apprentice": {"times": embedded.completion.apprentice, "started": None},
+                            "adept": {"times": embedded.completion.adept, "started": None}, 
+                            "expert": {"times": embedded.completion.expert, "started": None},
+                            "master": {"times": embedded.completion.master, "started": None}, 
+                            "legendary": {"times": embedded.completion.legendary, "started": None}}}
+            for doc in docs:
+                embeddedTemp["completion"][doc.difficulty]["started"] = True
+            data["embedded"].append(embeddedTemp)
     return data
 
 #####################
@@ -321,40 +353,14 @@ def questsLoad(request):
         quest.save()
     return redirect("/skyrimse/quests")
 
-def questLine(request):
-    # Pull source and questline from HTTP request.path
-    questSource = request.path.replace("/skyrimse/quests/", "").split("-")[0]
-    questLine = request.path.replace("/skyrimse/quests/", "").split("-")[1]
-    # Pull all quests and quest's sections
-    allQuests = Quest.objects(source=questSource, questLine=questLine)
-    allSections = [q.section for q in allQuests]
-    data = {"source": questSource, "questLine": questLine, "sections": {},
-            "progress": {"novice": None, "apprentice": None, "adept": None, 
-                            "expert": None, "master": None, "legendary": None}}
-    # Add each quest to the appropriate section
-    for section in allSections:
-        data["sections"][section] = {}
-        for quest in allQuests:
-            if(quest.section == section):
-                data["sections"][section][quest.name] ={"id": quest.id, "radiant": quest.radiant,
-                    "completion": {"novice": {"times": quest.completion.novice, "started": None}, 
-                        "apprentice": {"times": quest.completion.apprentice, "started": None},
-                        "adept": {"times": quest.completion.adept, "started": None}, 
-                        "expert": {"times": quest.completion.expert, "started": None},
-                        "master": {"times": quest.completion.master, "started": None}, 
-                        "legendary": {"times": quest.completion.legendary, "started": None}}}
-    for doc in Progress.objects.all():
-        data["progress"][doc.difficulty] = doc
-        for quest in allQuests:
-            data["sections"][quest.section][quest.name]["completion"][doc.difficulty]["started"] = True
-    return render(request, "skyrimseQuestLine.html", {'data': data})
+def questDetails(request):
+    data = generateDetails(obj=Quest, objClass="quest", request=request, embedded=None)
+    return render(request, "skyrimseQuest.html", {'data': data})
 
 def completeQuest(request):
     # Determine params from HTTP request
-    params = request.path.split("/skyrimse/quests/")[1]
-    questID = params.split("&")[0].split("=")[1]
-    difficulty = params.split("&")[1].split("=")[1]
-    questLine = params.split("&")[2].split("=")[1]
+    questID = request.path.split("/skyrimse/quests/")[1].split("&")[0].split("=")[1]
+    difficulty = request.path.split("/skyrimse/quests/")[1].split("&")[1].split("=")[1]
     # Pull the Quest and Progress objects
     quest = Quest.objects(id=questID).first()
     progress = Progress.objects(difficulty=difficulty).first()
@@ -363,7 +369,7 @@ def completeQuest(request):
     quest.save()
     updateProgressCompletion(source=quest.source, vanillaSection="quests", 
         modSection="modQuests", progress=progress)
-    return(redirect("/skyrimse/quests/{questLine}".format(questLine=questLine)))
+    return(redirect("/skyrimse/quests/details/{name}".format(name=quest.name)))
 
 ########################
 ##### Perk Related #####
@@ -387,36 +393,14 @@ def perksLoad(request):
         perk.save()
     return redirect("/skyrimse/perks")
 
-def perkDetail(request):
-    # Pull source and questline from HTTP request.path
-    perkSource = request.path.replace("/skyrimse/perks/", "").split("-")[0]
-    skill = request.path.replace("/skyrimse/perks/", "").split("-")[1]
-    # Pull all perks
-    allPerks = Perk.objects(source=perkSource, skill=skill)
-    data = {"source": perkSource, "skill": skill, "perks": {}, 
-            "skillLevels": {"novice": None, "apprentice": None, "adept": None, 
-                            "expert": None, "master": None, "legendary": None}}
-    # Add perk data
-    for perk in allPerks:
-        data["perks"][perk.name] = {"id": perk.id, "description": perk.description, "level": perk.level,
-            "completion": {"novice": {"learned": perk.completion.novice, "skillLevel": None},
-                        "apprentice": {"learned": perk.completion.apprentice, "skillLevel": None},
-                        "adept": {"learned": perk.completion.adept, "skillLevel": None},
-                        "expert": {"learned": perk.completion.expert, "skillLevel": None},
-                        "master": {"learned": perk.completion.master, "skillLevel": None},
-                        "legendary": {"learned": perk.completion.legendary, "skillLevel": None}}}
-    # Find character skill levels
-    for progress in Progress.objects.all():
-        for perk in data["perks"]:
-            data["perks"][perk]["completion"][progress.difficulty]["skillLevel"] = progress["skills"][skill]["level"]
-    return render(request, 'skyrimsePerksDetail.html', {'data': data})
+def perkDetails(request):
+    data = generateDetails(obj=Perk, objClass="perk", request=request, embedded=None)
+    return render(request, 'skyrimsePerk.html', {'data': data})
 
 def learnPerk(request):
     # Determine params from HTTP request
-    params = request.path.split("/skyrimse/perks/")[1]
-    perkID = params.split("&")[0].split("=")[1]
-    difficulty = params.split("&")[1].split("=")[1]
-    sourceSkill = params.split("&")[2].split("=")[1]
+    perkID = request.path.split("/skyrimse/perks/")[1].split("&")[0].split("=")[1]
+    difficulty = request.path.split("/skyrimse/perks/")[1].split("&")[1].split("=")[1]
     # Pull the Perk and Progress objects
     perk = Perk.objects(id=perkID).first()
     progress = Progress.objects(difficulty=difficulty).first()
@@ -425,7 +409,7 @@ def learnPerk(request):
     perk.save()
     updateProgressCompletion(source=perk.source, vanillaSection="perks", 
         modSection="modPerks", progress=progress)
-    return redirect("/skyrimse/perks/{sourceSkill}".format(sourceSkill=sourceSkill))
+    return redirect("/skyrimse/perks/details/{name}".format(name=perk.name))
 
 #########################
 ##### Shout Related #####
@@ -454,29 +438,8 @@ def shoutsLoad(request):
     return redirect("/skyrimse/shouts")
 
 def shoutsDetail(request):
-    # Pull source from HTTP request.path
-    source = request.path.split("/shouts/")[1]
-    # Load all the shouts from Mongo
-    allShouts = Shout.objects(source=source)
-    data = {"source": source, "shouts": {}}
-    # Pull Progress Data
-    docs = {"novice": None, "apprentice": None, "adept": None,
-        "expert": None, "master": None, "legendary": None}
-    for progress in Progress.objects.all():
-        docs[progress.difficulty] = True
-    # Add the generic shout data
-    for shout in allShouts:
-        data["shouts"][shout.name] = {"id": shout.id, "description": shout.description, "words": []}
-        for word in shout.words:
-            data["shouts"][shout.name]["words"].append({"original": word.original,
-                "translation": word.translation, "cooldown": word.cooldown,
-                "completion": {"novice": {"learned": word.completion.novice, "started": docs["novice"]},
-                    "apprentice": {"learned": word.completion.apprentice, "started": docs["apprentice"]},
-                    "adept": {"learned": word.completion.adept, "started": docs["adept"]},
-                    "expert": {"learned": word.completion.expert, "started": docs["expert"]},
-                    "master": {"learned": word.completion.master, "started": docs["master"]},
-                    "legendary": {"learned": word.completion.legendary, "started": docs["legendary"]}}})
-    return render(request, 'skyrimseShoutsDetail.html', {'data': data})
+    data = generateDetails(obj=Shout, objClass="shout", request=request, embedded="words")
+    return render(request, 'skyrimseShout.html', {'data': data})
 
 def learnWord(request):
     # Pull shout.id, shout.word, and difficulty from HTTP request.path
@@ -493,7 +456,7 @@ def learnWord(request):
     shout.save()
     updateProgressCompletion(source=shout.source, vanillaSection="words", 
         modSection="modWords", progress=progress)
-    return redirect("/skyrimse/shouts/{source}".format(source=shout.source))
+    return redirect("/skyrimse/shouts/details/{name}".format(name=shout.name))
 
 ############################
 ##### Location Related #####
@@ -518,31 +481,8 @@ def locationsLoad(request):
     return redirect("/skyrimse/locations")
 
 def locationsDetail(request):
-    # Pull source from HTTP request.path
-    source = request.path.split("/locations/")[1]
-    # Load all the shouts from Mongo
-    allLocations = Location.objects(source=source)
-    allTypes = set([l.locationType for l in allLocations])
-    data = {"source": source, "types": {}}
-    # Pull Progress Data
-    docs = {"novice": None, "apprentice": None, "adept": None,
-        "expert": None, "master": None, "legendary": None}
-    for progress in Progress.objects.all():
-        docs[progress.difficulty] = True
-    # Load the location data
-    for locationType in allTypes:
-        data["types"][locationType] = {}
-    for location in allLocations:
-        data["types"][location.locationType][location.name] = {"id": location.id,
-            "completion": {
-            "novice": {"visited": location.completion.novice, "started": docs["novice"]},
-            "apprentice": {"visited": location.completion.novice, "started": docs["apprentice"]},
-            "adept": {"visited": location.completion.novice, "started": docs["adept"]},
-            "expert": {"visited": location.completion.novice, "started": docs["expert"]},
-            "master": {"visited": location.completion.novice, "started": docs["master"]},
-            "legendary": {"visited": location.completion.novice, "started": docs["legendary"]}}
-        }
-    return render(request, 'skyrimseLocationsDetail.html', {'data': data})
+    data = generateDetails(obj=Location, objClass="location", request=request, embedded=None)
+    return render(request, 'skyrimseLocation.html', {'data': data})
 
 def visitLocation(request):
     # Pull shout.id, shout.word, and difficulty from HTTP request.path
@@ -556,7 +496,7 @@ def visitLocation(request):
     location.save()
     updateProgressCompletion(source=location.source, vanillaSection="locations", 
         modSection="modLocations", progress=progress)
-    return redirect("/skyrimse/locations/{source}".format(source=location.source))
+    return redirect("/skyrimse/locations/details/{name}".format(name=location.name))
 
 #########################
 ##### Spell Related #####
@@ -580,29 +520,9 @@ def spellsLoad(request):
         spell.save()
     return redirect("/skyrimse/spells")
 
-def spellSchool(request):
-    # Pull the school and source from HTTP request.path
-    source = request.path.split("/spells/")[1].split("-")[0]
-    school = request.path.split("/spells/")[1].split("-")[1]
-    # Pull all the spells
-    allSpells = Spell.objects(school=school, source=source)
-    docs = {"novice": None, "apprentice": None, "adept": None,
-        "expert": None, "master": None, "legendary": None}
-    for doc in Progress.objects.all():
-        docs[doc.difficulty] = doc["skills"][school]["level"]
-    # Start the data object
-    data = {"source": source, "school": school, "spells": {}}
-    # Load Spells into Data object
-    spellLevels = {"novice": 0, "apprentice": 25, "adept": 50, "expert": 75, "master": 100}
-    for spell in allSpells:
-        data["spells"][spell.name] = {"id": spell.id, "description": spell.description, "level": spellLevels[spell.level], 
-            "completion": {"novice": {"skillLevel": docs["novice"], "learned": spell.completion.novice},
-                "apprentice": {"skillLevel": docs["apprentice"], "learned": spell.completion.apprentice},
-                "adept": {"skillLevel": docs["adept"], "learned": spell.completion.adept},
-                "expert": {"skillLevel": docs["expert"], "learned": spell.completion.expert},
-                "master": {"skillLevel": docs["master"], "learned": spell.completion.master},
-                "legendary": {"skillLevel": docs["legendary"], "learned": spell.completion.legendary}}}
-    return render(request, 'skyrimseSpellSchool.html', {'data': data})
+def spellDetails(request):
+    data = generateDetails(obj=Spell, objClass="spell", request=request, embedded=None)
+    return render(request, 'skyrimseSpell.html', {'data': data})
 
 def learnSpell(request):
     # Pull shout.id, shout.word, and difficulty from HTTP request.path
@@ -616,7 +536,7 @@ def learnSpell(request):
     spell.save()
     updateProgressCompletion(source=spell.source, vanillaSection="spells", 
         modSection="modSpells", progress=progress)
-    return redirect("/skyrimse/spells/{source}-{school}".format(source=spell.source, school=spell.school))
+    return redirect("/skyrimse/spells/details/{name}".format(name=spell.name))
 
 ###############################
 ##### Enchantment Related #####
@@ -640,28 +560,9 @@ def enchantmentsLoad(request):
         enchantment.save()
     return redirect("/skyrimse/enchantments")
 
-def enchantmentType(request):
-    # Pull the school and source from HTTP request.path
-    source = request.path.split("/enchantments/")[1].split("-")[0]
-    enchantmentType = request.path.split("/enchantments/")[1].split("-")[1]
-    # Pull all the spells
-    allEnchantments = Enchantment.objects(enchantmentType=enchantmentType, source=source)
-    docs = {"novice": None, "apprentice": None, "adept": None,
-        "expert": None, "master": None, "legendary": None}
-    for doc in Progress.objects.all():
-        docs[doc.difficulty] = True
-    # Start the data object
-    data = {"source": source, "type": enchantmentType, "enchantments": {}}
-    # Load Spells into Data object
-    for enchantment in allEnchantments:
-        data["enchantments"][enchantment.name] = {"id": enchantment.id, "description": enchantment.description, 
-            "completion": {"novice": {"started": docs["novice"], "learned": enchantment.completion.novice},
-                "apprentice": {"started": docs["apprentice"], "learned": enchantment.completion.apprentice},
-                "adept": {"started": docs["adept"], "learned": enchantment.completion.adept},
-                "expert": {"started": docs["expert"], "learned": enchantment.completion.expert},
-                "master": {"started": docs["master"], "learned": enchantment.completion.master},
-                "legendary": {"started": docs["legendary"], "learned": enchantment.completion.legendary}}}
-    return render(request, 'skyrimseEnchantmentType.html', {'data': data})
+def enchantmentDetails(request):
+    data = generateDetails(obj=Enchantment, objClass="enchantment", request=request, embedded=None)
+    return render(request, 'skyrimseEnchantment.html', {'data': data})
 
 def learnEnchantment(request):
     # Pull shout.id, shout.word, and difficulty from HTTP request.path
@@ -675,7 +576,7 @@ def learnEnchantment(request):
     enchantment.save()
     updateProgressCompletion(source=enchantment.source, vanillaSection="enchantments", 
         modSection="modEnchantments", progress=progress)
-    return redirect("/skyrimse/enchantments/{source}-{type}".format(source=enchantment.source, type=enchantment.enchantmentType))
+    return redirect("/skyrimse/enchantments/details/{name}".format(name=enchantment.name))
 
 ###############################
 ##### Ingredients Related #####
@@ -703,36 +604,8 @@ def ingredientsLoad(request):
     return redirect("/skyrimse/ingredients")
 
 def ingredientsDetail(request):
-    # Pull the school and source from HTTP request.path
-    source = request.path.split("/ingredients/")[1]
-    # Pull all the ingredients
-    allIngredients = Ingredient.objects(source=source)
-    docs = {"novice": None, "apprentice": None, "adept": None,
-        "expert": None, "master": None, "legendary": None}
-    for doc in Progress.objects.all():
-        docs[doc.difficulty] = True
-    # Create the Data
-    data = {"source": source, "ingredients": []}
-    for ingredient in allIngredients:
-        tempIngredient = {"id": ingredient.id, "name": ingredient.name,
-            "location": ingredient.locations, "effects": []}
-        for effect in ingredient["effects"]:
-            effectIndex = ingredient["effects"].index(effect)
-            tempEffect = {"name": effect.name, "order": effect.order, "known": False,
-                "completion": {
-                    "novice": {"started": docs["novice"], "learned": ingredient["effects"][effectIndex]["completion"]["novice"]},
-                    "apprentice": {"started": docs["apprentice"], "learned": ingredient["effects"][effectIndex]["completion"]["apprentice"]},
-                    "adept": {"started": docs["adept"], "learned": ingredient["effects"][effectIndex]["completion"]["adept"]},
-                    "expert": {"started": docs["expert"], "learned": ingredient["effects"][effectIndex]["completion"]["expert"]},
-                    "master": {"started": docs["master"], "learned": ingredient["effects"][effectIndex]["completion"]["master"]},
-                    "legendary": {"started": docs["legendary"], "learned": ingredient["effects"][effectIndex]["completion"]["legendary"]}}}
-            for difficulty in ["novice", "apprentice", "adept", "expert", "master", "legendary"]:
-                if(tempEffect["completion"][difficulty]["learned"] > 0):
-                    tempEffect["known"] = True
-                    break
-            tempIngredient["effects"].append(tempEffect)
-        data["ingredients"].append(tempIngredient)
-    return render(request, 'skyrimseIngredientsDetail.html', {'data': data})
+    data = generateDetails(obj=Ingredient, objClass="ingredient", request=request, embedded="effects")
+    return render(request, 'skyrimseIngredient.html', {'data': data})
 
 def learnEffect(request):
     # Pull shout.id, shout.word, and difficulty from HTTP request.path
@@ -751,7 +624,7 @@ def learnEffect(request):
     ingredient.save()
     updateProgressCompletion(source=ingredient.source, vanillaSection="ingredients", 
         modSection="modIngredients", progress=progress)
-    return redirect("/skyrimse/ingredients/{source}".format(source=ingredient.source))
+    return redirect("/skyrimse/ingredients/details/{name}".format(name=ingredient.name))
 
 ##########################
 ##### Weapon Related #####
@@ -775,31 +648,9 @@ def weaponsLoad(request):
         weapon.save()
     return redirect("/skyrimse/weapons")
 
-def weaponType(request):
-    # Pull the type and class from HTTP request.path
-    source = request.path.split("/weapons/")[1].split("-")[0]
-    weaponType = request.path.split("/weapons/")[1].split("-")[1]
-    # Pull all the spells
-    allWeapons = Weapon.objects(weaponType=weaponType, source=source)
-    docs = {"novice": None, "apprentice": None, "adept": None,
-        "expert": None, "master": None, "legendary": None}
-    for doc in Progress.objects.all():
-        docs[doc.difficulty] = True
-    # Start the data object
-    data = {"source": source, "type": weaponType, "classes": {}}
-    # Add weapon data
-    for weapon in allWeapons:
-        if(not data["classes"].get(weapon.weaponClass)):
-            data["classes"][weapon.weaponClass] = []
-        data["classes"][weapon.weaponClass].append({"id": weapon.id, "name": weapon.name,
-            "completion": {
-                "novice": {"started": docs["novice"], "collected": weapon["completion"]["novice"]},
-                "apprentice": {"started": docs["apprentice"], "collected": weapon["completion"]["apprentice"]},
-                "adept": {"started": docs["adept"], "collected": weapon["completion"]["adept"]},
-                "expert": {"started": docs["expert"], "collected": weapon["completion"]["expert"]},
-                "master": {"started": docs["master"], "collected": weapon["completion"]["master"]},
-                "legendary": {"started": docs["legendary"], "collected": weapon["completion"]["legendary"]}}})
-    return render(request, 'skyrimseWeaponType.html', {'data': data})
+def weaponDetails(request):
+    data = generateDetails(obj=Weapon, objClass="weapon", request=request, embedded=None)
+    return render(request, 'skyrimseWeapon.html', {'data': data})
 
 def collectWeapon(request):
     # Pull weapon.id and difficulty from HTTP request.path
@@ -813,7 +664,7 @@ def collectWeapon(request):
     weapon.save()
     updateProgressCompletion(source=weapon.source, vanillaSection="weapons", 
         modSection="modWeapons", progress=progress)
-    return redirect("/skyrimse/weapons/{source}-{type}".format(source=weapon.source, type=weapon.weaponType))
+    return redirect("/skyrimse/weapons/details/{name}".format(name=weapon.name))
 
 #########################
 ##### Armor Related #####
@@ -837,31 +688,9 @@ def armorsLoad(request):
         armor.save()
     return redirect("/skyrimse/armors")
 
-def armorType(request):
-    # Pull the type and class from HTTP request.path
-    source = request.path.split("/armors/")[1].split("-")[0]
-    armorType = request.path.split("/armors/")[1].split("-")[1]
-    # Pull all the spells
-    allArmors = Armor.objects(armorType=armorType, source=source)
-    docs = {"novice": None, "apprentice": None, "adept": None,
-        "expert": None, "master": None, "legendary": None}
-    for doc in Progress.objects.all():
-        docs[doc.difficulty] = True
-    # Start the data object
-    data = {"source": source, "type": armorType, "classes": {}}
-    # Add weapon data
-    for armor in allArmors:
-        if(not data["classes"].get(armor.armorClass)):
-            data["classes"][armor.armorClass] = []
-        data["classes"][armor.armorClass].append({"id": armor.id, "name": armor.name,
-            "completion": {
-                "novice": {"started": docs["novice"], "collected": armor["completion"]["novice"]},
-                "apprentice": {"started": docs["apprentice"], "collected": armor["completion"]["apprentice"]},
-                "adept": {"started": docs["adept"], "collected": armor["completion"]["adept"]},
-                "expert": {"started": docs["expert"], "collected": armor["completion"]["expert"]},
-                "master": {"started": docs["master"], "collected": armor["completion"]["master"]},
-                "legendary": {"started": docs["legendary"], "collected": armor["completion"]["legendary"]}}})
-    return render(request, 'skyrimseArmorType.html', {'data': data})
+def armorDetails(request):
+    data = generateDetails(obj=Armor, objClass="armor", request=request, embedded=None)
+    return render(request, 'skyrimseArmor.html', {'data': data})
 
 def collectArmor(request):
     # Pull weapon.id and difficulty from HTTP request.path
@@ -875,7 +704,7 @@ def collectArmor(request):
     armor.save()
     updateProgressCompletion(source=armor.source, vanillaSection="armors", 
         modSection="modArmors", progress=progress)
-    return redirect("/skyrimse/armors/{source}-{type}".format(source=armor.source, type=armor.armorType))
+    return redirect("/skyrimse/armors/details/{name}".format(name=armor.name))
 
 ###########################
 ##### Jewelry Related #####
@@ -899,31 +728,9 @@ def jewelryLoad(request):
         jewelry.save()
     return redirect("/skyrimse/jewelry")
 
-def jewelryType(request):
-    # Pull the type and class from HTTP request.path
-    source = request.path.split("/jewelry/")[1].split("-")[0]
-    jewelryType = request.path.split("/jewelry/")[1].split("-")[1]
-    # Pull all the spells
-    allJewelry = Jewelry.objects(jewelryType=jewelryType, source=source)
-    docs = {"novice": None, "apprentice": None, "adept": None,
-        "expert": None, "master": None, "legendary": None}
-    for doc in Progress.objects.all():
-        docs[doc.difficulty] = True
-    # Start the data object
-    data = {"source": source, "type": jewelryType, "classes": {}}
-    # Add weapon data
-    for jewelry in allJewelry:
-        if(not data["classes"].get(jewelry.jewelryClass)):
-            data["classes"][jewelry.jewelryClass] = []
-        data["classes"][jewelry.jewelryClass].append({"id": jewelry.id, "name": jewelry.name,
-            "completion": {
-                "novice": {"started": docs["novice"], "collected": jewelry["completion"]["novice"]},
-                "apprentice": {"started": docs["apprentice"], "collected": jewelry["completion"]["apprentice"]},
-                "adept": {"started": docs["adept"], "collected": jewelry["completion"]["adept"]},
-                "expert": {"started": docs["expert"], "collected": jewelry["completion"]["expert"]},
-                "master": {"started": docs["master"], "collected": jewelry["completion"]["master"]},
-                "legendary": {"started": docs["legendary"], "collected": jewelry["completion"]["legendary"]}}})
-    return render(request, 'skyrimseJewelryType.html', {'data': data})
+def jewelryDetails(request):
+    data = generateDetails(obj=Jewelry, objClass="jewelry", request=request, embedded=None)
+    return render(request, 'skyrimseJewelry.html', {'data': data})
 
 def collectJewelry(request):
     # Pull weapon.id and difficulty from HTTP request.path
@@ -937,7 +744,7 @@ def collectJewelry(request):
     jewelry.save()
     updateProgressCompletion(source=jewelry.source, vanillaSection="jewelry", 
         modSection="modJewelry", progress=progress)
-    return redirect("/skyrimse/jewelry/{source}-{type}".format(source=jewelry.source, type=jewelry.jewelryType))
+    return redirect("/skyrimse/jewelry/details/{name}".format(name=jewelry.name))
 
 ########################
 ##### Book Related #####
@@ -961,28 +768,9 @@ def booksLoad(request):
         book.save()
     return redirect("/skyrimse/books")
 
-def booksList(request):
-    # Pull the letter from HTTP request.path
-    startsWith = request.path.split("/books/")[1]
-    # Pull all the spells
-    allBooks = Book.objects(startsWith=startsWith)
-    docs = {"novice": None, "apprentice": None, "adept": None,
-        "expert": None, "master": None, "legendary": None}
-    for doc in Progress.objects.all():
-        docs[doc.difficulty] = True
-    # Start the data object
-    data = {"startsWith": startsWith, "books": [], "startsWithList": ""}
-    # Load the data
-    for book in allBooks:
-        data["books"].append({"id": book.id, "name": book.name, "source": book.source, "type": book.bookType,
-            "completion": {
-                "novice": {"started": docs["novice"], "read": book["completion"]["novice"]},
-                "apprentice": {"started": docs["apprentice"], "read": book["completion"]["apprentice"]},
-                "adept": {"started": docs["adept"], "read": book["completion"]["adept"]},
-                "expert": {"started": docs["expert"], "read": book["completion"]["expert"]},
-                "master": {"started": docs["master"], "read": book["completion"]["master"]},
-                "legendary": {"started": docs["legendary"], "read": book["completion"]["legendary"]}}})
-    return render(request, 'skyrimseBooksList.html', {'data': data})
+def bookDetails(request):
+    data = generateDetails(obj=Book, objClass="book", request=request, embedded=None)
+    return render(request, 'skyrimseBook.html', {'data': data})
 
 def readBook(request):
     # Pull book.id and difficulty from HTTP request.path
@@ -996,7 +784,7 @@ def readBook(request):
     book.save()
     updateProgressCompletion(source=book.source, vanillaSection="books", 
         modSection="modBooks", progress=progress)
-    return redirect("/skyrimse/books/{startsWith}".format(startsWith=book.startsWith))
+    return redirect("/skyrimse/books/details/{name}".format(name=book.name))
 
 #######################
 ##### Key Related #####
@@ -1019,28 +807,9 @@ def keysLoad(request):
         key.save()
     return redirect("/skyrimse/keys")
 
-def keyLocations(request):
-    # Pull the location and difficulty from HTTP request.path
-    source = request.path.split("/keys/")[1].split("-")[0]
-    location = request.path.split("/keys/")[1].split("-")[1]
-    # Pull all the spells
-    allKeys = Key.objects(location=location, source=source)
-    docs = {"novice": None, "apprentice": None, "adept": None,
-        "expert": None, "master": None, "legendary": None}
-    for doc in Progress.objects.all():
-        docs[doc.difficulty] = True
-    # Start the data object
-    data = {"source": source, "location": location, "keys": []}
-    for key in allKeys:
-        data["keys"].append({"id": key.id, "name": key.name,
-            "completion": {
-                "novice": {"started": docs["novice"], "collected": key["completion"]["novice"]},
-                "apprentice": {"started": docs["apprentice"], "collected": key["completion"]["apprentice"]},
-                "adept": {"started": docs["adept"], "collected": key["completion"]["adept"]},
-                "expert": {"started": docs["expert"], "collected": key["completion"]["expert"]},
-                "master": {"started": docs["master"], "collected": key["completion"]["master"]},
-                "legendary": {"started": docs["legendary"], "collected": key["completion"]["legendary"]}}})
-    return render(request, 'skyrimseKeyLocations.html', {'data': data})
+def keyDetails(request):
+    data = generateDetails(obj=Key, objClass="key", request=request, embedded=None)
+    return render(request, 'skyrimseKey.html', {'data': data})
 
 def collectKey(request):
     # Pull key.id and difficulty from HTTP request.path
@@ -1054,7 +823,7 @@ def collectKey(request):
     key.save()
     updateProgressCompletion(source=key.source, vanillaSection="keys", 
         modSection="modKeys", progress=progress)
-    return redirect("/skyrimse/keys/{source}-{location}".format(source=key.source, location=key.location))
+    return redirect("/skyrimse/keys/details/{name}".format(name=key.name))
 
 ################################
 ##### Collectibles Related #####
@@ -1078,28 +847,9 @@ def collectiblesLoad(request):
         collectible.save()
     return redirect("/skyrimse/collectibles")
 
-def collectibleType(request):
-    # Pull the location and difficulty from HTTP request.path
-    source = request.path.split("/collectibles/")[1].split("-")[0]
-    collectibleType = request.path.split("/collectibles/")[1].split("-")[1]
-    # Pull all the spells
-    allCollectibles = Collectible.objects(collectibleType=collectibleType, source=source)
-    docs = {"novice": None, "apprentice": None, "adept": None,
-        "expert": None, "master": None, "legendary": None}
-    for doc in Progress.objects.all():
-        docs[doc.difficulty] = True
-    # Start the data object
-    data = {"source": source, "type": collectibleType, "collectibles": []}
-    for collectible in allCollectibles:
-        data["collectibles"].append({"id": collectible.id, "name": collectible.name, "notes": collectible.notes,
-            "completion": {
-                "novice": {"started": docs["novice"], "collected": collectible["completion"]["novice"]},
-                "apprentice": {"started": docs["apprentice"], "collected": collectible["completion"]["apprentice"]},
-                "adept": {"started": docs["adept"], "collected": collectible["completion"]["adept"]},
-                "expert": {"started": docs["expert"], "collected": collectible["completion"]["expert"]},
-                "master": {"started": docs["master"], "collected": collectible["completion"]["master"]},
-                "legendary": {"started": docs["legendary"], "collected": collectible["completion"]["legendary"]}}})
-    return render(request, 'skyrimseCollectibleType.html', {'data': data})
+def collectibleDetails(request):
+    data = generateDetails(obj=Collectible, objClass="collectible", request=request, embedded=None)
+    return render(request, 'skyrimseCollectible.html', {'data': data})
 
 def collectCollectible(request):
     # Pull key.id and difficulty from HTTP request.path
@@ -1113,7 +863,7 @@ def collectCollectible(request):
     collectible.save()
     updateProgressCompletion(source=collectible.source, vanillaSection="collectibles", 
         modSection="modCollectibles", progress=progress)
-    return redirect("/skyrimse/collectibles/{source}-{type}".format(source=collectible.source, type=collectible.collectibleType))
+    return redirect("/skyrimse/collectibles/details/{name}".format(name=collectible.name))
 
 def collectibleNotes(request):
     if(request.method == "POST"):

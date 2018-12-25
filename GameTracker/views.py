@@ -29,31 +29,12 @@ def search(request):
                 {"group": "Books", "type": Book, "url": "/skyrimse/books"}, {"group": "Keys", "type": Key, "url": "/skyrimse/keys"}, 
                 {"group": "Collectibles", "type": Collectible, "url": "/skyrimse/collectibles"}] 
             for obj in documents:
+                objList = []
                 for result in obj["type"].objects.search_text(searchTerm):
                     if(not data["Skyrim SE"].get(obj["group"])):
                         data["Skyrim SE"][obj["group"]] = []
-                    if("quests" in obj["url"]):
-                        url = "{base}/{source}-{questLine}".format(base=obj["url"], source=result["source"], questLine=result["questLine"])
-                    elif("perks" in obj["url"]):
-                        url = "{base}/{source}-{skill}".format(base=obj["url"], source=result["source"], skill=result["skill"])
-                    elif("spells" in obj["url"]):
-                        url = "{base}/{source}-{school}".format(base=obj["url"], source=result["source"], school=result["school"])
-                    elif("enchantments" in obj["url"]):
-                        url = "{base}/{source}-{enchantmentType}".format(base=obj["url"], source=result["source"], enchantmentType=result["enchantmentType"])
-                    elif("weapons" in obj["url"]):
-                        url = "{base}/{source}-{type}".format(base=obj["url"], source=result["source"], type=result["weaponType"])
-                    elif("armors" in obj["url"]):
-                        url = "{base}/{source}-{type}".format(base=obj["url"], source=result["source"], type=result["armorType"])
-                    elif("jewelry" in obj["url"]):
-                        url = "{base}/{source}-{type}".format(base=obj["url"], source=result["source"], type=result["jewelryType"])
-                    elif("books" in obj["url"]):
-                        url = "{base}/{startsWith}".format(base=obj["url"], startsWith=result["startsWith"])
-                    elif("keys" in obj["url"]):
-                        url = "{base}/{source}-{location}".format(base=obj["url"], source=result["source"], location=result["location"])
-                    elif("collectibles" in obj["url"]):
-                        url = "{base}/{source}-{type}".format(base=obj["url"], source=result["source"], type=result["collectibleType"])
-                    else: # Shouts, Locations, Ingredients
-                        url = "{base}/{source}".format(base=obj["url"], source=result["source"])
-                    data["Skyrim SE"][obj["group"]].append({"name": result["name"], "url": url})
+                    url = "{base}/details/{name}".format(base=obj["url"], name=result["name"])
+                    objList.append({"name": result["name"], "source": result["source"], "url": url})
+                data["Skyrim SE"][obj["group"]] = sorted(objList, key=lambda k: k["name"])
             return render(request, 'searchResults.html', {'data': data})
     return redirect("/")
